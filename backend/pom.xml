@@ -14,7 +14,7 @@
     <name>HealingSimCloneServer</name>
     <description>Server for the Healing sim clone</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>15</java.version>
     </properties>
     <dependencies>
         <dependency>
