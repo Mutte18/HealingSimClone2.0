@@ -3,21 +3,17 @@ package com.healing.gamelogic;
 import com.healing.entity.*;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 class RaiderHandler {
     RaiderHandler() {
 
     }
 
-
-
     ArrayList<Entity> createRaid() {
         int nrOfTanks = 2;
         int nrOfHealers = 4;
         int raidSize = 20;
         int nrOfDps = raidSize - nrOfHealers - nrOfTanks - 1;
-
 
         var raiders = new ArrayList<Entity>();
         raiders = createTanks(nrOfTanks, raiders);
@@ -28,7 +24,7 @@ class RaiderHandler {
     }
 
     private ArrayList<Entity> createPlayer(ArrayList<Entity> raiders) {
-        raiders.add(new Player(0, 500, true));
+        raiders.add(new Player(0, 500, true, 500));
         return raiders;
     }
     private ArrayList<Entity> createTanks(int nrOfTanks, ArrayList<Entity> raiders) {

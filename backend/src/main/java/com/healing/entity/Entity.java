@@ -19,14 +19,14 @@ public abstract class Entity {
         this.alive = alive;
     }
 
-    protected void increaseHealth(int updateHealthValue) {
+    public void increaseHealth(int updateHealthValue) {
         this.health += updateHealthValue;
         if (this.health > this.maxHealth) {
             this.health = this.maxHealth;
         }
     }
 
-    protected void reduceHealth(int updateHealthValue) {
+    public void reduceHealth(int updateHealthValue) {
         this.health -= updateHealthValue;
         if (this.health <= 0) {
             this.setAlive(false);
