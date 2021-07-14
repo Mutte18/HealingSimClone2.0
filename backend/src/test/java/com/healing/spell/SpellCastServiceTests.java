@@ -4,6 +4,7 @@ import com.healing.entity.Player;
 import com.healing.spell.exceptions.AlreadyCastingException;
 import com.healing.spell.exceptions.InsufficientManaException;
 import com.healing.spell.spellbook.SpellBook;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,14 +57,16 @@ public class SpellCastServiceTests {
         assertNull(spellCastService.getSpellBeingCast());
     }
 
+    @SneakyThrows
     @Test
     void finishSpellCast_StopsCastingAndConsumesMana() {
-        spellCastService = new SpellCastService(spellBook, spellBook.get(0), true);
+        spellCastService = new SpellCastService(spellBook);
         Player player = new Player(0, 100, true, 100);
 
         Integer expectedRemainingMana = player.getMana() - spellBook.get(0).getManaCost();
 
-        spellCastService.finishSpellCast(player);
+        spellCastService.startCastSpell(spellBook.get(0), player);
+        Thread.sleep((spellBook.get(0).getCastTime().intValue() * 1500));
 
         assertFalse(spellCastService.isCasting());
         assertNull(spellCastService.getSpellBeingCast());

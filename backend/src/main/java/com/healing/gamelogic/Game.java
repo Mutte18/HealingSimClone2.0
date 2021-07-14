@@ -2,14 +2,19 @@ package com.healing.gamelogic;
 
 import com.healing.entity.Entity;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class Game implements Runnable {
     private boolean gameRunning = true;
     private ArrayList<Entity> raidersList;
     private RaiderHandler raiderHandler;
     private static final long DELAY_PERIOD = 17;
+
+    @Autowired
     public Game() {
         raiderHandler = new RaiderHandler();
         restartGame();
@@ -18,6 +23,7 @@ public class Game implements Runnable {
     }
 
     private void restartGame() {
+        raidersList = raiderHandler.clearRaid();
         raidersList = raiderHandler.createRaid();
     }
 

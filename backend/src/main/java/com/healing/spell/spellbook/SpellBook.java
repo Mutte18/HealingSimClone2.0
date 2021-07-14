@@ -4,11 +4,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Component
 public class SpellBook extends ArrayList<Spell> {
     public SpellBook() {
         this.addSpells();
+    }
+
+    public Spell getSpell(String spellName) {
+        Optional<Spell> spellToReturn = this.stream()
+                .filter(spell -> spell.getClass().getSimpleName().equals(spellName))
+                .findAny();
+        return spellToReturn.orElse(null);
     }
 
     private void addSpells() {
@@ -22,4 +30,6 @@ public class SpellBook extends ArrayList<Spell> {
                         .healAmount(150)
                         .build());
     }
+
+
 }

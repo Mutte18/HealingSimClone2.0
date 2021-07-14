@@ -23,7 +23,7 @@ public class SpellCastService {
         this.isCasting = isCasting;
     }
 
-    void startCastSpell(Spell spellToCast, Player player) {
+    public Spell startCastSpell(Spell spellToCast, Player player) {
         if (isCasting && spellBeingCast != null) {
             throw new AlreadyCastingException();
         }
@@ -35,6 +35,7 @@ public class SpellCastService {
 
         castingThread = startCastTimer(spellToCast, player);
         castingThread.start();
+        return spellToCast;
     }
 
     private Thread startCastTimer(Spell spellToCast, Player player) {
@@ -57,6 +58,7 @@ public class SpellCastService {
 
     void finishSpellCast(Player player) {
         if (isCasting && spellBeingCast != null) {
+            System.out.println("Finished casting");
             player.reduceMana(spellBeingCast.getManaCost());
             isCasting = false;
             spellBeingCast = null;
