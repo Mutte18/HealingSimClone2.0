@@ -12,11 +12,10 @@ public class SpellBook extends ArrayList<Spell> {
         this.addSpells();
     }
 
-    public Spell getSpell(String spellName) {
-        Optional<Spell> spellToReturn = this.stream()
+    public Optional<Spell> getSpell(String spellName) {
+        return this.stream()
                 .filter(spell -> spell.getClass().getSimpleName().equals(spellName))
                 .findAny();
-        return spellToReturn.orElse(null);
     }
 
     private void addSpells() {

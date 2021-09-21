@@ -1,7 +1,6 @@
 package com.healing.gamelogic;
 
 import com.healing.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,58 +8,46 @@ import java.util.Optional;
 
 @Service
 public class RaiderHandler {
-    private ArrayList<Entity> raiders;
 
-    @Autowired
-    RaiderHandler() {
-        this.raiders = new ArrayList<>();
+    public RaidGroup clearRaid(RaidGroup raidGroup) {
+        raidGroup.clear();
+        return raidGroup;
     }
 
-    public ArrayList<Entity> clearRaid() {
-        this.raiders.clear();
-        return this.raiders;
-    }
-
-    ArrayList<Entity> createRaid() {
+    public RaidGroup createRaid() {
         int nrOfTanks = 2;
         int nrOfHealers = 4;
         int raidSize = 20;
         int nrOfDps = raidSize - nrOfHealers - nrOfTanks - 1;
 
-        createTanks(nrOfTanks);
-        createHealers(nrOfHealers);
-        createDps(nrOfDps);
-        createPlayer();
+        var raiders = new RaidGroup();
+        addTanks(nrOfTanks, raiders);
+        addHealers(nrOfHealers, raiders);
+        addDps(nrOfDps, raiders);
+        addPlayer(raiders);
         return raiders;
     }
 
-    private ArrayList<Entity> createPlayer() {
-        raiders.add(new Player(0, 500, true, 500));
-        return raiders;
+    private RaidGroup addPlayer(RaidGroup raidGroup) {
+        raidGroup.add(new Player(0, 500, true, 500));
+        return raidGroup;
     }
-    private ArrayList<Entity> createTanks(int nrOfTanks) {
+    private RaidGroup addTanks(int nrOfTanks, RaidGroup raidGroup) {
         for (int i = 0; i < nrOfTanks; i++) {
-            raiders.add(new Tank(i, 2000, true));
+            raidGroup.add(new Tank(i, 2000, true));
         }
-        return raiders;
+        return raidGroup;
     }
-    private ArrayList<Entity> createHealers(int nrOfHealers) {
+    private RaidGroup addHealers(int nrOfHealers, RaidGroup raidGroup) {
         for (int i = 0; i < nrOfHealers; i++) {
-            raiders.add(new Healer(i, 400, true));
+            raidGroup.add(new Healer(i, 400, true));
         }
-        return raiders;
+        return raidGroup;
     }
-    private ArrayList<Entity> createDps(int nrOfDps) {
+    private RaidGroup addDps(int nrOfDps, RaidGroup raidGroup) {
         for (int i = 0; i < nrOfDps; i++) {
-            raiders.add(new Dps(i, 200, true));
+            raidGroup.add(new Dps(i, 200, true));
         }
-        return raiders;
-    }
-
-    public Player getPlayer() {
-        Optional<Player> player = this.raiders.stream()
-                .filter(raider -> raider instanceof Player)
-                .map(raider -> (Player) raider).findFirst();
-        return player.orElse(null);
+        return raidGroup;
     }
 }

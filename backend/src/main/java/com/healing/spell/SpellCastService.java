@@ -1,11 +1,15 @@
 package com.healing.spell;
 
 import com.healing.entity.Player;
+import com.healing.spell.events.CancelSpellCastEvent;
+import com.healing.spell.events.StartSpellCastEvent;
 import com.healing.spell.exceptions.AlreadyCastingException;
 import com.healing.spell.exceptions.InsufficientManaException;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +17,7 @@ public class SpellCastService {
     private Spell spellBeingCast = null;
     private boolean isCasting = false;
     private Thread castingThread = null;
+    private boolean spellHasBeenCancelled = false;
 
     @Autowired
     public SpellCastService(SpellBook spellBook) {
@@ -36,6 +41,27 @@ public class SpellCastService {
         castingThread = startCastTimer(spellToCast, player);
         castingThread.start();
         return spellToCast;
+    }
+
+    @EventListener
+    @Async
+    public void handleCancelSpellCast(CancelSpellCastEvent event) throws InterruptedException {
+        System.out.println("A CancelSpellCastEvent was received" + event);
+        this.spellHasBeenCancelled = true;
+    }
+
+    @EventListener
+    @Async
+    public void handleStartSpellCast(StartSpellCastEvent event) throws InterruptedException {
+        this.spellHasBeenCancelled = false;
+        Thread.sleep(3000);
+        if (!spellHasBeenCancelled) {
+            System.out.println("Casting spell wohoo!");
+        }
+        else {
+            System.out.println("Did not cast spell, as it was cancelled");
+        }
+
     }
 
     private Thread startCastTimer(Spell spellToCast, Player player) {
@@ -65,8 +91,6 @@ public class SpellCastService {
         }
 
     }
-
-
 
     Spell getSpellBeingCast() {
         return this.spellBeingCast;

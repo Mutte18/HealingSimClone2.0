@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Service
 public class Game implements Runnable {
     private boolean gameRunning = true;
-    private ArrayList<Entity> raidersList;
+    private RaidGroup raidGroup;
     private RaiderHandler raiderHandler;
     private static final long DELAY_PERIOD = 17;
 
@@ -23,8 +23,8 @@ public class Game implements Runnable {
     }
 
     private void restartGame() {
-        raidersList = raiderHandler.clearRaid();
-        raidersList = raiderHandler.createRaid();
+        raidGroup = raiderHandler.clearRaid(raidGroup);
+        raidGroup = raiderHandler.createRaid();
     }
 
     @SneakyThrows
@@ -47,7 +47,7 @@ public class Game implements Runnable {
     }
 
     public void printRaidersListDownwards() {
-        raidersList.forEach(raider -> {
+        raidGroup.forEach(raider -> {
             System.out.println("-------------------");
             System.out.println("TYPE: " + raider.getClass().getSimpleName().toUpperCase());
             System.out.println("HEALTH: " + raider.getHealth() + " / " + raider.getMaxHealth());
@@ -56,10 +56,10 @@ public class Game implements Runnable {
     }
 
     public void setEntitiesHealthTo50Percent() {
-        raidersList.forEach(raider -> raider.setHealth(raider.getHealth() / 2));
+        raidGroup.forEach(raider -> raider.setHealth(raider.getHealth() / 2));
     }
 
     public void setEntitiesHealthTo0() {
-        raidersList.forEach(raider -> raider.reduceHealth(raider.getMaxHealth()));
+        raidGroup.forEach(raider -> raider.reduceHealth(raider.getMaxHealth()));
     }
 }
