@@ -1,0 +1,40 @@
+Receive a request to start a spell cast
+
+Check if already casting a spell - Throw exception
+
+set isCasting to true
+
+Emit event to startCastingListener with spellObject and cast time as argument to be used as wait time
+For instant cast spells, input 0 seconds wait
+
+When startCastingListener has waited X time, check if spellCancelled - throw exception.
+Else emit finishCast event - set isCasting to false, spellCancelled to false
+
+
+GameLogic and RaidGroup implement finishCastListener to handle drain mana, whom to heal etc
+
+
+--- Instant cast Spell ---
+1. Start cast spell
+2. Finish cast spell
+3. Perform spell action
+4. Consume mana from spell for caster
+
+--- Spell with Cast time ---
+1. Start cast spell
+2. Wait for cast time duration
+3. Finish cast spell
+4. Perform spell action
+5. Consume mana from spell for caster
+
+--- Interuppt spell during cast time ---
+1. Start cast spell
+2. Wait for cast time duration
+3. Interuppt spell
+4. Stop casting, nothing should happen
+
+--- Cast spell while already casting ---
+1. Start cast spell
+2. Wait for cast time duration
+3. Attempt to start cast another spell
+4. Should fail

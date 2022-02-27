@@ -1,10 +1,9 @@
 package com.healing.spell;
 
-import com.healing.entity.Player;
 import com.healing.gamelogic.RaiderHandler;
-import com.healing.spell.events.publishers.SpellCastPublisher;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
+import com.healing.spell.spellcast.SpellCastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,11 +17,10 @@ public class SpellCastController {
     private SpellCastService spellCastService;
     private SpellBook spellBook;
     private RaiderHandler raiderHandler;
-    private SpellCastPublisher spellCastPublisher;
 
     @Autowired
-    public SpellCastController(SpellCastPublisher spellCastPublisher) {
-        this.spellCastPublisher = spellCastPublisher;
+    public SpellCastController() {
+
     }
 
 
@@ -39,13 +37,11 @@ public class SpellCastController {
 
     @GetMapping(value = "/startcast", produces = "application/json")
     public ResponseEntity.HeadersBuilder<?> startSpellCast() {
-        spellCastPublisher.publishStartSpellCastEvent();
         return ResponseEntity.ok();
     }
 
     @GetMapping(value = "/cancelcast", produces = "application/json")
     public ResponseEntity.HeadersBuilder<?> cancelSpellCast() {
-        spellCastPublisher.publishCancelSpellCastEvent();
         return ResponseEntity.ok();
     }
 
