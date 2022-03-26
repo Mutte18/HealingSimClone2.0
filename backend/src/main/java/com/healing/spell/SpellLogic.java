@@ -13,5 +13,7 @@ class SpellLogic {
         spellBook = new SpellBook();
     }
 
+    public
+
 
 }

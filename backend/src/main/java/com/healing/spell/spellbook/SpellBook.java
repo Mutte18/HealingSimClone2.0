@@ -12,15 +12,16 @@ public class SpellBook extends ArrayList<Spell> {
         this.addSpells();
     }
 
-    public Optional<Spell> getSpell(String spellName) {
+    public Optional<Spell> getSpell(String spellId) {
         return this.stream()
-                .filter(spell -> spell.getClass().getSimpleName().equals(spellName))
+                .filter(spell -> spell.getSpellId().equals(spellId))
                 .findAny();
     }
 
     private void addSpells() {
         this.add(
                 FlashHeal.builder()
+                        .spellId("0")
                         .name("Flash Heal")
                         .castTime(1.5)
                         .cooldownTime(0)

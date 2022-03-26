@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public abstract class Spell {
+    private String spellId;
     private String name;
     private Integer manaCost;
     private Double castTime;

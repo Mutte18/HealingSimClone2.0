@@ -16,58 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpellCastService {
     private boolean isCasting = false;
-    private Thread castingThread = null;
-    private SpellCastPublisher spellCastPublisher;
 
     @Autowired
-    public SpellCastService(SpellCastPublisher spellCastPublisher) {
-        this.spellCastPublisher = spellCastPublisher;
+    public SpellCastService() {
+
     }
 
-    public boolean castSpell(int castTime) {
-        if (isCasting) {
-            throw new AlreadyCastingException();
-        }
-        if (isInstantSpell(castTime)) {
-            finishSpellCast();
-        }
-        else {
-            isCasting = true;
-            this.castingThread = startCastTimer(castTime);
-            this.castingThread.start();
-            return isCasting;
-        }
-    }
-
-    void finishSpellCast() {
-        isCasting = false;
-        emitFinishSpellCast();
-    }
-
-    public void cancelSpellCast() {
-        if (isCasting) {
-            System.out.println(this.castingThread);
-            this.castingThread.interrupt();
-            this.isCasting = false;
-        }
-    }
-
-    private boolean isInstantSpell(int castTime) {
-        return castTime == 0;
-    }
-
-    private Thread startCastTimer(int castTime) {
-        return new Thread(() -> {
-            try {
-                Thread.sleep(castTime);
-                finishSpellCast();
-            } catch (InterruptedException ignored) {
-                System.out.println("CastingThread was interuppted");
-            }
-        });
-    }
-
-    private void emitFinishSpellCast() {
-        this.spellCastPublisher.publishFinishSpellCastEvent();
-    }
 }
