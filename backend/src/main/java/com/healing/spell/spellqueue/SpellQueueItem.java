@@ -15,5 +15,6 @@ public class SpellQueueItem {
     private String id;
     private Spell spell;
     private Entity caster;
+    private Entity target;
     private ArrayList<Entity> targets;
 }

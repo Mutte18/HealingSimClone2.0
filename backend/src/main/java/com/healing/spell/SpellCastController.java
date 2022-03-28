@@ -1,5 +1,6 @@
 package com.healing.spell;
 
+import com.healing.gamelogic.RaidGroup;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
@@ -17,20 +18,21 @@ import java.util.UUID;
 @Controller
 @RequestMapping("spellcasting")
 public class SpellCastController {
-    private SpellCastService spellCastService;
     private SpellBook spellBook;
     private RaiderHandler raiderHandler;
     private SpellQueue spellQueue;
 
     @Autowired
-    public SpellCastController() {
-
+    public SpellCastController(RaiderHandler raiderHandler, SpellBook spellBook, SpellQueue spellQueue) {
+        this.raiderHandler = raiderHandler;
+        this.spellBook = spellBook;
+        this.spellQueue = spellQueue;
     }
 
 
     @PostMapping(value = "/{spellId}", produces = "application/json")
     public ResponseEntity.HeadersBuilder<?> castSpell(
-            @PathVariable String spellId, String casterId, String targetId) {
+            @PathVariable String spellId, int casterId, int targetId) {
         Optional<Spell> spell = spellBook.getSpell(spellId);
         if (spell.isEmpty()) {
             return ResponseEntity.notFound();
@@ -39,10 +41,9 @@ public class SpellCastController {
         spellQueue.addSpellToQueue(SpellQueueItem.builder()
                 .id(UUID.randomUUID().toString())
                 .spell(spell.get())
-                .caster(raiderHandler.));
-
-
-
+                .caster(raiderHandler.getRaiderById(casterId).get())
+                .target(raiderHandler.getRaiderById(targetId).get())
+                .build());
         return ResponseEntity.ok();
     }
 

@@ -16,9 +16,9 @@ public class SpellQueue extends ArrayList<SpellQueueItem> {
         this.remove(spellQueueItem);
     }
 
-    public SpellQueueItem processFirstSpellQueueItem() {
-        var spellQueueItem = this.get(0);
-        removeSpellFromQueue(spellQueueItem);
+    public Optional<SpellQueueItem> processFirstSpellQueueItem() {
+        var spellQueueItem = this.stream().findFirst();
+        spellQueueItem.ifPresent(this::removeSpellFromQueue);
         return spellQueueItem;
     }
 }
