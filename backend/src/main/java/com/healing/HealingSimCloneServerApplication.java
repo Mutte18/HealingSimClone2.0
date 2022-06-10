@@ -10,7 +10,7 @@ public class HealingSimCloneServerApplication {
 
     public static void main(String[] args) {
         System.setProperty("java.awt.headless", "false");
-        //System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+        // System.out.println(java.awt.GraphicsEnvironment.isHeadless());
         SpringApplication.run(HealingSimCloneServerApplication.class, args);
         Game game = new Game();
         new Thread(game).start();

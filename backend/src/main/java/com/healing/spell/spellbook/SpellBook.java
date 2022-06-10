@@ -13,22 +13,12 @@ public class SpellBook extends ArrayList<Spell> {
     }
 
     public Optional<Spell> getSpell(String spellName) {
-        return this.stream()
-                .filter(spell -> spell.getClass().getSimpleName().equals(spellName))
-                .findAny();
+        return this.stream().filter(spell -> spell.getClass().getSimpleName().equals(spellName)).findAny();
     }
 
     private void addSpells() {
-        this.add(
-                FlashHeal.builder()
-                        .name("Flash Heal")
-                        .castTime(1.5)
-                        .cooldownTime(0)
-                        .damageAmount(0)
-                        .manaCost(100)
-                        .healAmount(150)
-                        .build());
+        this.add(FlashHeal.builder().name("Flash Heal").castTime(1.5).cooldownTime(0).damageAmount(0).manaCost(100)
+                .healAmount(150).build());
     }
-
 
 }

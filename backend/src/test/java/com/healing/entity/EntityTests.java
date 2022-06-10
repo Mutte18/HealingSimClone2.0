@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EntityTests {
     private Dps dps;
+
     @BeforeEach
     void setUp() {
         this.dps = new Dps(0, 200, true);

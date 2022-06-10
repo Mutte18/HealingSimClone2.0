@@ -8,6 +8,7 @@ import lombok.Setter;
 public class Player extends Entity {
     private int mana;
     private int maxMana;
+
     public Player(int id, int health, boolean alive, int mana) {
         super(id, health, alive);
         this.mana = mana;

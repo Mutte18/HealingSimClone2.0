@@ -32,18 +32,21 @@ public class RaiderHandler {
         raidGroup.add(new Player(0, 500, true, 500));
         return raidGroup;
     }
+
     private RaidGroup addTanks(int nrOfTanks, RaidGroup raidGroup) {
         for (int i = 0; i < nrOfTanks; i++) {
             raidGroup.add(new Tank(i, 2000, true));
         }
         return raidGroup;
     }
+
     private RaidGroup addHealers(int nrOfHealers, RaidGroup raidGroup) {
         for (int i = 0; i < nrOfHealers; i++) {
             raidGroup.add(new Healer(i, 400, true));
         }
         return raidGroup;
     }
+
     private RaidGroup addDps(int nrOfDps, RaidGroup raidGroup) {
         for (int i = 0; i < nrOfDps; i++) {
             raidGroup.add(new Dps(i, 200, true));

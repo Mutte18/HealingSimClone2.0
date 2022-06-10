@@ -1,58 +1,42 @@
 package com.healing.spellcast;
 
-import com.healing.spell.events.publishers.SpellCastPublisher;
-import com.healing.spell.exceptions.AlreadyCastingException;
+import com.healing.gamelogic.Action;
+import com.healing.gamelogic.ActionsQueue;
 import com.healing.spell.spellcast.SpellCastService;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 public class SpellCastServiceTest {
 
-    private SpellCastService spellCastService;
+    @InjectMocks
+    SpellCastService spellCastService;
+
+    @Mock
+    private ActionsQueue actionsQueue;
+
+    private AutoCloseable closeable;
+
 
     @BeforeEach
-    void setup() {
-        this.spellCastService = new SpellCastService(new SpellCastPublisher());
+    public void setup() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+    
+    @AfterEach
+    public void cleanup() throws Exception {
+        closeable.close();
     }
 
     @Test
-    void shouldStartCastingWhenNotCastingSpell() {
-        spellCastService.castSpell(1);
-        assertTrue(spellCastService.isCasting());
-    }
-
-    @Test
-    void shouldFinishCastWhenCastTimeFulfilled() throws InterruptedException {
-        spellCastService.castSpell(100);
-        Thread.sleep(200);
-        assertFalse(spellCastService.isCasting());
-    }
-
-    @Test
-    void shouldThrowAlreadyCastingExceptionWhenAlreadyCasting() {
-        spellCastService.castSpell(100);
-        Assertions.assertThrows(AlreadyCastingException.class, () -> {
-            spellCastService.castSpell(100);
-        });
-    }
-
-    @Test
-    void shouldFinishCastingInstantlyWithCastTime0() {
-        spellCastService.castSpell(0);
-        assertFalse(spellCastService.isCasting());
-    }
-
-    @Test
-    void shouldStopCastingWhenCancellingSpellCast() throws InterruptedException {
-        spellCastService.castSpell(1000);
-        Thread.sleep(200);
-        spellCastService.cancelSpellCast();
-        assertFalse(spellCastService.isCasting());
-
+    public void shouldAddActionWhenCastingSpell() {
+        spellCastService.castSpell();
+        verify(actionsQueue).addActionToQueue(any(Action.class));
     }
 }

@@ -44,8 +44,6 @@ class RaidGroupTests {
     }
 
     private int countOccurencesOfEntity(RaidGroup raidGroup, Object entity) {
-        return (int) raidGroup.stream()
-                .filter(raider -> raider.getClass().equals(entity))
-                .count();
+        return (int) raidGroup.stream().filter(raider -> raider.getClass().equals(entity)).count();
     }
 }

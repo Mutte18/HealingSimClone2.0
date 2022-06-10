@@ -19,7 +19,6 @@ public class Game implements Runnable {
         raiderHandler = new RaiderHandler();
         restartGame();
 
-
     }
 
     private void restartGame() {
@@ -29,7 +28,7 @@ public class Game implements Runnable {
 
     @SneakyThrows
     private void gameLoop() {
-        while(this.gameRunning) {
+        while (this.gameRunning) {
             long beginTime = System.currentTimeMillis();
 
             long timeTaken = System.currentTimeMillis() - beginTime;
@@ -61,5 +60,15 @@ public class Game implements Runnable {
 
     public void setEntitiesHealthTo0() {
         raidGroup.forEach(raider -> raider.reduceHealth(raider.getMaxHealth()));
+    }
+
+    private void spellCastEventListener() {
+        // Listen to incoming spell events
+        // Add to action processing queue
+    }
+
+    private void processActionQueue() {
+        // Every X timeunit, go through action queue and perform the actions
+        // Then send state update to frontend
     }
 }

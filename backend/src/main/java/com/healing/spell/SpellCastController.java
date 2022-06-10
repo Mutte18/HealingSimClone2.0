@@ -14,15 +14,12 @@ import java.util.Optional;
 @Controller
 @RequestMapping("spellcasting")
 public class SpellCastController {
-    private SpellCastService spellCastService;
     private SpellBook spellBook;
-    private RaiderHandler raiderHandler;
 
     @Autowired
     public SpellCastController() {
 
     }
-
 
     @PostMapping(value = "/{spellName}", produces = "application/json")
     public ResponseEntity.HeadersBuilder<?> castSpell(@PathVariable String spellName) {
@@ -30,7 +27,6 @@ public class SpellCastController {
         if (spell.isEmpty()) {
             return ResponseEntity.notFound();
         }
-
 
         return ResponseEntity.ok();
     }
@@ -45,10 +41,8 @@ public class SpellCastController {
         return ResponseEntity.ok();
     }
 
-
-        private void validateSpell() {
+    private void validateSpell() {
 
     }
-
 
 }
