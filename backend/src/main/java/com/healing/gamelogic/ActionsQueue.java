@@ -1,23 +1,25 @@
 package com.healing.gamelogic;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
+import com.healing.gamelogic.actions.Action;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-public class ActionsQueue extends ArrayList<Action> {
+public class ActionsQueue {
 
-    @Bean
-    @Scope("singleton")
-    public ActionsQueue actionsQueueSingleton() {
-        return new ActionsQueue();
+    private final ArrayList<Action> actionsQueueList;
+
+    public ActionsQueue() {
+        this.actionsQueueList = new ArrayList<>();
     }
 
     public void addActionToQueue(Action action) {
-        this.add(action);
+        this.actionsQueueList.add(action);
     }
 
-    public void removeActionFromQueue(Action action) {
-        this.remove(action);
+    public Optional<Action> getTopActionAndRemoveFromQueue() {
+        var optionalAction = this.actionsQueueList.stream().findFirst();
+        optionalAction.ifPresent(this.actionsQueueList::remove);
+        return optionalAction;
     }
 }

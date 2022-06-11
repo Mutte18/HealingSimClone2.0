@@ -1,6 +1,8 @@
 package com.healing;
 
+import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.Game;
+import com.healing.gamelogic.RaiderHandler;
 import com.healing.gui.MainWindow;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +14,7 @@ public class HealingSimCloneServerApplication {
         System.setProperty("java.awt.headless", "false");
         // System.out.println(java.awt.GraphicsEnvironment.isHeadless());
         SpringApplication.run(HealingSimCloneServerApplication.class, args);
-        Game game = new Game();
+        Game game = new Game(new ActionsQueue(), new RaiderHandler());
         new Thread(game).start();
         new MainWindow(game);
     }

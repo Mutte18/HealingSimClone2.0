@@ -1,6 +1,5 @@
 package com.healing.spell.spellbook;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,9 +16,7 @@ public class SpellBook extends ArrayList<Spell> {
     }
 
     private void addSpells() {
-        this.add(FlashHeal.builder().spellId("0")
-                        .name("Flash Heal").castTime(1.5).cooldownTime(0).damageAmount(0).manaCost(100)
-                .healAmount(150).build());
+        this.add(new FlashHeal());
     }
 
 }

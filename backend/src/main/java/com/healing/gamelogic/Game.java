@@ -1,36 +1,27 @@
 package com.healing.gamelogic;
 
-import com.healing.entity.Entity;
-import com.healing.spell.spellqueue.SpellQueue;
+import com.healing.gamelogic.actions.Action;
+import com.healing.gamelogic.actions.PlayerAction;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class Game implements Runnable {
-    private boolean gameRunning = true;
-    private RaiderHandler raiderHandler;
-    private SpellQueue spellQueue;
-
     private static final long DELAY_PERIOD = 17;
+    private final boolean gameRunning = true;
+    private final RaiderHandler raiderHandler;
+    private final ActionsQueue actionsQueue;
 
     @Autowired
-    public Game() {
-        raiderHandler = new RaiderHandler();
+    public Game(ActionsQueue actionsQueue, RaiderHandler raiderHandler) {
+        this.raiderHandler = raiderHandler;
+        this.actionsQueue = actionsQueue;
         restartGame();
     }
 
     private void restartGame() {
         raiderHandler.resetRaidGroup();
-    }
-
-    private void processSpellQueue() {
-        var spellQueueItem = spellQueue.processFirstSpellQueueItem();
-        if (spellQueueItem.isPresent()) {
-            // perform logic of spell
-        }
     }
 
     @SneakyThrows
@@ -41,7 +32,6 @@ public class Game implements Runnable {
             long timeTaken = System.currentTimeMillis() - beginTime;
             long sleepTime = DELAY_PERIOD - timeTaken;
 
-            processSpellQueue();
             if (sleepTime >= 0) {
                 Thread.sleep(sleepTime);
             }
@@ -54,30 +44,33 @@ public class Game implements Runnable {
         gameLoop();
     }
 
-    public void printRaidersListDownwards() {
-        raidGroup.forEach(raider -> {
-            System.out.println("-------------------");
-            System.out.println("TYPE: " + raider.getClass().getSimpleName().toUpperCase());
-            System.out.println("HEALTH: " + raider.getHealth() + " / " + raider.getMaxHealth());
-            System.out.println("ALIVE: " + raider.isAlive());
-        });
-    }
-
-    public void setEntitiesHealthTo50Percent() {
-        raidGroup.forEach(raider -> raider.setHealth(raider.getHealth() / 2));
-    }
-
-    public void setEntitiesHealthTo0() {
-        raidGroup.forEach(raider -> raider.reduceHealth(raider.getMaxHealth()));
-    }
-
     private void spellCastEventListener() {
         // Listen to incoming spell events
         // Add to action processing queue
     }
 
-    private void processActionQueue() {
+    void processActionQueue() {
+        var optionalAction = actionsQueue.getTopActionAndRemoveFromQueue();
+        // Do stuff with action
+        optionalAction.ifPresent(this::performAction);
         // Every X timeunit, go through action queue and perform the actions
         // Then send state update to frontend
+    }
+
+    void performAction(Action action) {
+        if (action instanceof PlayerAction) {
+            performPlayerAction((PlayerAction) action);
+        }
+    }
+
+    void performPlayerAction(PlayerAction action) {
+        var player = action.getPlayer();
+        var target = raiderHandler.getRaiderById(action.getTarget().getId());
+        var spell = action.getSpell();
+
+        if (target.isPresent()) {
+            player.reduceMana(spell.getManaCost());
+            target.get().increaseHealth(spell.getHealAmount());
+        }
     }
 }

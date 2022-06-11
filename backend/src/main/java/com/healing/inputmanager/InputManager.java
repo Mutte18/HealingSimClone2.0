@@ -5,7 +5,7 @@ import com.healing.gamelogic.Game;
 import java.awt.event.KeyEvent;
 
 public class InputManager implements java.awt.event.KeyListener {
-    private Game game;
+    private final Game game;
 
     public InputManager(Game game) {
         this.game = game;
@@ -19,7 +19,6 @@ public class InputManager implements java.awt.event.KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_X) {
-            game.printRaidersListDownwards();
         }
     }
 

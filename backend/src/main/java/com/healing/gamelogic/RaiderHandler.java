@@ -1,25 +1,15 @@
 package com.healing.gamelogic;
 
-import com.healing.entity.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import com.healing.entity.Entity;
+import com.healing.entity.Player;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
-@Service
 public class RaiderHandler {
     private RaidGroup raidGroup;
 
     public RaiderHandler() {
         this.raidGroup = new RaidGroup();
-    }
-
-    @Bean
-    @Scope("singleton")
-    public RaiderHandler raiderHandlerSingleton() {
-        return new RaiderHandler();
     }
 
     public void resetRaidGroup() {
@@ -29,5 +19,12 @@ public class RaiderHandler {
 
     public Optional<Entity> getRaiderById(int id) {
         return raidGroup.stream().filter(raider -> raider.getId() == id).findAny();
+    }
+
+    public Player getPlayer() {
+        var result = raidGroup.stream().filter(player -> player.getClass() == Player.class).findAny();
+        if (result.isPresent()) {
+            return (Player) result;
+        }
     }
 }
