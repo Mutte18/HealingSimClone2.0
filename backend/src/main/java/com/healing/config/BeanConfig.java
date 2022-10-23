@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class BeanConfig {
-    @Bean
-    @Scope("singleton")
-    public RaiderHandler raiderHandlerSingleton() {
-        return new RaiderHandler();
-    }
+  @Bean
+  @Scope("singleton")
+  public RaiderHandler raiderHandlerSingleton() {
+    return new RaiderHandler();
+  }
 
-    @Bean
-    @Scope("singleton")
-    public ActionsQueue actionsQueueSingleton() {
-        return new ActionsQueue();
-    }
+  @Bean
+  @Scope("singleton")
+  public ActionsQueue actionsQueueSingleton() {
+    return new ActionsQueue();
+  }
 }

@@ -1,4 +1,3 @@
 package com.healing.spell.exceptions;
 
-public class InsufficientManaException extends RuntimeException {
-}
+public class InsufficientManaException extends RuntimeException {}

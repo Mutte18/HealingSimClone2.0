@@ -11,32 +11,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpellCastService {
 
-    private final ActionsQueue actionsQueue;
-    private final SpellBook spellBook;
-    private final RaiderHandler raiderHandler;
+  private final ActionsQueue actionsQueue;
+  private final SpellBook spellBook;
+  private final RaiderHandler raiderHandler;
 
-    @Autowired
-    public SpellCastService(ActionsQueue actionsQueue, SpellBook spellBook, RaiderHandler raiderHandler) {
-        this.actionsQueue = actionsQueue;
-        this.spellBook = spellBook;
-        this.raiderHandler = raiderHandler;
+  @Autowired
+  public SpellCastService(
+      ActionsQueue actionsQueue, SpellBook spellBook, RaiderHandler raiderHandler) {
+    this.actionsQueue = actionsQueue;
+    this.spellBook = spellBook;
+    this.raiderHandler = raiderHandler;
+    System.out.println(actionsQueue + " SpellCastService");
+  }
+
+  public PlayerAction castSpell(String spellId, String targetId) {
+    var player = raiderHandler.getPlayer();
+    var spell = spellBook.getSpell(spellId);
+    var target = raiderHandler.getRaiderById(Integer.parseInt(targetId));
+
+    if (player.isPresent() && spell.isPresent() && target.isPresent()) {
+      return (PlayerAction)
+          actionsQueue.addActionToQueue(
+              new PlayerAction((Player) player.get(), target.get(), spell.get(), "1"));
     }
+    return null;
 
-    public void castSpell(String spellId, String targetId) {
-        var player = raiderHandler.getPlayer();
-        var spell = spellBook.getSpell(spellId);
-        var target = raiderHandler.getRaiderById(Integer.parseInt(targetId));
+    // Retrieve spell to be cast
+    // If spell was found, trigger event to Game and return OK cast to controller
 
-        if (player.isPresent() && spell.isPresent() && target.isPresent()) {
-            actionsQueue.addActionToQueue(new PlayerAction((Player) player.get(), target.get(), spell.get(), "1"));
-        }
+    // If something wrong, return false to controller
 
-
-        // Retrieve spell to be cast
-        // If spell was found, trigger event to Game and return OK cast to controller
-
-        // If something wrong, return false to controller
-
-    }
-
+  }
 }

@@ -1,55 +1,35 @@
 package com.healing.spellcast;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.healing.gamelogic.ActionsQueue;
-import com.healing.gamelogic.actions.Action;
-import com.healing.spell.spellbook.FlashHeal;
-import com.healing.spell.spellbook.Spell;
+import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.SpellCastService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class SpellCastServiceTest {
 
-    @InjectMocks
-    SpellCastService spellCastService;
+  SpellCastService spellCastService;
 
-    @Mock
-    private ActionsQueue actionsQueue;
-    @Mock
-    private SpellBook spellBook;
+  private ActionsQueue actionsQueue;
+  private SpellBook spellBook;
+  private RaiderHandler raiderHandler;
 
-    private AutoCloseable closeable;
+  @BeforeEach
+  public void setup() {
+    actionsQueue = new ActionsQueue();
+    spellBook = new SpellBook();
+    raiderHandler = new RaiderHandler();
 
+    spellCastService = new SpellCastService(actionsQueue, spellBook, raiderHandler);
+  }
 
-    @BeforeEach
-    public void setup() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    public void cleanup() throws Exception {
-        closeable.close();
-    }
-
-    @Test
-    public void shouldAddActionToQueueWhenCastingSpell() {
-        when(spellBook.getSpell("0")).thenReturn(Optional.of(createSpell()));
-        //spellCastService.castSpell("0");
-        verify(actionsQueue).addActionToQueue(any(Action.class));
-    }
-
-    private Spell createSpell() {
-        return new FlashHeal();
-    }
+  @Test
+  public void shouldAddActionToQueueWhenCastingSpell() {
+    var action = spellCastService.castSpell("1", "1");
+    assertEquals(1, action.getTarget().getId());
+    assertEquals("Flash Heal", action.getSpell().getName());
+  }
 }

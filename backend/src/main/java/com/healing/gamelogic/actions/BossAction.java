@@ -1,4 +1,3 @@
 package com.healing.gamelogic.actions;
 
-public class BossAction {
-}
+public class BossAction {}
