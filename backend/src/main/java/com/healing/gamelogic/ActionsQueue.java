@@ -4,22 +4,18 @@ import com.healing.gamelogic.actions.Action;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class ActionsQueue {
+public class ActionsQueue extends ArrayList<Action> {
 
-  private final ArrayList<Action> actionsQueueList;
-
-  public ActionsQueue() {
-    this.actionsQueueList = new ArrayList<>();
-  }
+  public ActionsQueue() {}
 
   public Action addActionToQueue(Action action) {
-    this.actionsQueueList.add(action);
+    this.add(action);
     return action;
   }
 
   public Optional<Action> getTopActionAndRemoveFromQueue() {
-    var optionalAction = this.actionsQueueList.stream().findFirst();
-    optionalAction.ifPresent(this.actionsQueueList::remove);
+    var optionalAction = this.stream().findFirst();
+    optionalAction.ifPresent(this::remove);
     return optionalAction;
   }
 }

@@ -16,4 +16,6 @@ public abstract class Action {
     this.target = target;
     this.id = id;
   }
+
+  public abstract void performAction();
 }

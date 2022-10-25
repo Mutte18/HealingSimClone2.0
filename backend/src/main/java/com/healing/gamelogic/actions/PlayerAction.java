@@ -19,4 +19,14 @@ public class PlayerAction extends Action {
     this.target = target;
     this.id = id;
   }
+
+  @Override
+  public void performAction() {
+    if (target != null) {
+      player.reduceMana(spell.getManaCost());
+      target.increaseHealth(spell.getHealAmount());
+    }
+    System.out.println(
+        "Performed action, casted Spell: " + spell.getName() + " on Target: " + target.getId());
+  }
 }

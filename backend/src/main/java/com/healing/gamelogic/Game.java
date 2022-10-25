@@ -1,7 +1,6 @@
 package com.healing.gamelogic;
 
 import com.healing.gamelogic.actions.Action;
-import com.healing.gamelogic.actions.PlayerAction;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,26 +49,8 @@ public class Game implements Runnable {
   void processActionQueue() {
     var optionalAction = actionsQueue.getTopActionAndRemoveFromQueue();
     // Do stuff with action
-    optionalAction.ifPresent(this::performAction);
+    optionalAction.ifPresent(Action::performAction);
     // Every X timeunit, go through action queue and perform the actions
     // Then send state update to frontend
-  }
-
-  void performAction(Action action) {
-    if (action instanceof PlayerAction) {
-      performPlayerAction((PlayerAction) action);
-    }
-  }
-
-  void performPlayerAction(PlayerAction action) {
-    var player = action.getPlayer();
-    var target = raiderHandler.getRaiderById(action.getTarget().getId());
-    var spell = action.getSpell();
-
-    if (target.isPresent()) {
-      player.reduceMana(spell.getManaCost());
-      target.get().increaseHealth(spell.getHealAmount());
-    }
-    System.out.println("Performed action, " + action);
   }
 }
