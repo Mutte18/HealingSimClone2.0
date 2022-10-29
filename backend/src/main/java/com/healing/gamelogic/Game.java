@@ -64,5 +64,4 @@ public class Game implements Runnable {
   public Boss getCurrentBoss() {
     return this.boss;
   }
-
 }

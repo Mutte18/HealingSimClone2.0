@@ -8,11 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StateModel {
-    private Boss boss;
-    private RaidGroup raidGroup;
+  private Boss boss;
+  private RaidGroup raidGroup;
 
-    public StateModel(Boss boss, RaidGroup raidGroup) {
-        this.boss = boss;
-        this.raidGroup = raidGroup;
-    }
+  public StateModel(Boss boss, RaidGroup raidGroup) {
+    this.boss = boss;
+    this.raidGroup = raidGroup;
+  }
 }

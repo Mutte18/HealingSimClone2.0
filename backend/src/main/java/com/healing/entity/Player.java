@@ -10,7 +10,7 @@ public class Player extends Entity {
   private int maxMana;
 
   public Player(int id, int health, boolean alive, int mana) {
-    super(id, health, alive, "PLAYER");
+    super(id, health, alive);
     this.mana = mana;
     this.maxMana = mana;
   }
