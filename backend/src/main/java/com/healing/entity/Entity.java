@@ -10,12 +10,14 @@ public abstract class Entity {
   private int health;
   private int maxHealth;
   private boolean alive;
+  private String role;
 
-  public Entity(int id, int health, boolean alive) {
+  public Entity(int id, int health, boolean alive, String role) {
     this.id = id;
     this.health = health;
     this.maxHealth = health;
     this.alive = alive;
+    this.role = role;
   }
 
   public void increaseHealth(int updateHealthValue) {

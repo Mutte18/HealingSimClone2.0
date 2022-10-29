@@ -22,4 +22,8 @@ public class RaiderHandler {
   public Optional<Entity> getPlayer() {
     return raidGroup.stream().filter(player -> player.getClass() == Player.class).findAny();
   }
+
+  public RaidGroup getRaidGroup() {
+    return this.raidGroup;
+  }
 }
