@@ -6,6 +6,8 @@ import com.healing.entity.Dps;
 import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.spell.spellbook.FlashHeal;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class ActionsQueueTest {
@@ -14,9 +16,17 @@ public class ActionsQueueTest {
     var actionsQueue = new ActionsQueue();
 
     var action1 =
-        new PlayerAction(new Player(0, 0, true, 0), new Dps(1, 1, true), new FlashHeal(), "1");
+        new PlayerAction(
+            new Player(0, 0, true, 0),
+            new ArrayList<>(List.of(new Dps(1, 1, true))),
+            new FlashHeal(),
+            "1");
     var action2 =
-        new PlayerAction(new Player(0, 0, true, 0), new Dps(1, 1, true), new FlashHeal(), "2");
+        new PlayerAction(
+            new Player(0, 0, true, 0),
+            new ArrayList<>(List.of(new Dps(1, 1, true))),
+            new FlashHeal(),
+            "2");
 
     actionsQueue.addActionToQueue(action1);
     actionsQueue.addActionToQueue(action2);

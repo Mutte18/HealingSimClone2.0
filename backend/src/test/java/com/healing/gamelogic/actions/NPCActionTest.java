@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.healing.entity.Boss;
 import com.healing.entity.Dps;
 import com.healing.spell.spellbook.FlashHeal;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class NPCActionTest {
@@ -12,9 +14,21 @@ public class NPCActionTest {
   void shouldReduceTargetHealthWhenNPCCastsSpell() {
     var dps = new Dps(0, 100, true);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
-    var action = new NPCAction(dps, boss, new FlashHeal(), "1");
+    var action = new NPCAction(dps, new ArrayList<>(List.of(boss)), new FlashHeal(), "1");
     action.performAction();
 
     assertEquals(950, boss.getHealth());
+  }
+
+  @Test
+  void shouldReduceAllTargetedBossesHealthWhenNPCCastsSpell() {
+    var dps = new Dps(0, 100, true);
+    var boss = new Boss(1, 1000, true, "Defias Pillager");
+    var boss2 = new Boss(2, 750, true, "Defias Rogue");
+    var action = new NPCAction(dps, new ArrayList<>(List.of(boss, boss2)), new FlashHeal(), "1");
+    action.performAction();
+
+    assertEquals(950, boss.getHealth());
+    assertEquals(700, boss2.getHealth());
   }
 }

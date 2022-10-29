@@ -5,6 +5,8 @@ import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.gamelogic.actions.PlayerAction;
 import com.healing.spell.spellbook.SpellBook;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,8 @@ public class SpellCastService {
     if (player.isPresent() && spell.isPresent() && target.isPresent()) {
       return (PlayerAction)
           actionsQueue.addActionToQueue(
-              new PlayerAction((Player) player.get(), target.get(), spell.get(), "1"));
+              new PlayerAction(
+                  (Player) player.get(), new ArrayList<>(List.of(target.get())), spell.get(), "1"));
     }
     return null;
 

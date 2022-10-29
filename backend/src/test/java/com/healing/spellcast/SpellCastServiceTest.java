@@ -29,7 +29,7 @@ public class SpellCastServiceTest {
   @Test
   public void shouldAddActionToQueueWhenCastingSpell() {
     var action = spellCastService.castSpell("1", "1");
-    assertEquals(1, action.getTarget().getId());
+    assertEquals(1, action.getTargets().get(0).getId());
     assertEquals("Flash Heal", action.getSpell().getName());
   }
 }

@@ -7,6 +7,8 @@ import com.healing.entity.Dps;
 import com.healing.gamelogic.actions.Action;
 import com.healing.gamelogic.actions.NPCAction;
 import com.healing.spell.spellbook.FlashHeal;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 
 public class GameTest {
@@ -29,6 +31,6 @@ public class GameTest {
   private Action getAction() {
     var dps = new Dps(0, 100, true);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
-    return new NPCAction(dps, boss, new FlashHeal(), "1");
+    return new NPCAction(dps, new ArrayList<>(List.of(boss)), new FlashHeal(), "1");
   }
 }
