@@ -3,16 +3,17 @@ package com.healing.gamelogic;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import java.util.Optional;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RaiderHandler {
   private RaidGroup raidGroup;
 
-  public RaiderHandler() {
-    this.raidGroup = new RaidGroup();
-  }
+  public RaiderHandler() {}
 
   public void resetRaidGroup() {
     this.raidGroup = new RaidGroup();
+    this.raidGroup.fillRaidGroup();
   }
 
   public Optional<Entity> getRaiderById(int id) {

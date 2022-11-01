@@ -13,6 +13,7 @@ class RaidGroupTests {
   @BeforeEach
   void setUp() {
     raidGroup = new RaidGroup();
+    raidGroup.fillRaidGroup();
   }
 
   @Test

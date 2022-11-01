@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class RaidGroup extends ArrayList<Entity> {
 
-  public RaidGroup() {
+  public void fillRaidGroup() {
     this.addPlayer();
     this.addHealers();
     this.addTanks();

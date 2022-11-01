@@ -9,7 +9,7 @@ public class Boss extends Entity {
   private String name;
 
   public Boss(int id, int health, boolean alive, String name) {
-    super(id, health, alive);
+    super(id, health, alive, "BOSS");
     this.name = name;
   }
 }

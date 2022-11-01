@@ -1,18 +1,20 @@
 package com.healing.config;
 
 import com.healing.gamelogic.ActionsQueue;
-import com.healing.gamelogic.RaiderHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class BeanConfig {
-  @Bean
+  /*@Bean
   @Scope("singleton")
   public RaiderHandler raiderHandlerSingleton() {
+    var kalle = "Hej";
     return new RaiderHandler();
   }
+
+   */
 
   @Bean
   @Scope("singleton")

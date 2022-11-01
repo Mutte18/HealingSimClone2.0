@@ -17,7 +17,6 @@ public class StateService {
   public StateModel getState() {
     var boss = game.getCurrentBoss();
     var raidGroup = game.getRaidGroup();
-
     return new StateModel(boss, raidGroup);
   }
 }

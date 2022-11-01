@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "role")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
   @JsonSubTypes.Type(value = Boss.class, name = "boss"),
   @JsonSubTypes.Type(value = Dps.class, name = "dps"),
@@ -20,12 +20,14 @@ public abstract class Entity {
   private int health;
   private int maxHealth;
   private boolean alive;
+  private String role;
 
-  public Entity(int id, int health, boolean alive) {
+  public Entity(int id, int health, boolean alive, String role) {
     this.id = id;
     this.health = health;
     this.maxHealth = health;
     this.alive = alive;
+    this.role = role;
   }
 
   public void increaseHealth(int updateHealthValue) {

@@ -16,7 +16,7 @@ public class SpellCastIT extends IntegrationTest {
         .perform(
             MockMvcRequestBuilders.post("/spellcasting")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new SpellCastRequest("1", "1"))))
+                .content(mapper.writeValueAsString(new SpellCastRequest("1", "1"))))
         .andExpect(status().isOk());
   }
 }

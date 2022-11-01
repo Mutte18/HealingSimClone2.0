@@ -22,6 +22,7 @@ public class SpellCastServiceTest {
     actionsQueue = new ActionsQueue();
     spellBook = new SpellBook();
     raiderHandler = new RaiderHandler();
+    raiderHandler.resetRaidGroup();
 
     spellCastService = new SpellCastService(actionsQueue, spellBook, raiderHandler);
   }

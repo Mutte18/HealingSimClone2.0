@@ -10,5 +10,5 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class IntegrationTest {
   @Autowired protected MockMvc mockMvc;
-  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected ObjectMapper mapper;
 }
