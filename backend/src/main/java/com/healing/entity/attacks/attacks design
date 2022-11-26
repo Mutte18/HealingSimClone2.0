@@ -1,0 +1,5 @@
+
+
+Ability -> Spell (Player) -> Player heals, Flash heal
+Ability -> Attack (NPCs and Boss - mostly normal attacks, 1-5 targets) -> StandardSwing, Cleave,
+Ability -> BossAbility (Special boss abilites, often hits many targets) -> Firestorm, Blizzard,

@@ -23,11 +23,18 @@ public class Game implements Runnable {
     restartGame();
 
     new Thread(this).start();
+    new Thread(this::bossActionLoop).start();
     // new MainWindow(this);
   }
 
   private void restartGame() {
     raiderHandler.resetRaidGroup();
+  }
+
+  private void bossActionLoop() {
+    while (this.gameRunning) {
+      // actionsQueue.addActionToQueue(new BossAction(boss, raiderHandler.getPlayer(), ))
+    }
   }
 
   @SneakyThrows

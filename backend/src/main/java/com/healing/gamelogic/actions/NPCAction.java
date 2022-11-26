@@ -2,29 +2,31 @@ package com.healing.gamelogic.actions;
 
 import com.healing.entity.Dps;
 import com.healing.entity.Entity;
-import com.healing.spell.spellbook.Spell;
+import com.healing.entity.attacks.NPCAttack;
 import java.util.ArrayList;
 
 public class NPCAction extends Action {
   private final Dps dps;
+  private final NPCAttack npcAttack;
 
-  public NPCAction(Dps dps, ArrayList<Entity> targets, Spell spell, String id) {
-    super(dps, targets, spell, id);
+  public NPCAction(Dps dps, ArrayList<Entity> targets, NPCAttack npcAttack, String id) {
+    super(dps, targets, id);
     this.dps = dps;
+    this.npcAttack = npcAttack;
   }
 
   @Override
   public void performAction() {
     for (var target : targets) {
-      target.reduceHealth(spell.getDamageAmount());
+      target.reduceHealth(npcAttack.getDamageAmount());
     }
     System.out.println(
         "Performed NPC Action, "
             + dps
             + " casted "
-            + spell.getName()
+            + npcAttack.getName()
             + " for "
-            + spell.getDamageAmount()
+            + npcAttack.getDamageAmount()
             + " damage on "
             + targets);
   }

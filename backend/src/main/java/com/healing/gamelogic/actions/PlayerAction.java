@@ -10,10 +10,12 @@ import lombok.Getter;
 public class PlayerAction extends Action {
 
   private Player player;
+  private Spell spell;
 
   public PlayerAction(Player player, ArrayList<Entity> targets, Spell spell, String id) {
-    super(player, targets, spell, id);
+    super(player, targets, id);
     this.player = player;
+    this.spell = spell;
   }
 
   @Override

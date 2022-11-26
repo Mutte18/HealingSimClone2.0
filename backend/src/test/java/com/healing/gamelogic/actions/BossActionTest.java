@@ -3,17 +3,19 @@ package com.healing.gamelogic.actions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.healing.entity.*;
-import com.healing.spell.spellbook.FlashHeal;
+import com.healing.entity.attacks.MeleeSwing;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class BossActionTest {
   @Test
-  void shouldReduceTargetHealthWhenBossCastsSpellOnOneTarget() {
+  void shouldReduceTargetHealthWhenBossDoesAttackOnOneTarget() {
     var player = new Player(0, 100, true, 100);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
-    var action = new BossAction(boss, new ArrayList<>(List.of(player)), new FlashHeal(), "1");
+    var action =
+        new BossAction(
+            boss, new ArrayList<>(List.of(player)), new MeleeSwing("Melee Swing", 50), "1");
     action.performAction();
 
     assertEquals(50, player.getHealth());
@@ -27,7 +29,11 @@ public class BossActionTest {
     var boss = new Boss(1, 1000, true, "Defias Pillager");
 
     var action =
-        new BossAction(boss, new ArrayList<>(List.of(player, dps, healer)), new FlashHeal(), "1");
+        new BossAction(
+            boss,
+            new ArrayList<>(List.of(player, dps, healer)),
+            new MeleeSwing("Melee Swing", 50),
+            "1");
     action.performAction();
 
     assertEquals(50, player.getHealth());
@@ -39,7 +45,9 @@ public class BossActionTest {
   void shouldKillTargetWhenBossCastsDoubleSpells() {
     var player = new Player(0, 100, true, 100);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
-    var action = new BossAction(boss, new ArrayList<>(List.of(player)), new FlashHeal(), "1");
+    var action =
+        new BossAction(
+            boss, new ArrayList<>(List.of(player)), new MeleeSwing("Melee Swing", 100), "1");
     action.performAction();
     action.performAction();
 
@@ -54,7 +62,8 @@ public class BossActionTest {
 
     var boss = new Boss(1, 1000, true, "Defias Pillager");
     var action =
-        new BossAction(boss, new ArrayList<>(List.of(player, healer)), new FlashHeal(), "1");
+        new BossAction(
+            boss, new ArrayList<>(List.of(player, healer)), new MeleeSwing("Melee Swing", 50), "1");
     action.performAction();
     action.performAction();
 
