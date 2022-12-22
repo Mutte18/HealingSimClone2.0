@@ -2,7 +2,7 @@ package com.healing.gamelogic;
 
 import com.healing.entity.Boss;
 import com.healing.gamelogic.actions.Action;
-import lombok.SneakyThrows;
+import com.healing.state.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,17 +11,25 @@ public class Game implements Runnable {
   private static final long DELAY_PERIOD = 17;
   private final boolean gameRunning = true;
   private final RaiderHandler raiderHandler;
+  private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
-  private Boss boss;
+  private final StateService stateService;
 
   @Autowired
-  public Game(ActionsQueue actionsQueue, RaiderHandler raiderHandler) {
+  public Game(
+      ActionsQueue actionsQueue,
+      RaiderHandler raiderHandler,
+      BossHandler bossHandler,
+      StateService stateService) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
+    this.bossHandler = bossHandler;
+    this.stateService = stateService;
     System.out.println(actionsQueue + " Game");
-    this.boss = new Boss(0, 1000, true, "Defias Pillager");
     restartGame();
 
+    this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
+    stateService.printState();
     new Thread(this).start();
     new Thread(this::bossActionLoop).start();
     // new MainWindow(this);
@@ -33,11 +41,15 @@ public class Game implements Runnable {
 
   private void bossActionLoop() {
     while (this.gameRunning) {
-      // actionsQueue.addActionToQueue(new BossAction(boss, raiderHandler.getPlayer(), ))
+      try {
+        System.out.println(stateService.getState());
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
     }
   }
 
-  @SneakyThrows
   private void gameLoop() {
     while (this.gameRunning) {
       long beginTime = System.currentTimeMillis();
@@ -46,7 +58,11 @@ public class Game implements Runnable {
       long sleepTime = DELAY_PERIOD - timeTaken;
       processActionQueue();
       if (sleepTime >= 0) {
-        Thread.sleep(sleepTime);
+        try {
+          Thread.sleep(sleepTime);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -56,19 +72,11 @@ public class Game implements Runnable {
     gameLoop();
   }
 
-  void processActionQueue() {
+  private void processActionQueue() {
     var optionalAction = actionsQueue.getTopActionAndRemoveFromQueue();
     // Do stuff with action
     optionalAction.ifPresent(Action::performAction);
     // Every X timeunit, go through action queue and perform the actions
     // Then send state update to frontend
-  }
-
-  public RaidGroup getRaidGroup() {
-    return this.raiderHandler.getRaidGroup();
-  }
-
-  public Boss getCurrentBoss() {
-    return this.boss;
   }
 }

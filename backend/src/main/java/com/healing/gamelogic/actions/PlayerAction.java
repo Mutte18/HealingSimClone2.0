@@ -9,8 +9,8 @@ import lombok.Getter;
 @Getter
 public class PlayerAction extends Action {
 
-  private Player player;
-  private Spell spell;
+  private final Player player;
+  private final Spell spell;
 
   public PlayerAction(Player player, ArrayList<Entity> targets, Spell spell, String id) {
     super(player, targets, id);

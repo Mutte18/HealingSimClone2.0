@@ -1,28 +1,41 @@
 package com.healing.gamelogic;
 
-import static org.junit.Assert.assertEquals;
-
 import com.healing.entity.Boss;
 import com.healing.entity.Dps;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.gamelogic.actions.Action;
 import com.healing.gamelogic.actions.NPCAction;
+import com.healing.state.StateService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameTest {
-  RaiderHandler raiderHandler = new RaiderHandler();
-  ActionsQueue actionsQueue = new ActionsQueue();
+  RaiderHandler raiderHandler;
+  BossHandler bossHandler;
+  ActionsQueue actionsQueue;
+  StateService stateService;
+  Game game;
+
+  @BeforeEach
+  void setup() {
+    raiderHandler = new RaiderHandler();
+    bossHandler = new BossHandler();
+    actionsQueue = new ActionsQueue();
+    stateService = new StateService(bossHandler, raiderHandler);
+    game = new Game(actionsQueue, raiderHandler, bossHandler, stateService);
+  }
 
   @Test
   public void shouldProcessMultipleActions() throws InterruptedException {
-
     actionsQueue.addActionToQueue(getAction());
     actionsQueue.addActionToQueue(getAction());
     actionsQueue.addActionToQueue(getAction());
 
-    Game game = new Game(actionsQueue, raiderHandler);
     Thread.sleep(500);
 
     assertEquals(0, actionsQueue.size());

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("state")
 public class StateController {
 
-  private StateService stateService;
+  private final StateService stateService;
 
   @Autowired
   public StateController(StateService stateService) {
