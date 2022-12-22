@@ -1,7 +1,5 @@
 package com.healing.gamelogic;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.healing.entity.Dps;
 import com.healing.entity.Player;
 import com.healing.entity.attacks.MeleeSwing;
@@ -10,10 +8,13 @@ import com.healing.gamelogic.actions.NPCAction;
 import com.healing.gamelogic.actions.PlayerAction;
 import com.healing.spell.spellbook.FlashHeal;
 import com.healing.state.StateService;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameTest {
   RaiderHandler raiderHandler;
@@ -54,6 +55,7 @@ public class GameTest {
     for (var target : action.getTargets()) {
       assertEquals(target.getMaxHealth(), target.getHealth());
     }
+    assertEquals(900, action.getPlayer().getMana());
   }
 
   private Action getAction() {
@@ -65,7 +67,7 @@ public class GameTest {
         (Dps) dps, new ArrayList<>(List.of(boss)), new MeleeSwing("Melee Swing", 100), "1");
   }
 
-  private Action getPlayerHealAction() {
+  private PlayerAction getPlayerHealAction() {
     var player = raiderHandler.getPlayer().get();
     var target = raiderHandler.getRaidGroup().get(1);
     var secondTarget = raiderHandler.getRaidGroup().get(2);
