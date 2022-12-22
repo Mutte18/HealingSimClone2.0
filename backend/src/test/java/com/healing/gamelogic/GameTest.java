@@ -1,6 +1,5 @@
 package com.healing.gamelogic;
 
-import com.healing.entity.Boss;
 import com.healing.entity.Dps;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.gamelogic.actions.Action;
@@ -37,14 +36,16 @@ public class GameTest {
     actionsQueue.addActionToQueue(getAction());
 
     Thread.sleep(500);
+    stateService.printState();
 
     assertEquals(0, actionsQueue.size());
   }
 
   private Action getAction() {
-    var dps = new Dps(0, 100, true);
-    var boss = new Boss(1, 1000, true, "Defias Pillager");
-    return new NPCAction(
-        dps, new ArrayList<>(List.of(boss)), new MeleeSwing("Melee Swing", 100), "1");
+    //var dps = new Dps(0, 100, true);
+    //var boss = new Boss(1, 1000, true, "Defias Pillager");
+    var dps = raiderHandler.getDpsers().get(0);
+    var boss = bossHandler.getCurrentBoss();
+    return new NPCAction((Dps) dps, new ArrayList<>(List.of(boss)), new MeleeSwing("Melee Swing", 100), "1");
   }
 }

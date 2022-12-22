@@ -1,6 +1,8 @@
 package com.healing.state;
 
+import com.healing.entity.Boss;
 import com.healing.gamelogic.BossHandler;
+import com.healing.gamelogic.RaidGroup;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.state.model.StateModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +29,30 @@ public class StateService {
     var raidGroup = raiderHandler.getRaidGroup();
     var boss = bossHandler.getCurrentBoss();
 
+    printRaidGroupState(raidGroup);
+    System.out.println();
+    printBossState(boss);
+
+  }
+
+  private void printBossState(Boss boss) {
+    System.out.println("***Boss***");
+    System.out.println("{ " + boss.getName() + " HP: " + boss.getHealth() + "/" + boss.getMaxHealth() + " - " + getAliveText(boss.isAlive()) + " }");
+  }
+
+  private void printRaidGroupState(RaidGroup raidGroup) {
+    System.out.print("***Raiders***");
     for (int i = 0; i < raidGroup.size(); i++) {
+      var raider = raidGroup.get(i);
       if (i % 4 == 0) {
         System.out.println();
-        System.out.println();
       }
-      var raider = raidGroup.get(i);
-      System.out.print(" || ");
-      System.out.print(raider.getRole() + raider.getId() +
-              "- Health: " + raider.getHealth() + " / " + raider.getMaxHealth());
+      System.out.print(" [ " + raider.getRole() + raider.getId() +
+              " HP: " + raider.getHealth() + "/" + raider.getMaxHealth() + " - " + getAliveText(raider.isAlive()) + " ] ");
     }
+  }
+
+  private String getAliveText(Boolean isAlive) {
+    return isAlive ? "Alive" : "DEAD";
   }
 }
