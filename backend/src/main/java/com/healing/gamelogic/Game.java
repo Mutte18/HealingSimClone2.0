@@ -1,7 +1,6 @@
 package com.healing.gamelogic;
 
 import com.healing.entity.Boss;
-import com.healing.gamelogic.actions.Action;
 import com.healing.state.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,7 +28,6 @@ public class Game implements Runnable {
     restartGame();
 
     this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
-    stateService.printState();
     new Thread(this).start();
     new Thread(this::bossActionLoop).start();
     // new MainWindow(this);
@@ -75,7 +73,11 @@ public class Game implements Runnable {
   private void processActionQueue() {
     var optionalAction = actionsQueue.getTopActionAndRemoveFromQueue();
     // Do stuff with action
-    optionalAction.ifPresent(Action::performAction);
+    optionalAction.ifPresent(
+        action -> {
+          action.performAction();
+          stateService.printState();
+        });
     // Every X timeunit, go through action queue and perform the actions
     // Then send state update to frontend
   }

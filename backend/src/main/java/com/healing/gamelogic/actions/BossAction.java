@@ -23,12 +23,12 @@ public class BossAction extends Action {
 
     System.out.println(
         "Performed Boss Action, "
-            + boss
+            + boss.getName()
             + " casted "
             + npcAttack.getName()
             + " for "
             + npcAttack.getDamageAmount()
             + " damage on "
-            + targets);
+            + getTargetsInfo());
   }
 }

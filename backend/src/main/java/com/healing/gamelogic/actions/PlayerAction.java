@@ -28,10 +28,11 @@ public class PlayerAction extends Action {
     }
     System.out.println(
         "Performed action, "
-            + player
+            + player.getRole()
+            + player.getId()
             + " casted Spell: "
             + spell.getName()
             + " on Targets: "
-            + targets);
+            + getTargetsInfo());
   }
 }

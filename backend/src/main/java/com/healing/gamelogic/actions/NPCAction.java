@@ -3,7 +3,6 @@ package com.healing.gamelogic.actions;
 import com.healing.entity.Dps;
 import com.healing.entity.Entity;
 import com.healing.entity.attacks.NPCAttack;
-
 import java.util.ArrayList;
 
 public class NPCAction extends Action {
@@ -23,12 +22,13 @@ public class NPCAction extends Action {
     }
     System.out.println(
         "Performed NPC Action, "
-            + dps.getRole() + dps.getId()
+            + dps.getRole()
+            + dps.getId()
             + " casted "
             + npcAttack.getName()
             + " for "
             + npcAttack.getDamageAmount()
             + " damage on "
-            + targets);
+            + getTargetsInfo());
   }
 }

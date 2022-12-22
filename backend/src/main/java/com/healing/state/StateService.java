@@ -32,12 +32,20 @@ public class StateService {
     printRaidGroupState(raidGroup);
     System.out.println();
     printBossState(boss);
-
   }
 
   private void printBossState(Boss boss) {
     System.out.println("***Boss***");
-    System.out.println("{ " + boss.getName() + " HP: " + boss.getHealth() + "/" + boss.getMaxHealth() + " - " + getAliveText(boss.isAlive()) + " }");
+    System.out.println(
+        "{ "
+            + boss.getName()
+            + " HP: "
+            + boss.getHealth()
+            + "/"
+            + boss.getMaxHealth()
+            + " - "
+            + getAliveText(boss.isAlive())
+            + " }");
   }
 
   private void printRaidGroupState(RaidGroup raidGroup) {
@@ -47,8 +55,17 @@ public class StateService {
       if (i % 4 == 0) {
         System.out.println();
       }
-      System.out.print(" [ " + raider.getRole() + raider.getId() +
-              " HP: " + raider.getHealth() + "/" + raider.getMaxHealth() + " - " + getAliveText(raider.isAlive()) + " ] ");
+      System.out.print(
+          " [ "
+              + raider.getRole()
+              + raider.getId()
+              + " HP: "
+              + raider.getHealth()
+              + "/"
+              + raider.getMaxHealth()
+              + " - "
+              + getAliveText(raider.isAlive())
+              + " ] ");
     }
   }
 

@@ -2,11 +2,10 @@ package com.healing.gamelogic;
 
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class RaiderHandler {
@@ -32,6 +31,8 @@ public class RaiderHandler {
   }
 
   public List<Entity> getDpsers() {
-    return raidGroup.stream().filter(raider -> raider.getRole().equals("DPS")).collect(Collectors.toList());
+    return raidGroup.stream()
+        .filter(raider -> raider.getRole().equals("DPS"))
+        .collect(Collectors.toList());
   }
 }

@@ -19,4 +19,12 @@ public abstract class Action {
   }
 
   public abstract void performAction();
+
+  protected ArrayList<String> getTargetsInfo() {
+    var targetsInfoList = new ArrayList<String>();
+    for (var target : targets) {
+      targetsInfoList.add(target.getRole() + target.getId());
+    }
+    return targetsInfoList;
+  }
 }
