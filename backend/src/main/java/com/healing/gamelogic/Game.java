@@ -40,7 +40,8 @@ public class Game implements Runnable {
   private void bossActionLoop() {
     while (this.gameRunning) {
       try {
-        System.out.println(stateService.getState());
+        setBossFocusTarget();
+        actionsQueue.addActionToQueue(bossHandler.createBossAutoAttackAction());
         Thread.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -80,5 +81,13 @@ public class Game implements Runnable {
         });
     // Every X timeunit, go through action queue and perform the actions
     // Then send state update to frontend
+  }
+
+  private void setBossFocusTarget() {
+    var currentTarget = bossHandler.getCurrentBoss().getCurrentTarget();
+    if (currentTarget == null || !currentTarget.isAlive()) {
+      var newTarget = raiderHandler.getNewTarget();
+      newTarget.ifPresentOrElse(bossHandler::setNewTarget, () -> System.out.println("GAME OVER"));
+    }
   }
 }

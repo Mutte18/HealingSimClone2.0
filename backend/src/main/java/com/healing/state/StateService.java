@@ -45,6 +45,9 @@ public class StateService {
             + boss.getMaxHealth()
             + " - "
             + getAliveText(boss.isAlive())
+            + " Current Target:"
+            + boss.getCurrentTarget().getRole()
+            + boss.getCurrentTarget().getId()
             + " }");
   }
 

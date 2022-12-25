@@ -35,4 +35,26 @@ public class RaiderHandler {
         .filter(raider -> raider.getRole().equals("DPS"))
         .collect(Collectors.toList());
   }
+
+  public List<Entity> getTanks() {
+    return raidGroup.stream()
+        .filter(raider -> raider.getRole().equals("TANK"))
+        .collect(Collectors.toList());
+  }
+
+  public Optional<Entity> getNewTarget() {
+    var tankTarget =
+        raidGroup.stream()
+            .filter(raider -> raider.getRole().equals("TANK") && raider.isAlive())
+            .findAny();
+    if (tankTarget.isPresent()) {
+      return tankTarget;
+    } else {
+      var randomTarget = raidGroup.stream().filter(Entity::isAlive).findFirst();
+      if (randomTarget.isPresent()) {
+        return randomTarget;
+      }
+    }
+    return Optional.empty();
+  }
 }

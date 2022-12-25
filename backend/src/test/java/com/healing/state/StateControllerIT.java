@@ -37,5 +37,7 @@ public class StateControllerIT extends IntegrationTest {
             .findFirst()
             .get()
             .getHealth());
+
+    System.out.println(stateResponse.getState());
   }
 }
