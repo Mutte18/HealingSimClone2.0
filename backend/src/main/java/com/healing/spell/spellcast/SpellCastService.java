@@ -1,6 +1,5 @@
 package com.healing.spell.spellcast;
 
-import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.gamelogic.actions.PlayerAction;
@@ -31,11 +30,10 @@ public class SpellCastService {
     var spell = spellBook.getSpell(spellId);
     var target = raiderHandler.getRaiderById(Integer.parseInt(targetId));
 
-    if (player.isPresent() && spell.isPresent() && target.isPresent()) {
+    if (player != null && spell.isPresent() && target.isPresent()) {
       return (PlayerAction)
           actionsQueue.addActionToQueue(
-              new PlayerAction(
-                  (Player) player.get(), new ArrayList<>(List.of(target.get())), spell.get(), "1"));
+              new PlayerAction(player, new ArrayList<>(List.of(target.get())), spell.get(), "1"));
     }
     return null;
 

@@ -1,11 +1,10 @@
 package com.healing.gamelogic.actions;
 
 import com.healing.entity.Entity;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter

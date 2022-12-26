@@ -1,6 +1,9 @@
 package com.healing.state;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.healing.entity.Boss;
+import com.healing.entity.Player;
 import com.healing.gamelogic.BossHandler;
 import com.healing.gamelogic.RaidGroup;
 import com.healing.gamelogic.RaiderHandler;
@@ -12,11 +15,13 @@ import org.springframework.stereotype.Service;
 public class StateService {
   private final BossHandler bossHandler;
   private final RaiderHandler raiderHandler;
+  private final ObjectMapper mapper;
 
   @Autowired
   public StateService(BossHandler bossHandler, RaiderHandler raiderHandler) {
     this.bossHandler = bossHandler;
     this.raiderHandler = raiderHandler;
+    this.mapper = new ObjectMapper();
   }
 
   public StateModel getState() {
@@ -28,51 +33,47 @@ public class StateService {
   public void printState() {
     var raidGroup = raiderHandler.getRaidGroup();
     var boss = bossHandler.getCurrentBoss();
+    var player = raiderHandler.getPlayer();
 
     printRaidGroupState(raidGroup);
     System.out.println();
     printBossState(boss);
+    printPlayerState(player);
   }
 
   private void printBossState(Boss boss) {
-    System.out.println("***Boss***");
-    System.out.println(
-        "{ "
-            + boss.getName()
-            + " HP: "
-            + boss.getHealth()
-            + "/"
-            + boss.getMaxHealth()
-            + " - "
-            + getAliveText(boss.isAlive())
-            + " Current Target:"
-            + boss.getCurrentTarget().getRole()
-            + boss.getCurrentTarget().getId()
-            + " }");
-  }
-
-  private void printRaidGroupState(RaidGroup raidGroup) {
-    System.out.print("***Raiders***");
-    for (int i = 0; i < raidGroup.size(); i++) {
-      var raider = raidGroup.get(i);
-      if (i % 4 == 0) {
-        System.out.println();
-      }
-      System.out.print(
-          " [ "
-              + raider.getRole()
-              + raider.getId()
-              + " HP: "
-              + raider.getHealth()
-              + "/"
-              + raider.getMaxHealth()
-              + " - "
-              + getAliveText(raider.isAlive())
-              + " ] ");
+    System.out.println("***BOSS***");
+    try {
+      var json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(boss);
+      System.out.println(json);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
     }
   }
 
-  private String getAliveText(Boolean isAlive) {
-    return isAlive ? "Alive" : "DEAD";
+  private void printRaidGroupState(RaidGroup raidGroup) {
+    System.out.print("***RAIDERS***");
+    for (int i = 0; i < raidGroup.size(); i++) {
+      var raider = raidGroup.get(i);
+      if (i % 5 == 0) {
+        System.out.println();
+      }
+      try {
+        var json = mapper.writeValueAsString(raider);
+        System.out.println(json);
+      } catch (JsonProcessingException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void printPlayerState(Player player) {
+    System.out.println("***PLAYER***");
+    try {
+      var json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(player);
+      System.out.println(json);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
   }
 }

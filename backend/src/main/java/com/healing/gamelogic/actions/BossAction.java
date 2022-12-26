@@ -3,7 +3,6 @@ package com.healing.gamelogic.actions;
 import com.healing.entity.Boss;
 import com.healing.entity.Entity;
 import com.healing.entity.attacks.NPCAttack;
-
 import java.util.List;
 
 public class BossAction extends Action {

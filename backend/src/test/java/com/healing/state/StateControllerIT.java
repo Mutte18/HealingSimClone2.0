@@ -18,7 +18,7 @@ public class StateControllerIT extends IntegrationTest {
 
   @Test
   void shouldReturnCurrentState() throws Exception {
-    raiderHandler.getPlayer().get().reduceHealth(50);
+    raiderHandler.getPlayer().reduceHealth(50);
 
     var result =
         this.mockMvc

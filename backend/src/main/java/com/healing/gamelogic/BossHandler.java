@@ -5,10 +5,9 @@ import com.healing.entity.Entity;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.entity.attacks.specials.MassPyroblast;
 import com.healing.gamelogic.actions.BossAction;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BossHandler {
@@ -35,6 +34,7 @@ public class BossHandler {
   }
 
   public BossAction createBossAutoAttackAction() {
+    setBossFocusTarget();
     return new BossAction(
         currentBoss,
         new ArrayList<>(List.of(currentBoss.getCurrentTarget())),
@@ -44,6 +44,15 @@ public class BossHandler {
 
   public BossAction createBossSpecialAttackAction() {
     var specialAttack = new MassPyroblast();
-    return new BossAction(currentBoss, raiderHandler.getTargets(specialAttack.getMaxTargets()), specialAttack, "0");
+    return new BossAction(
+        currentBoss, raiderHandler.getTargets(specialAttack.getMaxTargets()), specialAttack, "0");
+  }
+
+  private void setBossFocusTarget() {
+    var currentTarget = currentBoss.getCurrentTarget();
+    if (currentTarget == null || !currentTarget.isAlive()) {
+      var newTarget = raiderHandler.getNewTarget();
+      newTarget.ifPresentOrElse(this::setNewTarget, () -> System.out.println("GAME OVER"));
+    }
   }
 }

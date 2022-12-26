@@ -1,12 +1,16 @@
 package com.healing.gamelogic;
 
+import com.healing.entity.Boss;
+import com.healing.entity.Dps;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
-import org.springframework.stereotype.Component;
-
+import com.healing.entity.attacks.MeleeSwing;
+import com.healing.gamelogic.actions.NPCAction;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class RaiderHandler {
@@ -23,8 +27,12 @@ public class RaiderHandler {
     return raidGroup.stream().filter(raider -> raider.getId() == id).findAny();
   }
 
-  public Optional<Entity> getPlayer() {
-    return raidGroup.stream().filter(player -> player.getClass() == Player.class).findAny();
+  public Player getPlayer() {
+    return (Player)
+        raidGroup.stream()
+            .filter(player -> player.getRole().equals("PLAYER"))
+            .findAny()
+            .orElse(null);
   }
 
   public RaidGroup getRaidGroup() {
@@ -60,6 +68,13 @@ public class RaiderHandler {
   }
 
   public List<Entity> getTargets(Integer nrOfTargets) {
-    return raidGroup.stream().filter(raider -> !raider.getRole().equals("TANK") && raider.isAlive()).limit(nrOfTargets).collect(Collectors.toList());
+    return raidGroup.stream()
+        .filter(raider -> !raider.getRole().equals("TANK") && raider.isAlive())
+        .limit(nrOfTargets)
+        .collect(Collectors.toList());
+  }
+
+  public NPCAction createDPSAutoAttackAction(Dps dps, Boss currentBoss) {
+    return new NPCAction(dps, new ArrayList<>(List.of(currentBoss)), new MeleeSwing(5), "0");
   }
 }
