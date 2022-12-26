@@ -1,7 +1,5 @@
 package com.healing.gamelogic;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.healing.entity.Dps;
 import com.healing.entity.Player;
 import com.healing.entity.attacks.MeleeSwing;
@@ -10,10 +8,13 @@ import com.healing.gamelogic.actions.NPCAction;
 import com.healing.gamelogic.actions.PlayerAction;
 import com.healing.spell.spellbook.FlashHeal;
 import com.healing.state.StateService;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameTest {
   RaiderHandler raiderHandler;
@@ -25,7 +26,7 @@ public class GameTest {
   @BeforeEach
   void setup() {
     raiderHandler = new RaiderHandler();
-    bossHandler = new BossHandler();
+    bossHandler = new BossHandler(raiderHandler);
     actionsQueue = new ActionsQueue();
     stateService = new StateService(bossHandler, raiderHandler);
     game = new Game(actionsQueue, raiderHandler, bossHandler, stateService);
@@ -61,7 +62,7 @@ public class GameTest {
     var dps = raiderHandler.getDpsers().get(0);
     var boss = bossHandler.getCurrentBoss();
     return new NPCAction(
-        (Dps) dps, new ArrayList<>(List.of(boss)), new MeleeSwing("Melee Swing", 100), "1");
+        (Dps) dps, new ArrayList<>(List.of(boss)), new MeleeSwing( 100), "1");
   }
 
   private PlayerAction getPlayerHealAction() {

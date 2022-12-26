@@ -2,7 +2,7 @@ package com.healing.entity.attacks;
 
 public class MeleeSwing extends NPCAttack {
 
-  public MeleeSwing(String name, Integer damageAmount) {
-    super(name, damageAmount, 1);
+  public MeleeSwing(Integer damageAmount) {
+    super("Melee Swing", damageAmount, 1);
   }
 }

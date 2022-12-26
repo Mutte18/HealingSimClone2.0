@@ -3,13 +3,14 @@ package com.healing.gamelogic.actions;
 import com.healing.entity.Boss;
 import com.healing.entity.Entity;
 import com.healing.entity.attacks.NPCAttack;
-import java.util.ArrayList;
+
+import java.util.List;
 
 public class BossAction extends Action {
   private final Boss boss;
   private final NPCAttack npcAttack;
 
-  public BossAction(Boss boss, ArrayList<Entity> targets, NPCAttack npcAttack, String id) {
+  public BossAction(Boss boss, List<Entity> targets, NPCAttack npcAttack, String id) {
     super(boss, targets, id);
     this.boss = boss;
     this.npcAttack = npcAttack;

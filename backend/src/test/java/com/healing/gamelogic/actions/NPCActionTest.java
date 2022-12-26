@@ -1,13 +1,14 @@
 package com.healing.gamelogic.actions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.healing.entity.Boss;
 import com.healing.entity.Dps;
 import com.healing.entity.attacks.MeleeSwing;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NPCActionTest {
   @Test
@@ -15,7 +16,7 @@ public class NPCActionTest {
     var dps = new Dps(0, 100, true);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
     var action =
-        new NPCAction(dps, new ArrayList<>(List.of(boss)), new MeleeSwing("Melee Swing", 50), "1");
+        new NPCAction(dps, new ArrayList<>(List.of(boss)), new MeleeSwing(50), "1");
     action.performAction();
 
     assertEquals(950, boss.getHealth());
@@ -28,7 +29,7 @@ public class NPCActionTest {
     var boss2 = new Boss(2, 750, true, "Defias Rogue");
     var action =
         new NPCAction(
-            dps, new ArrayList<>(List.of(boss, boss2)), new MeleeSwing("Melee Swing", 50), "1");
+            dps, new ArrayList<>(List.of(boss, boss2)), new MeleeSwing(50), "1");
     action.performAction();
 
     assertEquals(950, boss.getHealth());

@@ -1,12 +1,13 @@
 package com.healing.gamelogic.actions;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.healing.entity.*;
 import com.healing.entity.attacks.MeleeSwing;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BossActionTest {
   @Test
@@ -15,7 +16,7 @@ public class BossActionTest {
     var boss = new Boss(1, 1000, true, "Defias Pillager");
     var action =
         new BossAction(
-            boss, new ArrayList<>(List.of(player)), new MeleeSwing("Melee Swing", 50), "1");
+            boss, new ArrayList<>(List.of(player)), new MeleeSwing(50), "1");
     action.performAction();
 
     assertEquals(50, player.getHealth());
@@ -32,7 +33,7 @@ public class BossActionTest {
         new BossAction(
             boss,
             new ArrayList<>(List.of(player, dps, healer)),
-            new MeleeSwing("Melee Swing", 50),
+            new MeleeSwing(50),
             "1");
     action.performAction();
 
@@ -47,7 +48,7 @@ public class BossActionTest {
     var boss = new Boss(1, 1000, true, "Defias Pillager");
     var action =
         new BossAction(
-            boss, new ArrayList<>(List.of(player)), new MeleeSwing("Melee Swing", 100), "1");
+            boss, new ArrayList<>(List.of(player)), new MeleeSwing(100), "1");
     action.performAction();
     action.performAction();
 
@@ -63,7 +64,7 @@ public class BossActionTest {
     var boss = new Boss(1, 1000, true, "Defias Pillager");
     var action =
         new BossAction(
-            boss, new ArrayList<>(List.of(player, healer)), new MeleeSwing("Melee Swing", 50), "1");
+            boss, new ArrayList<>(List.of(player, healer)), new MeleeSwing(50), "1");
     action.performAction();
     action.performAction();
 

@@ -41,7 +41,8 @@ public class Game implements Runnable {
     while (this.gameRunning) {
       try {
         setBossFocusTarget();
-        actionsQueue.addActionToQueue(bossHandler.createBossAutoAttackAction());
+        //actionsQueue.addActionToQueue(bossHandler.createBossAutoAttackAction());
+        actionsQueue.addActionToQueue(bossHandler.createBossSpecialAttackAction());
         Thread.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
