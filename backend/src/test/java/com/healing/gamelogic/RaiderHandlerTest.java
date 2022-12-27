@@ -2,6 +2,7 @@ package com.healing.gamelogic;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.healing.entity.EntityRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,25 +18,25 @@ public class RaiderHandlerTest {
   @Test
   void shouldReturnTankAsNewTargetIfTankIsAlive() {
     var newTarget = raiderHandler.getNewTarget().get();
-    assertEquals("TANK", newTarget.getRole());
+    assertEquals(EntityRole.TANK, newTarget.getRole());
   }
 
   @Test
   void shouldReturnTankAsNewTargetWhenOnlyOneTankIsDead() {
-    var tanks = raiderHandler.getTanks();
+    var tanks = raiderHandler.getRaidersOfType(EntityRole.TANK);
     tanks.get(0).reduceHealth(999999);
     var newTarget = raiderHandler.getNewTarget().get();
-    assertEquals("TANK", newTarget.getRole());
+    assertEquals(EntityRole.TANK, newTarget.getRole());
   }
 
   @Test
   void shouldNotReturnATankWhenTanksAreDead() {
-    var tanks = raiderHandler.getTanks();
+    var tanks = raiderHandler.getRaidersOfType(EntityRole.TANK);
     tanks.get(0).reduceHealth(999999);
     tanks.get(1).reduceHealth(999999);
 
     var newTarget = raiderHandler.getNewTarget().get();
-    assertNotEquals("TANK", newTarget.getRole());
+    assertNotEquals(EntityRole.TANK, newTarget.getRole());
   }
 
   @Test

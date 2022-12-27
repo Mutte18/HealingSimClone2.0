@@ -2,6 +2,7 @@ package com.healing.state;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.healing.entity.EntityRole;
 import com.healing.gamelogic.Game;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.integration.IntegrationTest;
@@ -33,7 +34,7 @@ public class StateControllerIT extends IntegrationTest {
     Assertions.assertEquals(
         50,
         stateResponse.getState().getRaidGroup().stream()
-            .filter(raider -> raider.getRole().equals("PLAYER"))
+            .filter(raider -> raider.getRole().equals(EntityRole.PLAYER))
             .findFirst()
             .get()
             .getHealth());

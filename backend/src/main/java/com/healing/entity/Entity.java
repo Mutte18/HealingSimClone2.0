@@ -20,9 +20,9 @@ public abstract class Entity {
   private int health;
   private int maxHealth;
   private boolean alive;
-  private String role;
+  private EntityRole role;
 
-  public Entity(int id, int health, boolean alive, String role) {
+  public Entity(int id, int health, boolean alive, EntityRole role) {
     this.id = id;
     this.health = health;
     this.maxHealth = health;

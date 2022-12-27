@@ -2,6 +2,7 @@ package com.healing.gamelogic;
 
 import com.healing.entity.Boss;
 import com.healing.entity.Dps;
+import com.healing.entity.EntityRole;
 import com.healing.state.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -64,7 +65,27 @@ public class Game implements Runnable {
     while (this.gameRunning) {
       try {
         raiderHandler
-            .getDpsers()
+            .getRaidersOfType(EntityRole.DPS)
+            .forEach(
+                raider -> {
+                  if (raider.isAlive()) {
+                    actionsQueue.addActionToQueue(
+                        raiderHandler.createDPSAutoAttackAction(
+                            (Dps) raider, bossHandler.getCurrentBoss()));
+                  }
+                });
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void healerAutoHealLoop() {
+    while (this.gameRunning) {
+      try {
+        raiderHandler
+            .getRaidersOfType(EntityRole.HEALER)
             .forEach(
                 raider -> {
                   if (raider.isAlive()) {

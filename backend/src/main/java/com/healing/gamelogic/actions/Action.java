@@ -24,7 +24,7 @@ public abstract class Action {
   protected ArrayList<String> getTargetsInfo() {
     var targetsInfoList = new ArrayList<String>();
     for (var target : targets) {
-      targetsInfoList.add(target.getRole() + target.getId());
+      targetsInfoList.add(target.getRole().toString() + target.getId());
     }
     return targetsInfoList;
   }

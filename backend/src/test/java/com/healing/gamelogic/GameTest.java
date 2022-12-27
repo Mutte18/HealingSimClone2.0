@@ -3,6 +3,7 @@ package com.healing.gamelogic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.healing.entity.Dps;
+import com.healing.entity.EntityRole;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.gamelogic.actions.Action;
 import com.healing.gamelogic.actions.NPCAction;
@@ -55,7 +56,7 @@ public class GameTest {
   }
 
   private Action getAction() {
-    var dps = raiderHandler.getDpsers().get(0);
+    var dps = raiderHandler.getRaidersOfType(EntityRole.DPS).get(0);
     var boss = bossHandler.getCurrentBoss();
     return new NPCAction((Dps) dps, new ArrayList<>(List.of(boss)), new MeleeSwing(100), "1");
   }

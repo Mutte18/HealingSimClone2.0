@@ -1,9 +1,6 @@
 package com.healing.gamelogic;
 
-import com.healing.entity.Boss;
-import com.healing.entity.Dps;
-import com.healing.entity.Entity;
-import com.healing.entity.Player;
+import com.healing.entity.*;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.gamelogic.actions.NPCAction;
 import java.util.ArrayList;
@@ -30,7 +27,7 @@ public class RaiderHandler {
   public Player getPlayer() {
     return (Player)
         raidGroup.stream()
-            .filter(player -> player.getRole().equals("PLAYER"))
+            .filter(player -> player.getRole().equals(EntityRole.PLAYER))
             .findAny()
             .orElse(null);
   }
@@ -39,22 +36,16 @@ public class RaiderHandler {
     return this.raidGroup;
   }
 
-  public List<Entity> getDpsers() {
+  public List<Entity> getRaidersOfType(EntityRole role) {
     return raidGroup.stream()
-        .filter(raider -> raider.getRole().equals("DPS"))
-        .collect(Collectors.toList());
-  }
-
-  public List<Entity> getTanks() {
-    return raidGroup.stream()
-        .filter(raider -> raider.getRole().equals("TANK"))
+        .filter(raider -> raider.getRole().equals(role))
         .collect(Collectors.toList());
   }
 
   public Optional<Entity> getNewTarget() {
     var tankTarget =
         raidGroup.stream()
-            .filter(raider -> raider.getRole().equals("TANK") && raider.isAlive())
+            .filter(raider -> raider.getRole().equals(EntityRole.TANK) && raider.isAlive())
             .findAny();
     if (tankTarget.isPresent()) {
       return tankTarget;
@@ -69,7 +60,7 @@ public class RaiderHandler {
 
   public List<Entity> getTargets(Integer nrOfTargets) {
     return raidGroup.stream()
-        .filter(raider -> !raider.getRole().equals("TANK") && raider.isAlive())
+        .filter(raider -> !raider.getRole().equals(EntityRole.TANK) && raider.isAlive())
         .limit(nrOfTargets)
         .collect(Collectors.toList());
   }
