@@ -3,6 +3,7 @@ package com.healing.gamelogic;
 import com.healing.entity.Boss;
 import com.healing.entity.Dps;
 import com.healing.entity.EntityRole;
+import com.healing.entity.Healer;
 import com.healing.state.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Game implements Runnable {
   private static final long DELAY_PERIOD = 17;
-  private final boolean gameRunning = false;
+  private final boolean gameRunning = true;
   private final RaiderHandler raiderHandler;
   private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
@@ -31,8 +32,9 @@ public class Game implements Runnable {
     this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     new Thread(this).start();
     new Thread(this::bossAutoAttackActionLoop).start();
-    new Thread(this::bossSpecialAttackActionLoop).start();
+    //new Thread(this::bossSpecialAttackActionLoop).start();
     new Thread(this::dpsActionLoop).start();
+    new Thread(this::healerAutoHealLoop).start();
   }
 
   private void restartGame() {
@@ -87,14 +89,13 @@ public class Game implements Runnable {
         raiderHandler
             .getRaidersOfType(EntityRole.HEALER)
             .forEach(
-                raider -> {
-                  if (raider.isAlive()) {
+                healer -> {
+                  if (healer.isAlive()) {
                     actionsQueue.addActionToQueue(
-                        raiderHandler.createDPSAutoAttackAction(
-                            (Dps) raider, bossHandler.getCurrentBoss()));
+                        raiderHandler.createHealerAutoHealAction((Healer) healer));
                   }
                 });
-        Thread.sleep(2000);
+        Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

@@ -3,6 +3,7 @@ package com.healing.state;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.healing.entity.Boss;
+import com.healing.entity.EntityRole;
 import com.healing.entity.Player;
 import com.healing.gamelogic.BossHandler;
 import com.healing.gamelogic.RaidGroup;
@@ -65,6 +66,7 @@ public class StateService {
         e.printStackTrace();
       }
     }
+    printAliveRaidersCount(raidGroup);
   }
 
   private void printPlayerState(Player player) {
@@ -75,5 +77,21 @@ public class StateService {
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
+  }
+
+  private void printAliveRaidersCount(RaidGroup raidGroup) {
+    var aliveRaidersCount = raiderHandler.getAliveRaiders().size();
+    System.out.println("Raiders Alive: " + aliveRaidersCount + "/" + raidGroup.size());
+
+    printAliveRoleCount(EntityRole.DPS);
+    printAliveRoleCount(EntityRole.HEALER);
+    printAliveRoleCount(EntityRole.TANK);
+    printAliveRoleCount(EntityRole.PLAYER);
+  }
+
+  private void printAliveRoleCount(EntityRole entityRole) {
+    var aliveRoleCount = raiderHandler.getAliveRaiders().stream().filter(raider -> raider.getRole() == entityRole).count();
+    System.out.println(entityRole.toString() + " Alive: " + aliveRoleCount + "/" + raiderHandler.getRaidersOfType(entityRole).size());
+
   }
 }
