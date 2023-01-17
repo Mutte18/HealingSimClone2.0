@@ -4,12 +4,11 @@ import com.healing.entity.*;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.gamelogic.actions.NPCAction;
 import com.healing.gamelogic.actions.NPCHealerAction;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class RaiderHandler {
@@ -45,8 +44,7 @@ public class RaiderHandler {
   }
 
   public List<Entity> getAliveRaiders() {
-    return raidGroup.stream()
-            .filter(Entity::isAlive).collect(Collectors.toList());
+    return raidGroup.stream().filter(Entity::isAlive).collect(Collectors.toList());
   }
 
   public Optional<Entity> getNewTarget() {
@@ -75,6 +73,7 @@ public class RaiderHandler {
   public NPCAction createDPSAutoAttackAction(Dps dps, Boss currentBoss) {
     return new NPCAction(dps, new ArrayList<>(List.of(currentBoss)), new MeleeSwing(5), "0");
   }
+
   public NPCHealerAction createHealerAutoHealAction(Healer healer) {
     return new NPCHealerAction(healer, getAliveRaiders(), "0");
   }

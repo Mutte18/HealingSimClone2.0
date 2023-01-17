@@ -90,8 +90,15 @@ public class StateService {
   }
 
   private void printAliveRoleCount(EntityRole entityRole) {
-    var aliveRoleCount = raiderHandler.getAliveRaiders().stream().filter(raider -> raider.getRole() == entityRole).count();
-    System.out.println(entityRole.toString() + " Alive: " + aliveRoleCount + "/" + raiderHandler.getRaidersOfType(entityRole).size());
-
+    var aliveRoleCount =
+        raiderHandler.getAliveRaiders().stream()
+            .filter(raider -> raider.getRole() == entityRole)
+            .count();
+    System.out.println(
+        entityRole.toString()
+            + " Alive: "
+            + aliveRoleCount
+            + "/"
+            + raiderHandler.getRaidersOfType(entityRole).size());
   }
 }

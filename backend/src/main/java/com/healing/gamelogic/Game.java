@@ -32,7 +32,7 @@ public class Game implements Runnable {
     this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     new Thread(this).start();
     new Thread(this::bossAutoAttackActionLoop).start();
-    //new Thread(this::bossSpecialAttackActionLoop).start();
+    // new Thread(this::bossSpecialAttackActionLoop).start();
     new Thread(this::dpsActionLoop).start();
     new Thread(this::healerAutoHealLoop).start();
   }

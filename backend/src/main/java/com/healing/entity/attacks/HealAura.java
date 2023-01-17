@@ -1,4 +1,3 @@
 package com.healing.entity.attacks;
 
-public class HealAura {
-}
+public class HealAura {}
