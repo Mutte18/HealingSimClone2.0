@@ -8,6 +8,9 @@ import com.healing.state.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+import java.time.Instant;
+
 @Component
 public class Game implements Runnable {
   private static final long DELAY_PERIOD = 17;
@@ -16,6 +19,8 @@ public class Game implements Runnable {
   private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
   private final StateService stateService;
+  private int ticks = 0;
+  private int secondsElapsed;
 
   @Autowired
   public Game(
@@ -103,19 +108,61 @@ public class Game implements Runnable {
   }
 
   private void gameLoop() {
+    Instant startTime = Instant.now();
+
+
+    long lastime = System.nanoTime();
+    double AmountOfTicks = 60;
+    double ns = 1000000000 / AmountOfTicks;
+    double delta = 0;
+    int frames = 0;
+    double time = System.currentTimeMillis();
+
     while (this.gameRunning) {
-      long beginTime = System.currentTimeMillis();
+
+      /*long beginTime = System.currentTimeMillis();
 
       long timeTaken = System.currentTimeMillis() - beginTime;
       long sleepTime = DELAY_PERIOD - timeTaken;
-      processActionQueue();
+      ticks++;
+      if (ticks >= 58) {
+        var timeTo60 = Duration.between(startTime, Instant.now());
+        System.out.println("TIIIIIME " + timeTo60);
+        ticks = 0;
+        secondsElapsed++;
+        System.out.println("Seconds elapsed: " + secondsElapsed);
+        startTime = Instant.now();
+        //System.out.println(ticks);
+      //processActionQueue();
+      }
+
       if (sleepTime >= 0) {
         try {
           Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
+      }*/
+
+      long now = System.nanoTime();
+      delta += (now - lastime) / ns;
+      lastime = now;
+      if(delta >= 1) {
+        frames++;
+        delta--;
+        if (System.currentTimeMillis() - time >= 1000) {
+          System.out.println("fps:" + frames);
+          time += 1000;
+          secondsElapsed++;
+          System.out.println("Seconds Elapsed " + secondsElapsed);
+          frames = 0;
+        }
       }
+
+      // https://www.reddit.com/r/learnprogramming/comments/o2aet5/i_cant_understand_the_notch_game_loop_java/
+
+
+
     }
   }
 
@@ -131,7 +178,7 @@ public class Game implements Runnable {
       optionalAction.ifPresent(
           action -> {
             action.performAction();
-            stateService.printState();
+            //stateService.printState();
           });
       // Every X timeunit, go through action queue and perform the actions
       // Then send state update to frontend
