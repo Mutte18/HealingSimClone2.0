@@ -1,7 +1,7 @@
 # HoTs
 * Create spells that add HoTs to raiders
-* Build support that removes HoTs after X seconds
-* Build support so that HoTs heal every X seconds
+* ~~Build support that removes HoTs after X seconds~~
+* ~~Build support so that HoTs heal every X seconds~~
 
 # SpellCasting
 * Look into use seconds elapsed for spell casting

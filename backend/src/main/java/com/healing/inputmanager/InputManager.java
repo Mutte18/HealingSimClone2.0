@@ -1,13 +1,13 @@
 package com.healing.inputmanager;
 
-import com.healing.gamelogic.Game;
+import com.healing.state.StateService;
 import java.awt.event.KeyEvent;
 
 public class InputManager implements java.awt.event.KeyListener {
-  private final Game game;
+  private final StateService stateService;
 
-  public InputManager(Game game) {
-    this.game = game;
+  public InputManager(StateService stateService) {
+    this.stateService = stateService;
   }
 
   @Override
@@ -15,8 +15,11 @@ public class InputManager implements java.awt.event.KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_X) {
-      game.printState();
+    switch (e.getKeyCode()) {
+      case KeyEvent.VK_A -> stateService.printState("all");
+      case KeyEvent.VK_P -> stateService.printState("player");
+      case KeyEvent.VK_R -> stateService.printState("raid");
+      case KeyEvent.VK_B -> stateService.printState("boss");
     }
   }
 

@@ -31,18 +31,25 @@ public class StateService {
     return new StateModel(boss, raidGroup);
   }
 
-  public void printState() {
+  public void printState(String state) {
     var raidGroup = raiderHandler.getRaidGroup();
     var boss = bossHandler.getCurrentBoss();
     var player = raiderHandler.getPlayer();
 
-    /*printRaidGroupState(raidGroup);
-    System.out.println();
-    printBossState(boss);*/
-    printPlayerState(player);
+    switch (state) {
+      case "all" -> {
+        printRaidGroupState(raidGroup);
+        System.out.println();
+        printBossState(boss);
+        printPlayerState(player);
+      }
+      case "player" -> printPlayerState(player);
+      case "boss" -> printBossState(boss);
+      case "raid" -> printRaidGroupState(raidGroup);
+    }
   }
 
-  private void printBossState(Boss boss) {
+  public void printBossState(Boss boss) {
     System.out.println("***BOSS***");
     try {
       var json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(boss);

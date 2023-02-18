@@ -20,6 +20,7 @@ public class GameTest {
   BossHandler bossHandler;
   ActionsQueue actionsQueue;
   StateService stateService;
+  GameLoopHelper gameLoopHelper;
   Game game;
 
   @BeforeEach
@@ -28,7 +29,8 @@ public class GameTest {
     bossHandler = new BossHandler(raiderHandler);
     actionsQueue = new ActionsQueue();
     stateService = new StateService(bossHandler, raiderHandler);
-    game = new Game(actionsQueue, raiderHandler, bossHandler, stateService);
+    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler);
+    game = new Game(actionsQueue, raiderHandler, bossHandler, stateService, gameLoopHelper);
   }
 
   @Test

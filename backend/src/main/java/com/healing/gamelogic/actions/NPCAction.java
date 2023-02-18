@@ -20,15 +20,17 @@ public class NPCAction extends Action {
     for (var target : targets) {
       target.reduceHealth(npcAttack.getDamageAmount());
     }
-    System.out.println(
-        "Performed NPC Action, "
-            + dps.getRole()
-            + dps.getId()
-            + " casted "
-            + npcAttack.getName()
-            + " for "
-            + npcAttack.getDamageAmount()
-            + " damage on "
-            + getTargetsInfo());
+    /*System.out.println(
+       "Performed NPC Action, "
+           + dps.getRole()
+           + dps.getId()
+           + " casted "
+           + npcAttack.getName()
+           + " for "
+           + npcAttack.getDamageAmount()
+           + " damage on "
+           + getTargetsInfo());
+
+    */
   }
 }
