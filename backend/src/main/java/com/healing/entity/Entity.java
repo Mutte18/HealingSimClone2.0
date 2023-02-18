@@ -2,8 +2,12 @@ package com.healing.entity;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.healing.buff.Buff;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +25,7 @@ public abstract class Entity {
   private int maxHealth;
   private boolean alive;
   private EntityRole role;
+  private List<Buff> buffs;
 
   public Entity(int id, int health, boolean alive, EntityRole role) {
     this.id = id;
@@ -28,6 +33,7 @@ public abstract class Entity {
     this.maxHealth = health;
     this.alive = alive;
     this.role = role;
+    this.buffs = new ArrayList<>();
   }
 
   public void increaseHealth(int updateHealthValue) {

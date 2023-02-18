@@ -1,15 +1,16 @@
 package com.healing.gamelogic;
 
-import com.healing.entity.Boss;
-import com.healing.entity.Dps;
-import com.healing.entity.EntityRole;
-import com.healing.entity.Healer;
+import com.healing.buff.Renew;
+import com.healing.entity.*;
+import com.healing.gui.MainWindow;
 import com.healing.state.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Component
 public class Game implements Runnable {
@@ -20,7 +21,18 @@ public class Game implements Runnable {
   private final ActionsQueue actionsQueue;
   private final StateService stateService;
   private int ticks = 0;
-  private int secondsElapsed;
+  private double secondsElapsed;
+
+  /**
+   * Time keeping variables
+   */
+  private long lasttime = System.nanoTime();
+  private double AmountOfTicks = 60;
+  private double ns = 1000000000 / AmountOfTicks;
+  private double delta = 0;
+  private int frames = 0;
+  private double time = System.currentTimeMillis();
+  private int tenthOfSecond = 0;
 
   @Autowired
   public Game(
@@ -36,10 +48,11 @@ public class Game implements Runnable {
 
     this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     new Thread(this).start();
-    new Thread(this::bossAutoAttackActionLoop).start();
+    new MainWindow(this);
+    //new Thread(this::bossAutoAttackActionLoop).start();
     // new Thread(this::bossSpecialAttackActionLoop).start();
-    new Thread(this::dpsActionLoop).start();
-    new Thread(this::healerAutoHealLoop).start();
+    //new Thread(this::dpsActionLoop).start();
+    //new Thread(this::healerAutoHealLoop).start();
   }
 
   private void restartGame() {
@@ -110,15 +123,13 @@ public class Game implements Runnable {
   private void gameLoop() {
     Instant startTime = Instant.now();
 
-
-    long lastime = System.nanoTime();
-    double AmountOfTicks = 60;
-    double ns = 1000000000 / AmountOfTicks;
-    double delta = 0;
-    int frames = 0;
-    double time = System.currentTimeMillis();
+    raiderHandler.getPlayer().getBuffs().add(new Renew());
+    raiderHandler.getPlayer().getBuffs().add(new Renew());
+    raiderHandler.getPlayer().setMaxHealth(1000);
 
     while (this.gameRunning) {
+      processTime();
+      processActionQueue();
 
       /*long beginTime = System.currentTimeMillis();
 
@@ -133,7 +144,7 @@ public class Game implements Runnable {
         System.out.println("Seconds elapsed: " + secondsElapsed);
         startTime = Instant.now();
         //System.out.println(ticks);
-      //processActionQueue();
+      //
       }
 
       if (sleepTime >= 0) {
@@ -144,26 +155,50 @@ public class Game implements Runnable {
         }
       }*/
 
-      long now = System.nanoTime();
-      delta += (now - lastime) / ns;
-      lastime = now;
-      if(delta >= 1) {
-        frames++;
-        delta--;
-        if (System.currentTimeMillis() - time >= 1000) {
-          System.out.println("fps:" + frames);
-          time += 1000;
-          secondsElapsed++;
-          System.out.println("Seconds Elapsed " + secondsElapsed);
-          frames = 0;
-        }
-      }
+
 
       // https://www.reddit.com/r/learnprogramming/comments/o2aet5/i_cant_understand_the_notch_game_loop_java/
 
 
 
     }
+  }
+
+  private void processTime() {
+    long now = System.nanoTime();
+    delta += (now - lasttime) / ns;
+    lasttime = now;
+    if(delta >= 1) {
+      frames++;
+      delta--;
+
+      var elapsedTime = System.currentTimeMillis() - time;
+      if (elapsedTime >= 100) {
+        time += 100;
+        tenthOfSecond++;
+
+        processBuffs(1);
+        cleanUpExpiredBuffs();
+
+      } else if (tenthOfSecond == 10) {
+        frames = 0;
+        tenthOfSecond = 0;
+      }
+    }
+  }
+
+  private void processBuffs(int timeIncrease) {
+    var raiders = raiderHandler.getAliveRaiders();
+    raiders.forEach(raider -> raider.getBuffs().forEach(buff -> {
+      buff.addAction(raider, actionsQueue);
+      buff.incrementTimeElapsed(timeIncrease);
+    }));
+  }
+
+  private void cleanUpExpiredBuffs() {
+    raiderHandler.getRaidGroup().forEach(raider -> raider.setBuffs(
+            raider.getBuffs().stream().filter(
+                    buff -> !buff.isExpired()).collect(Collectors.toList())));
   }
 
   @Override
@@ -183,5 +218,9 @@ public class Game implements Runnable {
       // Every X timeunit, go through action queue and perform the actions
       // Then send state update to frontend
     }
+  }
+
+  public void printState() {
+    stateService.printState();
   }
 }

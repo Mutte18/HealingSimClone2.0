@@ -36,9 +36,9 @@ public class StateService {
     var boss = bossHandler.getCurrentBoss();
     var player = raiderHandler.getPlayer();
 
-    printRaidGroupState(raidGroup);
+    /*printRaidGroupState(raidGroup);
     System.out.println();
-    printBossState(boss);
+    printBossState(boss);*/
     printPlayerState(player);
   }
 

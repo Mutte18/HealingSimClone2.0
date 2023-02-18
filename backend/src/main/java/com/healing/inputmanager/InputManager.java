@@ -15,7 +15,9 @@ public class InputManager implements java.awt.event.KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_X) {}
+    if (e.getKeyCode() == KeyEvent.VK_X) {
+      game.printState();
+    }
   }
 
   @Override
