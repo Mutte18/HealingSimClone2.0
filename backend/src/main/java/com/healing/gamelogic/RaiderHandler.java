@@ -77,4 +77,8 @@ public class RaiderHandler {
   public NPCHealerAction createHealerAutoHealAction(Healer healer) {
     return new NPCHealerAction(healer, getAliveRaiders(), "0");
   }
+
+  void killAllRaiders() {
+    raidGroup.forEach(raider -> raider.reduceHealth(999999));
+  }
 }

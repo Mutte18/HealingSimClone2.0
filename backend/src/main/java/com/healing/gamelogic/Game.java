@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Game implements Runnable {
-  private final boolean gameRunning = true;
+  private boolean gameRunning = true;
   private final RaiderHandler raiderHandler;
   private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
@@ -39,7 +39,6 @@ public class Game implements Runnable {
     this.stateService = stateService;
     this.gameLoopHelper = gameLoopHelper;
 
-    this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     new MainWindow(stateService);
     restartGame();
     new Thread(this).start();
@@ -52,6 +51,7 @@ public class Game implements Runnable {
 
   private void restartGame() {
     raiderHandler.resetRaidGroup();
+    this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
   }
 
   private void gameLoop() {
@@ -63,11 +63,11 @@ public class Game implements Runnable {
       processTime();
       gameLoopHelper.processActionLoops();
       processActionQueue();
-      // https://www.reddit.com/r/learnprogramming/comments/o2aet5/i_cant_understand_the_notch_game_loop_java/
     }
   }
 
   private void processTime() {
+    // https://www.reddit.com/r/learnprogramming/comments/o2aet5/i_cant_understand_the_notch_game_loop_java/
     long now = System.nanoTime();
     double amountOfTicks = 60;
     double ns = 1000000000 / amountOfTicks;
@@ -123,5 +123,9 @@ public class Game implements Runnable {
       var optionalAction = actionsQueue.getTopActionAndRemoveFromQueue();
       optionalAction.ifPresent(Action::performAction);
     }
+  }
+
+  void toggleIsRunning(boolean isRunning) {
+    this.gameRunning = isRunning;
   }
 }

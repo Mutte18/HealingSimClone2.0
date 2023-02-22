@@ -46,4 +46,10 @@ public class RaiderHandlerTest {
 
     assertTrue(newTarget.isEmpty());
   }
+
+  @Test
+  void shouldReturnThreeAliveTargetsThatAreNotTanks() {
+    var targets = raiderHandler.getTargets(3);
+    assertEquals(3, targets.size());
+  }
 }

@@ -1,5 +1,6 @@
 package com.healing.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ public class Boss extends Entity {
   private String name;
   private Entity currentTarget;
 
+  @Builder
   public Boss(int id, int health, boolean alive, String name) {
     super(id, health, alive, EntityRole.BOSS);
     this.name = name;

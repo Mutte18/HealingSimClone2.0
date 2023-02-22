@@ -43,7 +43,8 @@ public class GameLoopHelper {
         && secondsElapsed > 0
         && !bossAutoLoopExecutions.contains(secondsElapsed)) {
       bossAutoLoopExecutions.add(secondsElapsed);
-      actionsQueue.addActionToQueue(bossHandler.createBossAutoAttackAction());
+      var bossAction = bossHandler.createBossAutoAttackAction();
+      bossAction.ifPresent(actionsQueue::addActionToQueue);
     }
   }
 

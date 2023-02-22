@@ -31,6 +31,7 @@ public class GameTest {
     stateService = new StateService(bossHandler, raiderHandler);
     gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler);
     game = new Game(actionsQueue, raiderHandler, bossHandler, stateService, gameLoopHelper);
+    game.toggleIsRunning(false);
   }
 
   @Test
