@@ -53,7 +53,8 @@ public class BossHandlerTest {
 
   @Test
   void currentTargetShouldBeNullWhenNoRaiderIsAlive() {
-    bossHandler.createNewBoss(Boss.builder().id(0).health(1000).alive(true).name("Defias Pillager").build());
+    bossHandler.createNewBoss(
+        Boss.builder().id(0).health(1000).alive(true).name("Defias Pillager").build());
 
     raiderHandler.resetRaidGroup();
     raiderHandler.killAllRaiders();

@@ -1,16 +1,17 @@
 package com.healing.buff;
 
+import com.healing.config.TimeKeeping;
 import com.healing.entity.Entity;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.actions.HoTAction;
 
 public class Renew extends Buff {
-  private static final int duration = 10 * TENTH_OF_SECOND;
-  private static final double interval = 1.5 * TENTH_OF_SECOND;
+  private static final int duration = 10 * TimeKeeping.TENTH_OF_SECOND;
+  private static final double interval = 1.5 * TimeKeeping.TENTH_OF_SECOND;
   private static final int healAmount = 45;
 
   public Renew() {
-    super(duration);
+    super(duration, interval);
   }
 
   @Override

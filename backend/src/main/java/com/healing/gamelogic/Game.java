@@ -2,10 +2,8 @@ package com.healing.gamelogic;
 
 import com.healing.buff.Renew;
 import com.healing.entity.Boss;
-import com.healing.gamelogic.actions.Action;
 import com.healing.gui.MainWindow;
 import com.healing.state.StateService;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +15,7 @@ public class Game implements Runnable {
   private final ActionsQueue actionsQueue;
   private final StateService stateService;
   private final GameLoopHelper gameLoopHelper;
+  private final BuffHandler buffHandler;
 
   /** Time keeping variables */
   private long lasttime = System.nanoTime();
@@ -32,12 +31,14 @@ public class Game implements Runnable {
       RaiderHandler raiderHandler,
       BossHandler bossHandler,
       StateService stateService,
-      GameLoopHelper gameLoopHelper) {
+      GameLoopHelper gameLoopHelper,
+      BuffHandler buffHandler) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;
     this.stateService = stateService;
     this.gameLoopHelper = gameLoopHelper;
+    this.buffHandler = buffHandler;
 
     new MainWindow(stateService);
     restartGame();
@@ -62,7 +63,7 @@ public class Game implements Runnable {
     while (this.gameRunning) {
       processTime();
       gameLoopHelper.processActionLoops();
-      processActionQueue();
+      actionsQueue.processActionQueue();
     }
   }
 
@@ -83,45 +84,14 @@ public class Game implements Runnable {
         time += 100;
         tenthOfSecond++;
 
-        processBuffs(1);
-        cleanUpExpiredBuffs();
+        buffHandler.processBuffs(1);
+        buffHandler.cleanUpExpiredBuffs();
 
       } else if (tenthOfSecond == 10) {
         frames = 0;
         tenthOfSecond = 0;
         gameLoopHelper.incrementSecondsElapsed();
       }
-    }
-  }
-
-  private void processBuffs(int timeIncrease) {
-    var raiders = raiderHandler.getAliveRaiders();
-    raiders.forEach(
-        raider ->
-            raider
-                .getBuffs()
-                .forEach(
-                    buff -> {
-                      buff.addAction(raider, actionsQueue);
-                      buff.incrementTimeElapsed(timeIncrease);
-                    }));
-  }
-
-  private void cleanUpExpiredBuffs() {
-    raiderHandler
-        .getRaidGroup()
-        .forEach(
-            raider ->
-                raider.setBuffs(
-                    raider.getBuffs().stream()
-                        .filter(buff -> !buff.isExpired())
-                        .collect(Collectors.toList())));
-  }
-
-  void processActionQueue() {
-    while (actionsQueue.size() > 0) {
-      var optionalAction = actionsQueue.getTopActionAndRemoveFromQueue();
-      optionalAction.ifPresent(Action::performAction);
     }
   }
 

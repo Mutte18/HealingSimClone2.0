@@ -18,4 +18,11 @@ public class ActionsQueue extends ArrayList<Action> {
     optionalAction.ifPresent(this::remove);
     return optionalAction;
   }
+
+  public void processActionQueue() {
+    while (this.size() > 0) {
+      var optionalAction = getTopActionAndRemoveFromQueue();
+      optionalAction.ifPresent(Action::performAction);
+    }
+  }
 }

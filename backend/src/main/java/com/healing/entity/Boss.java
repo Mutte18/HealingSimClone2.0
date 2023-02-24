@@ -15,4 +15,7 @@ public class Boss extends Entity {
     super(id, health, alive, EntityRole.BOSS);
     this.name = name;
   }
+
+  @Override
+  public void tick(Integer secondsElapsed) {}
 }

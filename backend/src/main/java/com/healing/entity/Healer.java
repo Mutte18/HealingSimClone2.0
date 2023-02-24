@@ -4,4 +4,7 @@ public class Healer extends Entity {
   public Healer(int id, int health, boolean alive) {
     super(id, health, alive, EntityRole.HEALER);
   }
+
+  @Override
+  public void tick(Integer secondsElapsed) {}
 }

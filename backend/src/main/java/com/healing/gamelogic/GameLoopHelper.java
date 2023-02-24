@@ -29,6 +29,7 @@ public class GameLoopHelper {
   public void incrementSecondsElapsed() {
     secondsElapsed++;
     clearAutoLoopExecutions();
+    raiderHandler.getRaidGroup().forEach(raider -> raider.tick(secondsElapsed));
   }
 
   public void processActionLoops() {
