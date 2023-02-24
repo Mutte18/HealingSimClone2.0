@@ -62,7 +62,6 @@ public class Game implements Runnable {
 
     while (this.gameRunning) {
       processTime();
-      gameLoopHelper.processActionLoops();
       actionsQueue.processActionQueue();
     }
   }
@@ -90,7 +89,9 @@ public class Game implements Runnable {
       } else if (tenthOfSecond == 10) {
         frames = 0;
         tenthOfSecond = 0;
-        gameLoopHelper.incrementSecondsElapsed();
+        gameLoopHelper.incrementSecondsElapsed(1);
+        gameLoopHelper.processActionLoops();
+
       }
     }
   }
