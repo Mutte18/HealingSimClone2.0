@@ -16,5 +16,6 @@ public class SpellBook extends ArrayList<Spell> {
 
   private void addSpells() {
     this.add(new FlashHeal());
+    this.add(new Renew());
   }
 }

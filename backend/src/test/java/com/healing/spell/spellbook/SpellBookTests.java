@@ -9,6 +9,6 @@ public class SpellBookTests {
   @Test
   void createNewSpellBook_ContainsUniqueSpells() {
     SpellBook spellBook = new SpellBook();
-    assertEquals(1, spellBook.size());
+    assertEquals(2, spellBook.size());
   }
 }

@@ -4,6 +4,7 @@ import com.healing.buff.Renew;
 import com.healing.entity.Boss;
 import com.healing.gui.MainWindow;
 import com.healing.state.StateService;
+import java.awt.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +41,9 @@ public class Game implements Runnable {
     this.gameLoopHelper = gameLoopHelper;
     this.buffHandler = buffHandler;
 
-    new MainWindow(stateService);
+    if (!GraphicsEnvironment.isHeadless()) {
+      new MainWindow(stateService);
+    }
     restartGame();
     new Thread(this).start();
   }
@@ -89,9 +92,7 @@ public class Game implements Runnable {
       } else if (tenthOfSecond == 10) {
         frames = 0;
         tenthOfSecond = 0;
-        gameLoopHelper.incrementSecondsElapsed(1);
-        gameLoopHelper.processActionLoops();
-
+        gameLoopHelper.tick(1);
       }
     }
   }

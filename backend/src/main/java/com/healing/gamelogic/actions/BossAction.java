@@ -4,15 +4,20 @@ import com.healing.entity.Boss;
 import com.healing.entity.Entity;
 import com.healing.entity.attacks.NPCAttack;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class BossAction extends Action {
   private final Boss boss;
   private final NPCAttack npcAttack;
+  private final ActionType actionType;
 
-  public BossAction(Boss boss, List<Entity> targets, NPCAttack npcAttack, String id) {
+  public BossAction(
+      Boss boss, List<Entity> targets, NPCAttack npcAttack, String id, ActionType actionType) {
     super(boss, targets, id);
     this.boss = boss;
     this.npcAttack = npcAttack;
+    this.actionType = actionType;
   }
 
   @Override

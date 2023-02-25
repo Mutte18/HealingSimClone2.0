@@ -19,7 +19,7 @@ import lombok.Setter;
   @JsonSubTypes.Type(value = Tank.class, name = "tank")
 })
 public abstract class Entity {
-  private int id;
+  private String id;
   private int health;
   private int maxHealth;
   private boolean alive;
@@ -27,7 +27,7 @@ public abstract class Entity {
   private List<Buff> buffs;
 
   public Entity(int id, int health, boolean alive, EntityRole role) {
-    this.id = id;
+    this.id = role.name() + id;
     this.health = health;
     this.maxHealth = health;
     this.alive = alive;

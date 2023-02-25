@@ -1,5 +1,6 @@
 package com.healing.gamelogic.actions;
 
+import static com.healing.gamelogic.actions.ActionType.NORMAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.healing.entity.*;
@@ -13,7 +14,8 @@ public class BossActionTest {
   void shouldReduceTargetHealthWhenBossDoesAttackOnOneTarget() {
     var player = new Player(0, 100, true, 100);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
-    var action = new BossAction(boss, new ArrayList<>(List.of(player)), new MeleeSwing(50), "1");
+    var action =
+        new BossAction(boss, new ArrayList<>(List.of(player)), new MeleeSwing(50), "1", NORMAL);
     action.performAction();
 
     assertEquals(50, player.getHealth());
@@ -28,7 +30,7 @@ public class BossActionTest {
 
     var action =
         new BossAction(
-            boss, new ArrayList<>(List.of(player, dps, healer)), new MeleeSwing(50), "1");
+            boss, new ArrayList<>(List.of(player, dps, healer)), new MeleeSwing(50), "1", NORMAL);
     action.performAction();
 
     assertEquals(50, player.getHealth());
@@ -40,7 +42,8 @@ public class BossActionTest {
   void shouldKillTargetWhenBossCastsDoubleSpells() {
     var player = new Player(0, 100, true, 100);
     var boss = new Boss(1, 1000, true, "Defias Pillager");
-    var action = new BossAction(boss, new ArrayList<>(List.of(player)), new MeleeSwing(100), "1");
+    var action =
+        new BossAction(boss, new ArrayList<>(List.of(player)), new MeleeSwing(100), "1", NORMAL);
     action.performAction();
     action.performAction();
 
@@ -55,7 +58,8 @@ public class BossActionTest {
 
     var boss = new Boss(1, 1000, true, "Defias Pillager");
     var action =
-        new BossAction(boss, new ArrayList<>(List.of(player, healer)), new MeleeSwing(50), "1");
+        new BossAction(
+            boss, new ArrayList<>(List.of(player, healer)), new MeleeSwing(50), "1", NORMAL);
     action.performAction();
     action.performAction();
 

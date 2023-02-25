@@ -1,10 +1,19 @@
 package com.healing.spellcast;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
+import com.healing.spell.exceptions.InvalidSpellNameException;
+import com.healing.spell.exceptions.NoTargetException;
+import com.healing.spell.spellbook.FlashHeal;
+import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.SpellCastService;
+import java.util.Optional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SpellCastServiceTest {
 
@@ -22,5 +31,47 @@ public class SpellCastServiceTest {
     raiderHandler.resetRaidGroup();
 
     spellCastService = new SpellCastService(actionsQueue, spellBook, raiderHandler);
+  }
+
+  @Test
+  void castingSpellWithTargetIdShouldAddAnActionWithCorrectTarget() throws NoTargetException {
+    var spell = spellBook.get(0);
+    spellCastService.castSpell(spell.getSpellId(), "DPS0");
+    var expectedTarget = raiderHandler.getRaiderById("DPS0").get();
+    var actualTarget = actionsQueue.get(0).getTargets().get(0);
+
+    assertEquals(expectedTarget.getId(), actualTarget.getId());
+    assertEquals(1, actionsQueue.size());
+  }
+
+  @Test
+  void castingBuffSpellShouldAddBuffToTarget() throws NoTargetException {
+    var spell = getSpellByName("Renew").get();
+    var target = "PLAYER0";
+    spellCastService.castSpell(spell.getSpellId(), target);
+
+    var expectedTarget = raiderHandler.getRaiderById(target).get();
+    assertEquals(1, expectedTarget.getBuffs().size());
+  }
+
+  @Test
+  void castingSpellWithInvalidIdShouldThrowInvalidSpellNameException() {
+    var target = "PLAYER0";
+
+    Assertions.assertThrows(
+        InvalidSpellNameException.class, () -> spellCastService.castSpell("99", target));
+  }
+
+  @Test
+  void castingSpellWithNoTargetShouldThrowNoTargetException() {
+    var target = "GG123";
+
+    Assertions.assertThrows(
+        NoTargetException.class,
+        () -> spellCastService.castSpell(new FlashHeal().getSpellId(), target));
+  }
+
+  private Optional<Spell> getSpellByName(String spellName) {
+    return spellBook.stream().filter(spell -> spell.getName().equals(spellName)).findAny();
   }
 }

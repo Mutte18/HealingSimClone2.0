@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EntityTests {
+class EntityTest {
   private Dps dps;
 
   @BeforeEach
@@ -50,5 +50,10 @@ class EntityTests {
   void shouldNotChangeAliveWhenHealthRemainAbove0() {
     dps.reduceHealth(150);
     assertTrue(dps.isAlive());
+  }
+
+  @Test
+  void idShouldReturnRoleAndIdCombination() {
+    assertEquals("DPS0", dps.getId());
   }
 }

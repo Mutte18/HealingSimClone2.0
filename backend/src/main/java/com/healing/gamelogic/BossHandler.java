@@ -4,6 +4,7 @@ import com.healing.entity.Boss;
 import com.healing.entity.Entity;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.entity.attacks.specials.MassPyroblast;
+import com.healing.gamelogic.actions.ActionType;
 import com.healing.gamelogic.actions.BossAction;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,8 @@ public class BossHandler {
               currentBoss,
               new ArrayList<>(List.of(currentBoss.getCurrentTarget())),
               new MeleeSwing(25),
-              "0"));
+              "0",
+              ActionType.NORMAL));
     }
     return Optional.empty();
   }
@@ -46,7 +48,11 @@ public class BossHandler {
   public BossAction createBossSpecialAttackAction() {
     var specialAttack = new MassPyroblast();
     return new BossAction(
-        currentBoss, raiderHandler.getTargets(specialAttack.getMaxTargets()), specialAttack, "0");
+        currentBoss,
+        raiderHandler.getTargets(specialAttack.getMaxTargets()),
+        specialAttack,
+        "0",
+        ActionType.SPECIAL);
   }
 
   private void setBossFocusTarget() {

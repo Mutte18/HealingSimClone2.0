@@ -4,6 +4,8 @@ import com.healing.buff.Renew;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.gamelogic.actions.PlayerAction;
+import com.healing.spell.exceptions.InvalidSpellNameException;
+import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellbook.SpellBook;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +27,20 @@ public class SpellCastService {
     this.raiderHandler = raiderHandler;
   }
 
-  public void castSpell(String spellId, String targetId) {
+  public void castSpell(String spellId, String targetId) throws NoTargetException {
     var player = raiderHandler.getPlayer();
     var spell = spellBook.getSpell(spellId);
-    var target = raiderHandler.getRaiderById(Integer.parseInt(targetId));
+    var target = raiderHandler.getRaiderById(targetId);
 
-    if (player != null && spell.isPresent() && target.isPresent()) {
+    if (target.isEmpty()) {
+      throw new NoTargetException();
+    }
+
+    if (spell.isEmpty()) {
+      throw new InvalidSpellNameException();
+    }
+
+    if (player != null) {
       switch (spell.get().getSpellType()) {
         case BUFF -> target.get().getBuffs().add(new Renew());
         case HEAL -> actionsQueue.addActionToQueue(

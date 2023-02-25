@@ -2,11 +2,14 @@ package com.healing.gamelogic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.healing.entity.*;
+import com.healing.entity.Dps;
+import com.healing.entity.Healer;
+import com.healing.entity.Player;
+import com.healing.entity.Tank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class RaidGroupTests {
+class RaidGroupTest {
 
   private RaidGroup raidGroup;
 

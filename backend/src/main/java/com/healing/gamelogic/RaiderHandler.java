@@ -21,8 +21,8 @@ public class RaiderHandler {
     this.raidGroup.fillRaidGroup();
   }
 
-  public Optional<Entity> getRaiderById(int id) {
-    return raidGroup.stream().filter(raider -> raider.getId() == id).findAny();
+  public Optional<Entity> getRaiderById(String id) {
+    return raidGroup.stream().filter(raider -> raider.getId().equals(id)).findAny();
   }
 
   public Player getPlayer() {
