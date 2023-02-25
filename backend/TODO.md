@@ -1,5 +1,5 @@
 # HoTs
-* Create spells that add HoTs to raiders
+* ~~Create spells that add HoTs to raiders~~
 * ~~Build support that removes HoTs after X seconds~~
 * ~~Build support so that HoTs heal every X seconds~~
 

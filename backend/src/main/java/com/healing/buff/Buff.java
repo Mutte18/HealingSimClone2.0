@@ -16,7 +16,7 @@ public abstract class Buff {
     this.tickInterval = tickInterval;
   }
 
-  public void incrementTimeElapsed(int timeIncrease) {
+  public void tick(int timeIncrease) {
     if (!isExpired) {
       timeElapsed += timeIncrease;
       if (timeElapsed >= duration) {

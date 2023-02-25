@@ -1,7 +1,5 @@
 package com.healing.spellcast;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.healing.integration.IntegrationTest;
 import com.healing.spell.spellbook.FlashHeal;
 import com.healing.spell.spellcast.request.SpellCastRequest;
@@ -9,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-public class SpellCastTest extends IntegrationTest {
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class SpellCastIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldCastSpellWithValidSpellAndTarget() throws Exception {

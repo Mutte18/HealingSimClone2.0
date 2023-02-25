@@ -7,10 +7,11 @@ import com.healing.gamelogic.actions.PlayerAction;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellbook.SpellBook;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SpellCastService {
@@ -46,6 +47,8 @@ public class SpellCastService {
         case HEAL -> actionsQueue.addActionToQueue(
             new PlayerAction(player, new ArrayList<>(List.of(target.get())), spell.get(), "1"));
       }
+      player.reduceMana(spell.get().getManaCost());
+      System.err.println("Casted " + spell.get().getName() + " on " + target.get().getId());
     }
     // Retrieve spell to be cast
     // If spell was found, trigger event to Game and return OK cast to controller

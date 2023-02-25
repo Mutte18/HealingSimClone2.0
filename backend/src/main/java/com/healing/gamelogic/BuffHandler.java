@@ -22,7 +22,7 @@ public class BuffHandler {
                 .forEach(
                     buff -> {
                       buff.addAction(raider, actionsQueue);
-                      buff.incrementTimeElapsed(timeIncrease);
+                      buff.tick(timeIncrease);
                     }));
   }
 

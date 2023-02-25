@@ -23,10 +23,12 @@ public class GameLoopHelper {
   public void tick(Integer seconds) {
     this.secondsElapsed += seconds;
 
-    dpsAutoAttack(secondsElapsed);
+    /*dpsAutoAttack(secondsElapsed);
     npcHealerAoEHeal(secondsElapsed);
     bossAutoAttack(secondsElapsed);
     bossSpecialAttack(secondsElapsed);
+
+     */
     raiderHandler.getRaidGroup().forEach(raider -> raider.tick(secondsElapsed));
   }
 

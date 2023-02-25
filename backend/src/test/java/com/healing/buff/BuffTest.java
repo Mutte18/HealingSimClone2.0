@@ -17,22 +17,22 @@ public class BuffTest {
 
   @Test
   void shouldOnlyIncreaseTimeElapsedWhenBuffNotExpired() {
-    renew.incrementTimeElapsed(1);
+    renew.tick(1);
 
     Assertions.assertEquals(1, renew.getTimeElapsed());
   }
 
   @Test
   void shouldSetExpiredWhenTimeElapsedExceedsDuration() {
-    renew.incrementTimeElapsed(999);
+    renew.tick(999);
 
     Assertions.assertTrue(renew.isExpired());
   }
 
   @Test
   void shouldNotIncreaseTimeElapsedWhenAlreadyExpired() {
-    renew.incrementTimeElapsed(renew.getDuration());
-    renew.incrementTimeElapsed(1);
+    renew.tick(renew.getDuration());
+    renew.tick(1);
 
     Assertions.assertEquals(renew.getDuration(), renew.getTimeElapsed());
   }
@@ -41,7 +41,7 @@ public class BuffTest {
   void shouldNotTriggerActionWhenElapsedIsNotOnTickInterval() {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    renew.incrementTimeElapsed(1);
+    renew.tick(1);
 
     renew.addAction(dps, actionsQueue);
 
@@ -52,7 +52,7 @@ public class BuffTest {
   void shouldNotTriggerActionWhenBuffIsExpired() {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    renew.incrementTimeElapsed(9999);
+    renew.tick(9999);
 
     renew.addAction(dps, actionsQueue);
 
@@ -64,7 +64,7 @@ public class BuffTest {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
 
-    renew.incrementTimeElapsed(15);
+    renew.tick(15);
 
     renew.addAction(dps, actionsQueue);
 

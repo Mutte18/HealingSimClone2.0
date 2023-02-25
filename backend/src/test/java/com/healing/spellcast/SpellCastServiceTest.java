@@ -1,7 +1,5 @@
 package com.healing.spellcast;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.exceptions.InvalidSpellNameException;
@@ -10,10 +8,13 @@ import com.healing.spell.spellbook.FlashHeal;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.SpellCastService;
-import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpellCastServiceTest {
 
@@ -42,6 +43,16 @@ public class SpellCastServiceTest {
 
     assertEquals(expectedTarget.getId(), actualTarget.getId());
     assertEquals(1, actionsQueue.size());
+  }
+
+  @Test
+  void castingSpellShouldReducePlayersMana() throws NoTargetException {
+    var spell = spellBook.get(0);
+    var player = raiderHandler.getPlayer();
+    var manaBeforeCast = player.getMana();
+    spellCastService.castSpell(spell.getSpellId(), "DPS0");
+
+    assertEquals(manaBeforeCast - spell.getManaCost(), player.getMana());
   }
 
   @Test
