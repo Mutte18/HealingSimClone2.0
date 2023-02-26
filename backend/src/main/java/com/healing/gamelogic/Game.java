@@ -1,6 +1,6 @@
 package com.healing.gamelogic;
 
-import com.healing.buff.Renew;
+import com.healing.buff.RenewBuff;
 import com.healing.entity.Boss;
 import com.healing.gui.MainWindow;
 import com.healing.state.StateService;
@@ -59,8 +59,8 @@ public class Game implements Runnable {
   }
 
   private void gameLoop() {
-    raiderHandler.getPlayer().getBuffs().add(new Renew());
-    raiderHandler.getPlayer().getBuffs().add(new Renew());
+    raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
+    raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
     raiderHandler.getPlayer().setMaxHealth(1000);
 
     while (this.gameRunning) {

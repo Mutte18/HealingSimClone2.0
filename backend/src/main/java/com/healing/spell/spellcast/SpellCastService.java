@@ -1,12 +1,15 @@
 package com.healing.spell.spellcast;
 
-import com.healing.buff.Renew;
+import com.healing.entity.Entity;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.gamelogic.actions.PlayerAction;
+import com.healing.spell.exceptions.InsufficientManaException;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellbook.SpellBook;
+import com.healing.spell.spellbook.spellType.BuffSpell;
+import com.healing.spell.spellbook.spellType.HealSpell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +45,22 @@ public class SpellCastService {
     }
 
     if (player != null) {
-      switch (spell.get().getSpellType()) {
-        case BUFF -> target.get().getBuffs().add(new Renew());
+      if (player.getMana() < spell.get().getManaCost()) {
+        throw new InsufficientManaException();
+      }
+      switch (spell.get()) {
+        case BuffSpell buffSpell -> target.get().getBuffs().add(buffSpell.getBuff());
+        case HealSpell healSpell -> actionsQueue.addActionToQueue(
+                new PlayerAction(player, getTargets(target.get(), healSpell.getAdditionalTargets()), healSpell, "1"));
+        default -> throw new IllegalStateException("Unexpected value: " + spell.get());
+      }
+      /*switch (spell.get().getSpellType()) {
+        case BUFF -> target.get().getBuffs().add(spell.get().get);
         case HEAL -> actionsQueue.addActionToQueue(
             new PlayerAction(player, new ArrayList<>(List.of(target.get())), spell.get(), "1"));
       }
+
+       */
       player.reduceMana(spell.get().getManaCost());
       System.err.println("Casted " + spell.get().getName() + " on " + target.get().getId());
     }
@@ -55,5 +69,12 @@ public class SpellCastService {
 
     // If something wrong, return false to controller
 
+  }
+
+  private List<Entity> getTargets(Entity target, Integer additionalTargets) {
+    var targets = new ArrayList<Entity>();
+    targets.add(target);
+    targets.addAll(raiderHandler.getLeastHealthyRaiders(target, additionalTargets));
+  return targets;
   }
 }

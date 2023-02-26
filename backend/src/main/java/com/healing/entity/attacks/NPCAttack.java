@@ -1,10 +1,8 @@
 package com.healing.entity.attacks;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public abstract class NPCAttack {
   protected String name;
   protected Integer damageAmount;

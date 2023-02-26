@@ -31,12 +31,15 @@ public class InputManager implements java.awt.event.KeyListener {
       case KeyEvent.VK_R -> stateService.printState("raid");
       case KeyEvent.VK_B -> stateService.printState("boss");
       case KeyEvent.VK_G -> {
-
-
-          var spellCastJson = new ObjectMapper().writeValueAsString(new SpellCastRequest("0", "PLAYER0"));
+        var spellCastJson =
+            new ObjectMapper().writeValueAsString(new SpellCastRequest("2", "PLAYER0"));
         HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/spellcasting"))
-                .POST(HttpRequest.BodyPublishers.ofString(spellCastJson)).header("Content-Type", "application/json").build();
+        HttpRequest request =
+            HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/spellcasting"))
+                .POST(HttpRequest.BodyPublishers.ofString(spellCastJson))
+                .header("Content-Type", "application/json")
+                .build();
         try {
           httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException ex) {

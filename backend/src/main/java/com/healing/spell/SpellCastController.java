@@ -4,14 +4,13 @@ import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellcast.SpellCastService;
 import com.healing.spell.spellcast.request.SpellCastRequest;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("spellcasting")

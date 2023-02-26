@@ -9,22 +9,12 @@ public abstract class Spell {
   private String spellId;
   private String name;
   private Integer manaCost;
-  private Integer healAmount;
-  private Integer damageAmount;
-  private SpellType spellType;
+  private Integer additionalTargets;
 
-  public Spell(
-      String spellId,
-      String name,
-      Integer manaCost,
-      Integer healAmount,
-      Integer damageAmount,
-      SpellType spellType) {
+  public Spell(String spellId, String name, Integer manaCost, Integer additionalTargets) {
     this.spellId = spellId;
     this.name = name;
     this.manaCost = manaCost;
-    this.healAmount = healAmount;
-    this.damageAmount = damageAmount;
-    this.spellType = spellType;
+    this.additionalTargets = additionalTargets;
   }
 }

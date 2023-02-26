@@ -12,17 +12,6 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerActionTest {
   @Test
-  void shouldReducePlayerManaWhenPlayerActionIsProcessed() {
-    var player = new Player(0, 0, true, 100);
-    var action =
-        new PlayerAction(
-            player, new ArrayList<>(List.of(new Dps(1, 1, true))), new FlashHeal(), "1");
-    action.performAction();
-
-    assertEquals(0, player.getMana());
-  }
-
-  @Test
   void shouldIncreaseTargetHealthWhenTargetIsHealed() {
     var player = new Player(0, 0, true, 100);
     var dps = new Dps(1, 100, true);

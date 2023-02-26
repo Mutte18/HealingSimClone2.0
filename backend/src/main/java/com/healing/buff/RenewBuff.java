@@ -5,12 +5,12 @@ import com.healing.entity.Entity;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.actions.HoTAction;
 
-public class Renew extends Buff {
+public class RenewBuff extends Buff {
   private static final int duration = 10 * TimeKeeping.TENTH_OF_SECOND;
   private static final double interval = 1.5 * TimeKeeping.TENTH_OF_SECOND;
   private static final int healAmount = 45;
 
-  public Renew() {
+  public RenewBuff() {
     super(duration, interval);
   }
 

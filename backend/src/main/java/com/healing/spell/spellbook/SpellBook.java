@@ -1,8 +1,9 @@
 package com.healing.spell.spellbook;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Optional;
-import org.springframework.stereotype.Component;
 
 @Component
 public class SpellBook extends ArrayList<Spell> {
@@ -17,5 +18,6 @@ public class SpellBook extends ArrayList<Spell> {
   private void addSpells() {
     this.add(new FlashHeal());
     this.add(new Renew());
+    this.add(new ChainHeal());
   }
 }

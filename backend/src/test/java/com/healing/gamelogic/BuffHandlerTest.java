@@ -1,6 +1,6 @@
 package com.healing.gamelogic;
 
-import com.healing.buff.Renew;
+import com.healing.buff.RenewBuff;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,6 +59,6 @@ public class BuffHandlerTest {
   }
 
   private void addBuffToRaider() {
-    raiderHandler.getRaidGroup().get(0).setBuffs(List.of(new Renew()));
+    raiderHandler.getRaidGroup().get(0).setBuffs(List.of(new RenewBuff()));
   }
 }

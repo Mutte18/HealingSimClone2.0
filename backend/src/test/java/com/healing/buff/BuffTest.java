@@ -8,42 +8,42 @@ import org.junit.jupiter.api.Test;
 
 public class BuffTest {
 
-  private Renew renew;
+  private RenewBuff renewBuff;
 
   @BeforeEach
   void setup() {
-    renew = new Renew();
+    renewBuff = new RenewBuff();
   }
 
   @Test
   void shouldOnlyIncreaseTimeElapsedWhenBuffNotExpired() {
-    renew.tick(1);
+    renewBuff.tick(1);
 
-    Assertions.assertEquals(1, renew.getTimeElapsed());
+    Assertions.assertEquals(1, renewBuff.getTimeElapsed());
   }
 
   @Test
   void shouldSetExpiredWhenTimeElapsedExceedsDuration() {
-    renew.tick(999);
+    renewBuff.tick(999);
 
-    Assertions.assertTrue(renew.isExpired());
+    Assertions.assertTrue(renewBuff.isExpired());
   }
 
   @Test
   void shouldNotIncreaseTimeElapsedWhenAlreadyExpired() {
-    renew.tick(renew.getDuration());
-    renew.tick(1);
+    renewBuff.tick(renewBuff.getDuration());
+    renewBuff.tick(1);
 
-    Assertions.assertEquals(renew.getDuration(), renew.getTimeElapsed());
+    Assertions.assertEquals(renewBuff.getDuration(), renewBuff.getTimeElapsed());
   }
 
   @Test
   void shouldNotTriggerActionWhenElapsedIsNotOnTickInterval() {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    renew.tick(1);
+    renewBuff.tick(1);
 
-    renew.addAction(dps, actionsQueue);
+    renewBuff.addAction(dps, actionsQueue);
 
     Assertions.assertEquals(0, actionsQueue.size());
   }
@@ -52,9 +52,9 @@ public class BuffTest {
   void shouldNotTriggerActionWhenBuffIsExpired() {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    renew.tick(9999);
+    renewBuff.tick(9999);
 
-    renew.addAction(dps, actionsQueue);
+    renewBuff.addAction(dps, actionsQueue);
 
     Assertions.assertEquals(0, actionsQueue.size());
   }
@@ -64,9 +64,9 @@ public class BuffTest {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
 
-    renew.tick(15);
+    renewBuff.tick(15);
 
-    renew.addAction(dps, actionsQueue);
+    renewBuff.addAction(dps, actionsQueue);
 
     Assertions.assertEquals(1, actionsQueue.size());
   }

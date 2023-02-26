@@ -1,7 +1,10 @@
 package com.healing.spell.spellbook;
 
-public class Renew extends Spell {
+import com.healing.buff.RenewBuff;
+import com.healing.spell.spellbook.spellType.BuffSpell;
+
+public class Renew extends BuffSpell {
   public Renew() {
-    super("1", "Renew", 100, 0, 0, SpellType.BUFF);
+    super("1", "Renew", 100, 0, new RenewBuff());
   }
 }

@@ -4,9 +4,7 @@ import com.healing.entity.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
 @Getter
 public abstract class Action {
   protected Entity initiator;
