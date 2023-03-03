@@ -8,7 +8,8 @@ import lombok.Getter;
 public abstract class BuffSpell extends Spell {
   private final Buff buff;
 
-  public BuffSpell(String spellId, String name, Integer manaCost, Integer additionalTargets, Buff buff) {
+  public BuffSpell(
+      String spellId, String name, Integer manaCost, Integer additionalTargets, Buff buff) {
     super(spellId, name, manaCost, additionalTargets);
     this.buff = buff;
   }

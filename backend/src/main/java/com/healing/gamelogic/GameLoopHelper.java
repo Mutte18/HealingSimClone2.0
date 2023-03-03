@@ -24,7 +24,7 @@ public class GameLoopHelper {
     this.secondsElapsed += seconds;
 
     dpsAutoAttack(secondsElapsed);
-    //npcHealerAoEHeal(secondsElapsed);
+    npcHealerAoEHeal(secondsElapsed);
     bossAutoAttack(secondsElapsed);
     bossSpecialAttack(secondsElapsed);
 

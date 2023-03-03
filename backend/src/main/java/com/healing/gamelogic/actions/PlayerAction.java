@@ -3,9 +3,8 @@ package com.healing.gamelogic.actions;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import com.healing.spell.spellbook.spellType.HealSpell;
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 public class PlayerAction extends Action {

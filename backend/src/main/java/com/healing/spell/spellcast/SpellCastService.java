@@ -10,11 +10,10 @@ import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellbook.spellType.BuffSpell;
 import com.healing.spell.spellbook.spellType.HealSpell;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SpellCastService {
@@ -51,7 +50,11 @@ public class SpellCastService {
       switch (spell.get()) {
         case BuffSpell buffSpell -> target.get().getBuffs().add(buffSpell.getBuff());
         case HealSpell healSpell -> actionsQueue.addActionToQueue(
-                new PlayerAction(player, getTargets(target.get(), healSpell.getAdditionalTargets()), healSpell, "1"));
+            new PlayerAction(
+                player,
+                getTargets(target.get(), healSpell.getAdditionalTargets()),
+                healSpell,
+                "1"));
         default -> throw new IllegalStateException("Unexpected value: " + spell.get());
       }
       /*switch (spell.get().getSpellType()) {
@@ -75,6 +78,6 @@ public class SpellCastService {
     var targets = new ArrayList<Entity>();
     targets.add(target);
     targets.addAll(raiderHandler.getLeastHealthyRaiders(target, additionalTargets));
-  return targets;
+    return targets;
   }
 }

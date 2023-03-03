@@ -3,14 +3,13 @@ package com.healing.inputmanager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.healing.spell.spellcast.request.SpellCastRequest;
 import com.healing.state.StateService;
-import lombok.SneakyThrows;
-
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import lombok.SneakyThrows;
 
 public class InputManager implements java.awt.event.KeyListener {
   private final StateService stateService;

@@ -8,7 +8,11 @@ public abstract class HealSpell extends Spell {
   private final Integer healAmount;
 
   public HealSpell(
-      String spellId, String name, Integer manaCost, Integer additionalTargets, Integer healAmount) {
+      String spellId,
+      String name,
+      Integer manaCost,
+      Integer additionalTargets,
+      Integer healAmount) {
     super(spellId, name, manaCost, additionalTargets);
     this.healAmount = healAmount;
   }
