@@ -4,9 +4,7 @@ import com.healing.entity.*;
 import com.healing.entity.attacks.MeleeSwing;
 import com.healing.gamelogic.actions.NPCAction;
 import com.healing.gamelogic.actions.NPCHealerAction;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -83,14 +81,17 @@ public class RaiderHandler {
   }
 
   public List<Entity> getLeastHealthyRaiders(Entity initialTarget, Integer desiredTargets) {
-    return raidGroup.stream()
-        .filter(
-            raider ->
-                raider.isAlive()
-                    && !raider.getId().equals(initialTarget.getId())
-                    && !raider.getRole().equals(EntityRole.TANK)
-                    && raider.getHealth() != raider.getMaxHealth())
-        .limit(desiredTargets)
-        .collect(Collectors.toList());
+    var damagedRaiders =
+        raidGroup.stream()
+            .filter(
+                raider ->
+                    raider.isAlive()
+                        && !raider.getId().equals(initialTarget.getId())
+                        && !raider.getRole().equals(EntityRole.TANK)
+                        && raider.getHealth() != raider.getMaxHealth())
+            .sorted(Comparator.comparingInt(Entity::getHpInPercent))
+            .toList();
+
+    return damagedRaiders.stream().limit(desiredTargets).collect(Collectors.toList());
   }
 }

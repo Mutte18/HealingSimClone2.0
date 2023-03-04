@@ -30,10 +30,13 @@ public class BuffHandler {
     raiderHandler
         .getRaidGroup()
         .forEach(
-            raider ->
+            raider -> {
+              if (!raider.getBuffs().isEmpty()) {
                 raider.setBuffs(
                     raider.getBuffs().stream()
                         .filter(buff -> !buff.isExpired())
-                        .collect(Collectors.toList())));
+                        .collect(Collectors.toList()));
+              }
+            });
   }
 }

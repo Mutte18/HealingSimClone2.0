@@ -1,16 +1,17 @@
 package com.healing.spellcast;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
+import com.healing.spell.exceptions.InsufficientManaException;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellbook.FlashHeal;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.SpellCastService;
-import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,12 +57,54 @@ public class SpellCastServiceTest {
 
   @Test
   void castingBuffSpellShouldAddBuffToTarget() throws NoTargetException {
-    var spell = getSpellByName("Renew").get();
+    var spell = getSpellByName("Renew");
     var target = "PLAYER0";
     spellCastService.castSpell(spell.getSpellId(), target);
 
     var expectedTarget = raiderHandler.getRaiderById(target).get();
     assertEquals(1, expectedTarget.getBuffs().size());
+  }
+
+  @Test
+  void castingSpellWithHealAmountAndBuffShouldProduceActionAndAddBuff() throws NoTargetException {
+    var spell = getSpellByName("Riptide");
+    var target = "PLAYER0";
+    spellCastService.castSpell(spell.getSpellId(), target);
+
+    var expectedTarget = raiderHandler.getRaiderById(target).get();
+    assertEquals(1, expectedTarget.getBuffs().size());
+
+    assertEquals(1, actionsQueue.size());
+  }
+
+  @Test
+  void castingSpellThatHasNoBuffShouldNotAddBuffToTarget() throws NoTargetException {
+    var spell = getSpellByName("Flash Heal");
+    var target = "PLAYER0";
+    spellCastService.castSpell(spell.getSpellId(), target);
+
+    var expectedTarget = raiderHandler.getRaiderById(target).get();
+    assertEquals(0, expectedTarget.getBuffs().size());
+  }
+
+  @Test
+  void getTargetsShouldGetTheMostInjuredRaiders() throws NoTargetException {
+    var spell = getSpellByName("Chain Heal");
+    var target = "PLAYER0";
+    var raiderToBeHealed1 = raiderHandler.getRaiderById("DPS0").get();
+    var raiderToBeHealed2 = raiderHandler.getRaiderById("DPS1").get();
+    var raiderNotPicked = raiderHandler.getRaiderById("DPS2").get();
+
+    raiderToBeHealed1.setHealth(20);
+    raiderToBeHealed2.setHealth(40);
+    raiderNotPicked.setHealth(80);
+
+    spellCastService.castSpell(spell.getSpellId(), target);
+    actionsQueue.processActionQueue();
+
+    assertEquals(100, raiderToBeHealed1.getHealth());
+    assertEquals(100, raiderToBeHealed2.getHealth());
+    assertEquals(80, raiderNotPicked.getHealth());
   }
 
   @Test
@@ -81,7 +124,34 @@ public class SpellCastServiceTest {
         () -> spellCastService.castSpell(new FlashHeal().getSpellId(), target));
   }
 
-  private Optional<Spell> getSpellByName(String spellName) {
-    return spellBook.stream().filter(spell -> spell.getName().equals(spellName)).findAny();
+  @Test
+  void castingSpellWithoutSufficientManaShouldThrowException() {
+    var target = "DPS0";
+    raiderHandler.getPlayer().setMana(0);
+
+    Assertions.assertThrows(
+        InsufficientManaException.class,
+        () -> spellCastService.castSpell(new FlashHeal().getSpellId(), target));
+  }
+
+  @Test
+  void castingBuffSpellShouldGenerateUniqueBuff() throws NoTargetException {
+    var spell = getSpellByName("Riptide");
+    var target = "PLAYER0";
+    spellCastService.castSpell(spell.getSpellId(), target);
+    spellCastService.castSpell(spell.getSpellId(), target);
+
+    var buffs = raiderHandler.getRaiderById("PLAYER0").get().getBuffs();
+    var buff1 = buffs.get(0);
+    var buff2 = buffs.get(1);
+
+    assertNotEquals(buff1, buff2);
+  }
+
+  private Spell getSpellByName(String spellName) {
+    return spellBook.stream()
+        .filter(spell -> spell.getName().equals(spellName))
+        .findAny()
+        .orElse(null);
   }
 }

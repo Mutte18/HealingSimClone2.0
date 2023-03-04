@@ -31,7 +31,7 @@ public class InputManager implements java.awt.event.KeyListener {
       case KeyEvent.VK_B -> stateService.printState("boss");
       case KeyEvent.VK_G -> {
         var spellCastJson =
-            new ObjectMapper().writeValueAsString(new SpellCastRequest("2", "PLAYER0"));
+            new ObjectMapper().writeValueAsString(new SpellCastRequest("3", "PLAYER0"));
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request =
             HttpRequest.newBuilder()

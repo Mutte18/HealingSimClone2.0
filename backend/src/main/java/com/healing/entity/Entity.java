@@ -51,4 +51,10 @@ public abstract class Entity {
   }
 
   public abstract void tick(Integer secondsElapsed);
+
+  public int getHpInPercent() {
+    double hp = health;
+    double maxHp = maxHealth;
+    return (int) ((hp / maxHp) * 100);
+  }
 }

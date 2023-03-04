@@ -2,7 +2,7 @@ package com.healing.gamelogic.actions;
 
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
-import com.healing.spell.spellbook.spellType.HealSpell;
+import com.healing.spell.spellbook.Spell;
 import java.util.List;
 import lombok.Getter;
 
@@ -10,9 +10,9 @@ import lombok.Getter;
 public class PlayerAction extends Action {
 
   private final Player player;
-  private final HealSpell spell;
+  private final Spell spell;
 
-  public PlayerAction(Player player, List<Entity> targets, HealSpell spell, String id) {
+  public PlayerAction(Player player, List<Entity> targets, Spell spell, String id) {
     super(player, targets, id);
     this.player = player;
     this.spell = spell;

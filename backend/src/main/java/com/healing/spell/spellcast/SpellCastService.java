@@ -3,13 +3,10 @@ package com.healing.spell.spellcast;
 import com.healing.entity.Entity;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
-import com.healing.gamelogic.actions.PlayerAction;
 import com.healing.spell.exceptions.InsufficientManaException;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellbook.SpellBook;
-import com.healing.spell.spellbook.spellType.BuffSpell;
-import com.healing.spell.spellbook.spellType.HealSpell;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,49 +29,33 @@ public class SpellCastService {
 
   public void castSpell(String spellId, String targetId) throws NoTargetException {
     var player = raiderHandler.getPlayer();
-    var spell = spellBook.getSpell(spellId);
-    var target = raiderHandler.getRaiderById(targetId);
+    var optionalSpell = spellBook.getSpell(spellId);
+    var optionalTarget = raiderHandler.getRaiderById(targetId);
 
-    if (target.isEmpty()) {
+    if (optionalTarget.isEmpty()) {
       throw new NoTargetException();
     }
-
-    if (spell.isEmpty()) {
+    if (optionalSpell.isEmpty()) {
       throw new InvalidSpellNameException();
     }
+    var target = optionalTarget.get();
+    var spell = optionalSpell.get();
 
     if (player != null) {
-      if (player.getMana() < spell.get().getManaCost()) {
+      if (player.getMana() < spell.getManaCost()) {
         throw new InsufficientManaException();
       }
-      switch (spell.get()) {
-        case BuffSpell buffSpell -> target.get().getBuffs().add(buffSpell.getBuff());
-        case HealSpell healSpell -> actionsQueue.addActionToQueue(
-            new PlayerAction(
-                player,
-                getTargets(target.get(), healSpell.getAdditionalTargets()),
-                healSpell,
-                "1"));
-        default -> throw new IllegalStateException("Unexpected value: " + spell.get());
-      }
-      /*switch (spell.get().getSpellType()) {
-        case BUFF -> target.get().getBuffs().add(spell.get().get);
-        case HEAL -> actionsQueue.addActionToQueue(
-            new PlayerAction(player, new ArrayList<>(List.of(target.get())), spell.get(), "1"));
-      }
+      spell.createAction(
+          actionsQueue, target, getAdditionalTargets(target, spell.getAdditionalTargets()), player);
+      System.out.println(spell);
+      spell.addBuff(target);
 
-       */
-      player.reduceMana(spell.get().getManaCost());
-      System.err.println("Casted " + spell.get().getName() + " on " + target.get().getId());
+      player.reduceMana(spell.getManaCost());
+      System.err.println("Casted " + spell.getName() + " on " + target.getId());
     }
-    // Retrieve spell to be cast
-    // If spell was found, trigger event to Game and return OK cast to controller
-
-    // If something wrong, return false to controller
-
   }
 
-  private List<Entity> getTargets(Entity target, Integer additionalTargets) {
+  private List<Entity> getAdditionalTargets(Entity target, Integer additionalTargets) {
     var targets = new ArrayList<Entity>();
     targets.add(target);
     targets.addAll(raiderHandler.getLeastHealthyRaiders(target, additionalTargets));

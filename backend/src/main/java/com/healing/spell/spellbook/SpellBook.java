@@ -10,13 +10,26 @@ public class SpellBook extends ArrayList<Spell> {
     this.addSpells();
   }
 
-  public Optional<Spell> getSpell(String spellId) {
+  /*public Optional<Spell> getSpell(String spellId) {
     return this.stream().filter(spell -> spell.getSpellId().equals(spellId)).findAny();
-  }
+  }*/
 
   private void addSpells() {
     this.add(new FlashHeal());
     this.add(new Renew());
     this.add(new ChainHeal());
+    this.add(new Riptide());
+  }
+
+  public Optional<Spell> getSpell(String spellId) {
+    Spell spell =
+        switch (spellId) {
+          case "0" -> new FlashHeal();
+          case "1" -> new Renew();
+          case "2" -> new ChainHeal();
+          case "3" -> new Riptide();
+          default -> null;
+        };
+    return Optional.ofNullable(spell);
   }
 }

@@ -56,4 +56,13 @@ class EntityTest {
   void idShouldReturnRoleAndIdCombination() {
     assertEquals("DPS0", dps.getId());
   }
+
+  @Test
+  void shouldReturnPercentageInHumanReadable() {
+    dps = new Dps(0, 100, true);
+
+    dps.reduceHealth(50);
+
+    assertEquals(50, dps.getHpInPercent());
+  }
 }

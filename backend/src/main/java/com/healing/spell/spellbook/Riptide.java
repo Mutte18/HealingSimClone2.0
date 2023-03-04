@@ -1,21 +1,22 @@
 package com.healing.spell.spellbook;
 
+import com.healing.buff.RiptideBuff;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.actions.PlayerAction;
 import java.util.List;
 
-public class FlashHeal extends Spell {
-  public FlashHeal() {
+public class Riptide extends Spell {
+  public Riptide() {
     super(
-        SpellList.FLASH_HEAL.getName(),
-        SpellList.FLASH_HEAL.getId(),
-        SpellList.FLASH_HEAL.getManaCost(),
-        SpellList.FLASH_HEAL.getAdditionalTargets(),
-        SpellList.FLASH_HEAL.getHealAmount(),
-        SpellList.FLASH_HEAL.getDamageAmount(),
-        null);
+        SpellList.RIPTIDE.getName(),
+        SpellList.RIPTIDE.getId(),
+        SpellList.RIPTIDE.getManaCost(),
+        SpellList.RIPTIDE.getAdditionalTargets(),
+        SpellList.RIPTIDE.getHealAmount(),
+        SpellList.RIPTIDE.getDamageAmount(),
+        new RiptideBuff());
   }
 
   @Override
@@ -25,5 +26,7 @@ public class FlashHeal extends Spell {
   }
 
   @Override
-  public void addBuff(Entity target) {}
+  public void addBuff(Entity target) {
+    target.getBuffs().add(this.getBuff());
+  }
 }

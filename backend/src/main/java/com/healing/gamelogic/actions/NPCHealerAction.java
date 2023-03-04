@@ -20,7 +20,6 @@ public class NPCHealerAction extends Action {
     }
     System.out.println(
         "Performed NPC Heal Action, "
-            + healer.getRole()
             + healer.getId()
             + " casted Heal Aura for "
             + healAmount
