@@ -8,14 +8,7 @@ import java.util.List;
 
 public class Renew extends Spell {
   public Renew() {
-    super(
-        SpellList.RENEW.getName(),
-        SpellList.RENEW.getId(),
-        SpellList.RENEW.getManaCost(),
-        SpellList.RENEW.getAdditionalTargets(),
-        SpellList.RENEW.getHealAmount(),
-        SpellList.RENEW.getDamageAmount(),
-        new RenewBuff());
+    super("Renew", "1", 100, 0, 0, 0, 0);
   }
 
   @Override
@@ -24,6 +17,6 @@ public class Renew extends Spell {
 
   @Override
   public void addBuff(Entity target) {
-    target.getBuffs().add(this.getBuff());
+    target.getBuffs().add(new RenewBuff());
   }
 }

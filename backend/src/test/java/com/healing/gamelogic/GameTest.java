@@ -1,5 +1,7 @@
 package com.healing.gamelogic;
 
+import com.healing.spell.spellbook.SpellBook;
+import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.state.StateService;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -18,7 +20,9 @@ public class GameTest {
     bossHandler = new BossHandler(raiderHandler);
     actionsQueue = new ActionsQueue();
     stateService = new StateService(bossHandler, raiderHandler);
-    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler);
+    gameLoopHelper =
+        new GameLoopHelper(
+            actionsQueue, bossHandler, raiderHandler, new SpellBook(), new GlobalCooldownHandler());
     buffHandler = new BuffHandler(raiderHandler, actionsQueue);
     game =
         new Game(

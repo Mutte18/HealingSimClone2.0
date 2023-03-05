@@ -8,14 +8,7 @@ import java.util.List;
 
 public class FlashHeal extends Spell {
   public FlashHeal() {
-    super(
-        SpellList.FLASH_HEAL.getName(),
-        SpellList.FLASH_HEAL.getId(),
-        SpellList.FLASH_HEAL.getManaCost(),
-        SpellList.FLASH_HEAL.getAdditionalTargets(),
-        SpellList.FLASH_HEAL.getHealAmount(),
-        SpellList.FLASH_HEAL.getDamageAmount(),
-        null);
+    super("Flash Heal", "0", 100, 0, 100, 0, 0);
   }
 
   @Override

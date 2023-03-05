@@ -8,14 +8,7 @@ import java.util.List;
 
 public class ChainHeal extends Spell {
   public ChainHeal() {
-    super(
-        SpellList.CHAIN_HEAL.getName(),
-        SpellList.CHAIN_HEAL.getId(),
-        SpellList.CHAIN_HEAL.getManaCost(),
-        SpellList.CHAIN_HEAL.getAdditionalTargets(),
-        SpellList.CHAIN_HEAL.getHealAmount(),
-        SpellList.CHAIN_HEAL.getDamageAmount(),
-        null);
+    super("Chain Heal", "2", 250, 2, 150, 0, 1);
   }
 
   @Override

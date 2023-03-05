@@ -3,6 +3,8 @@ package com.healing.gamelogic;
 import com.healing.entity.Boss;
 import com.healing.entity.EntityRole;
 import com.healing.gamelogic.actions.*;
+import com.healing.spell.spellbook.SpellBook;
+import com.healing.spell.spellcast.GlobalCooldownHandler;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +16,8 @@ public class GameLoopHelperTest {
   private RaiderHandler raiderHandler;
   private BossHandler bossHandler;
   private ActionsQueue actionsQueue;
+  private SpellBook spellBook;
+  private GlobalCooldownHandler globalCooldownHandler;
 
   @BeforeEach
   void setup() {
@@ -22,7 +26,11 @@ public class GameLoopHelperTest {
     bossHandler = new BossHandler(raiderHandler);
     bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     actionsQueue = new ActionsQueue();
-    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler);
+    spellBook = new SpellBook();
+    globalCooldownHandler = new GlobalCooldownHandler();
+    gameLoopHelper =
+        new GameLoopHelper(
+            actionsQueue, bossHandler, raiderHandler, spellBook, globalCooldownHandler);
   }
 
   @Test
@@ -80,6 +88,14 @@ public class GameLoopHelperTest {
 
     var bossActions = getBossActionsOfType(ActionType.SPECIAL);
     Assertions.assertEquals(1, bossActions.size());
+  }
+
+  @Test
+  void shouldSetGlobalCooldownToFalseEachTick() {
+    globalCooldownHandler.toggleGlobalCooldown(true);
+    gameLoopHelper.tick(1);
+
+    Assertions.assertFalse(globalCooldownHandler.isOnCooldown());
   }
 
   private List<Action> getActionsOfType(Class actionTypeToFind) {

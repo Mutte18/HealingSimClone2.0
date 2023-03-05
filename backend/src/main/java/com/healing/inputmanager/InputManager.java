@@ -1,5 +1,6 @@
 package com.healing.inputmanager;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.healing.spell.spellcast.request.SpellCastRequest;
 import com.healing.state.StateService;
@@ -29,27 +30,30 @@ public class InputManager implements java.awt.event.KeyListener {
       case KeyEvent.VK_P -> stateService.printState("player");
       case KeyEvent.VK_R -> stateService.printState("raid");
       case KeyEvent.VK_B -> stateService.printState("boss");
-      case KeyEvent.VK_G -> {
-        var spellCastJson =
-            new ObjectMapper().writeValueAsString(new SpellCastRequest("3", "PLAYER0"));
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest request =
-            HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/spellcasting"))
-                .POST(HttpRequest.BodyPublishers.ofString(spellCastJson))
-                .header("Content-Type", "application/json")
-                .build();
-        try {
-          httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException ex) {
-          ex.printStackTrace();
-        } catch (InterruptedException ex) {
-          ex.printStackTrace();
-        }
-      }
+      case KeyEvent.VK_G -> castSpell("3", "PLAYER0");
+      case KeyEvent.VK_H -> castSpell("1", "DPS0");
     }
   }
 
   @Override
   public void keyReleased(KeyEvent e) {}
+
+  private void castSpell(String spellId, String target) throws JsonProcessingException {
+    var spellCastJson =
+        new ObjectMapper().writeValueAsString(new SpellCastRequest(spellId, target));
+    HttpClient httpClient = HttpClient.newHttpClient();
+    HttpRequest request =
+        HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:8080/spellcasting"))
+            .POST(HttpRequest.BodyPublishers.ofString(spellCastJson))
+            .header("Content-Type", "application/json")
+            .build();
+    try {
+      httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    } catch (InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
 }

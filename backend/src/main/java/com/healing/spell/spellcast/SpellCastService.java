@@ -3,9 +3,7 @@ package com.healing.spell.spellcast;
 import com.healing.entity.Entity;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
-import com.healing.spell.exceptions.InsufficientManaException;
-import com.healing.spell.exceptions.InvalidSpellNameException;
-import com.healing.spell.exceptions.NoTargetException;
+import com.healing.spell.exceptions.*;
 import com.healing.spell.spellbook.SpellBook;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +16,18 @@ public class SpellCastService {
   private final ActionsQueue actionsQueue;
   private final SpellBook spellBook;
   private final RaiderHandler raiderHandler;
+  private final GlobalCooldownHandler globalCooldownHandler;
 
   @Autowired
   public SpellCastService(
-      ActionsQueue actionsQueue, SpellBook spellBook, RaiderHandler raiderHandler) {
+      ActionsQueue actionsQueue,
+      SpellBook spellBook,
+      RaiderHandler raiderHandler,
+      GlobalCooldownHandler globalCooldownHandler) {
     this.actionsQueue = actionsQueue;
     this.spellBook = spellBook;
     this.raiderHandler = raiderHandler;
+    this.globalCooldownHandler = globalCooldownHandler;
   }
 
   public void castSpell(String spellId, String targetId) throws NoTargetException {
@@ -42,9 +45,21 @@ public class SpellCastService {
     var spell = optionalSpell.get();
 
     if (player != null) {
+      if (globalCooldownHandler.isOnCooldown()) {
+        throw new GlobalCooldownException();
+      }
+      if (spell.getOnCooldown()) {
+        throw new SpellOnCooldownException(
+            spell.getName()
+                + " is not ready yet. Cooldown remaining: "
+                + spell.getRemainingCooldown()
+                + " seconds ");
+      }
       if (player.getMana() < spell.getManaCost()) {
         throw new InsufficientManaException();
       }
+      globalCooldownHandler.toggleGlobalCooldown(true);
+      spell.startCooldown();
       spell.createAction(
           actionsQueue, target, getAdditionalTargets(target, spell.getAdditionalTargets()), player);
       System.out.println(spell);

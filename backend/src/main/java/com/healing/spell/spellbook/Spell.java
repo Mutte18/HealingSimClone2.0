@@ -1,6 +1,5 @@
 package com.healing.spell.spellbook;
 
-import com.healing.buff.Buff;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
@@ -15,7 +14,9 @@ public abstract class Spell {
   private final Integer healAmount;
   private final Integer damageAmount;
   private final Integer additionalTargets;
-  private Buff buff;
+  private final Integer coolDownTime;
+  private Integer remainingCooldown = 0;
+  private Boolean onCooldown = false;
 
   public Spell(
       String name,
@@ -24,15 +25,14 @@ public abstract class Spell {
       Integer additionalTargets,
       Integer healAmount,
       Integer damageAmount,
-      Buff buff) {
+      Integer coolDownTime) {
     this.name = name;
     this.spellId = spellId;
     this.manaCost = manaCost;
     this.additionalTargets = additionalTargets;
     this.healAmount = healAmount;
     this.damageAmount = damageAmount;
-    this.buff = buff;
-    // new UUID(1,1);
+    this.coolDownTime = coolDownTime;
   }
 
   public abstract void createAction(
@@ -40,7 +40,17 @@ public abstract class Spell {
 
   public abstract void addBuff(Entity target);
 
-  public void setBuff(Buff buff) {
-    this.buff = buff;
+  public void tick(Integer seconds) {
+    this.remainingCooldown -= seconds;
+    if (this.remainingCooldown <= 0) {
+      this.onCooldown = false;
+    }
+  }
+
+  public void startCooldown() {
+    if (coolDownTime > 0) {
+      this.onCooldown = true;
+      this.remainingCooldown = this.coolDownTime;
+    }
   }
 }

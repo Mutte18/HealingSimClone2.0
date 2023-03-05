@@ -9,14 +9,7 @@ import java.util.List;
 
 public class Riptide extends Spell {
   public Riptide() {
-    super(
-        SpellList.RIPTIDE.getName(),
-        SpellList.RIPTIDE.getId(),
-        SpellList.RIPTIDE.getManaCost(),
-        SpellList.RIPTIDE.getAdditionalTargets(),
-        SpellList.RIPTIDE.getHealAmount(),
-        SpellList.RIPTIDE.getDamageAmount(),
-        new RiptideBuff());
+    super("Riptide", "3", 150, 0, 75, 0, 4);
   }
 
   @Override
@@ -27,6 +20,6 @@ public class Riptide extends Spell {
 
   @Override
   public void addBuff(Entity target) {
-    target.getBuffs().add(this.getBuff());
+    target.getBuffs().add(new RiptideBuff());
   }
 }

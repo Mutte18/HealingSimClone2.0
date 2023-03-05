@@ -3,6 +3,14 @@
 * ~~Build support that removes HoTs after X seconds~~
 * ~~Build support so that HoTs heal every X seconds~~
 
+# DoTs & Debuffs on raiders?
+
+# Cooldown on spells
+
+# GUI to see raider healths in Java
+
+
+
 # SpellCasting
 * Look into use seconds elapsed for spell casting
 * Look into channeling spells, like tranquility
@@ -13,8 +21,6 @@
 # Absorb spells
 * Add functionality to add absorb spell effects
 * This should be "extra" health on the target
-
-# Debuffs on raiders?
 
 # Interuppt system for interuppting bosses?
 * Elapsed seconds for boss casting?

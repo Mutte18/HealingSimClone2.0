@@ -5,12 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
-import com.healing.spell.exceptions.InsufficientManaException;
-import com.healing.spell.exceptions.InvalidSpellNameException;
-import com.healing.spell.exceptions.NoTargetException;
+import com.healing.spell.exceptions.*;
 import com.healing.spell.spellbook.FlashHeal;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
+import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +22,7 @@ public class SpellCastServiceTest {
   private ActionsQueue actionsQueue;
   private SpellBook spellBook;
   private RaiderHandler raiderHandler;
+  private GlobalCooldownHandler globalCooldownHandler;
 
   @BeforeEach
   public void setup() {
@@ -30,8 +30,10 @@ public class SpellCastServiceTest {
     spellBook = new SpellBook();
     raiderHandler = new RaiderHandler();
     raiderHandler.resetRaidGroup();
+    globalCooldownHandler = new GlobalCooldownHandler();
 
-    spellCastService = new SpellCastService(actionsQueue, spellBook, raiderHandler);
+    spellCastService =
+        new SpellCastService(actionsQueue, spellBook, raiderHandler, globalCooldownHandler);
   }
 
   @Test
@@ -136,7 +138,7 @@ public class SpellCastServiceTest {
 
   @Test
   void castingBuffSpellShouldGenerateUniqueBuff() throws NoTargetException {
-    var spell = getSpellByName("Riptide");
+    var spell = getSpellByName("Renew");
     var target = "PLAYER0";
     spellCastService.castSpell(spell.getSpellId(), target);
     spellCastService.castSpell(spell.getSpellId(), target);
@@ -146,6 +148,30 @@ public class SpellCastServiceTest {
     var buff2 = buffs.get(1);
 
     assertNotEquals(buff1, buff2);
+  }
+
+  @Test
+  void castingSpellWhenSpellIsOnCooldownShouldThrowException() throws NoTargetException {
+    var spell = getSpellByName("Riptide");
+    var target = "PLAYER0";
+    spellCastService.castSpell(spell.getSpellId(), target);
+    globalCooldownHandler.toggleGlobalCooldown(false);
+
+    Assertions.assertThrows(
+        SpellOnCooldownException.class,
+        () -> spellCastService.castSpell(spell.getSpellId(), target));
+  }
+
+  @Test
+  void castingSpellDuringGlobalCooldownShouldThrowException() throws NoTargetException {
+    var firstSpell = getSpellByName("Riptide");
+    var secondSpell = getSpellByName("Renew");
+    var target = "PLAYER0";
+    spellCastService.castSpell(firstSpell.getSpellId(), target);
+
+    Assertions.assertThrows(
+        GlobalCooldownException.class,
+        () -> spellCastService.castSpell(secondSpell.getSpellId(), target));
   }
 
   private Spell getSpellByName(String spellName) {
