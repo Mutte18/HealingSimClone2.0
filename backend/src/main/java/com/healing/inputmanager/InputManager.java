@@ -20,8 +20,7 @@ public class InputManager implements java.awt.event.KeyListener {
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {
-  }
+  public void keyTyped(KeyEvent e) {}
 
   @SneakyThrows
   @Override
@@ -34,25 +33,22 @@ public class InputManager implements java.awt.event.KeyListener {
       case KeyEvent.VK_G -> castSpell("0", "PLAYER0");
       case KeyEvent.VK_H -> castSpell("1", "DPS0");
       case KeyEvent.VK_X -> cancelSpellCast();
-
-
     }
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-  }
+  public void keyReleased(KeyEvent e) {}
 
   private void castSpell(String spellId, String target) throws JsonProcessingException {
     var spellCastJson =
-            new ObjectMapper().writeValueAsString(new SpellCastRequest(spellId, target));
+        new ObjectMapper().writeValueAsString(new SpellCastRequest(spellId, target));
     HttpClient httpClient = HttpClient.newHttpClient();
     HttpRequest request =
-            HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/spellcasting"))
-                    .POST(HttpRequest.BodyPublishers.ofString(spellCastJson))
-                    .header("Content-Type", "application/json")
-                    .build();
+        HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:8080/spellcasting"))
+            .POST(HttpRequest.BodyPublishers.ofString(spellCastJson))
+            .header("Content-Type", "application/json")
+            .build();
     try {
       httpClient.send(request, HttpResponse.BodyHandlers.ofString());
     } catch (IOException ex) {
@@ -65,11 +61,11 @@ public class InputManager implements java.awt.event.KeyListener {
   private void cancelSpellCast() {
     HttpClient httpClient = HttpClient.newHttpClient();
     HttpRequest request =
-            HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/spellcasting/cancel"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
-                    .header("Content-Type", "application/json")
-                    .build();
+        HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:8080/spellcasting/cancel"))
+            .POST(HttpRequest.BodyPublishers.ofString(""))
+            .header("Content-Type", "application/json")
+            .build();
     try {
       httpClient.send(request, HttpResponse.BodyHandlers.ofString());
       System.out.println("GGs");

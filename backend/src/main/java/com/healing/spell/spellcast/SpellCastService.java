@@ -1,14 +1,10 @@
 package com.healing.spell.spellcast;
 
-import com.healing.entity.Entity;
 import com.healing.entity.Player;
-import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.exceptions.*;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +15,6 @@ public class SpellCastService {
   private final GlobalCooldownHandler globalCooldownHandler;
   private final SpellCastingHandler spellCastingHandler;
   private final RaiderHandler raiderHandler;
-
 
   @Autowired
   public SpellCastService(
@@ -50,7 +45,6 @@ public class SpellCastService {
     if (player != null) {
       validationChecks(spell, player);
       spellCastingHandler.startCastingSpell(spell, player, target);
-
     }
   }
 
@@ -63,10 +57,10 @@ public class SpellCastService {
     }
     if (spell.getOnCooldown()) {
       throw new SpellOnCooldownException(
-              spell.getName()
-                      + " is not ready yet. Cooldown remaining: "
-                      + spell.getRemainingCooldown()
-                      + " seconds ");
+          spell.getName()
+              + " is not ready yet. Cooldown remaining: "
+              + spell.getRemainingCooldown()
+              + " seconds ");
     }
     if (player.getMana() < spell.getManaCost()) {
       throw new InsufficientManaException();

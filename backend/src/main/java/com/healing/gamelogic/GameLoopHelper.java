@@ -5,7 +5,6 @@ import com.healing.entity.EntityRole;
 import com.healing.entity.Healer;
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
-import com.healing.spell.spellcast.SpellCastingHandler;
 import org.springframework.stereotype.Component;
 
 @Component

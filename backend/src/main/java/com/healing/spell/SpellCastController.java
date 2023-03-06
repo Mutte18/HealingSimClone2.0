@@ -22,7 +22,8 @@ public class SpellCastController {
   private final SpellCastingHandler spellCastingHandler;
 
   @Autowired
-  public SpellCastController(SpellCastService spellCastService, SpellCastingHandler spellCastingHandler) {
+  public SpellCastController(
+      SpellCastService spellCastService, SpellCastingHandler spellCastingHandler) {
     this.spellCastService = spellCastService;
     this.spellCastingHandler = spellCastingHandler;
   }
@@ -42,7 +43,7 @@ public class SpellCastController {
     return ResponseEntity.ok().body("");
   }
 
-  @PostMapping("/spellcasting/cancel")
+  @PostMapping("/cancel")
   public ResponseEntity<String> cancelSpellCast() {
     spellCastingHandler.cancelSpellCast();
     return ResponseEntity.ok().body("");

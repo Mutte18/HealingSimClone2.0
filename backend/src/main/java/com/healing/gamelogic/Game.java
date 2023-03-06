@@ -20,7 +20,6 @@ public class Game implements Runnable {
   private final BuffHandler buffHandler;
   private final SpellCastingHandler spellCastingHandler;
 
-
   /** Time keeping variables */
   private long lasttime = System.nanoTime();
 

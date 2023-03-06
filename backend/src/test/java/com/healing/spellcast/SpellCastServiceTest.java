@@ -31,7 +31,8 @@ public class SpellCastServiceTest {
     raiderHandler = new RaiderHandler();
     raiderHandler.resetRaidGroup();
     globalCooldownHandler = new GlobalCooldownHandler();
-    spellCastingHandler = new SpellCastingHandler(new ActionsQueue(), raiderHandler, globalCooldownHandler);
+    spellCastingHandler =
+        new SpellCastingHandler(new ActionsQueue(), raiderHandler, globalCooldownHandler);
 
     spellCastService =
         new SpellCastService(spellBook, raiderHandler, globalCooldownHandler, spellCastingHandler);

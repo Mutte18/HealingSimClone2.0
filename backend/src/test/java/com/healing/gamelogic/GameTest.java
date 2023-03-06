@@ -26,10 +26,17 @@ public class GameTest {
         new GameLoopHelper(
             actionsQueue, bossHandler, raiderHandler, new SpellBook(), new GlobalCooldownHandler());
     buffHandler = new BuffHandler(raiderHandler, actionsQueue);
-    spellCastingHandler = new SpellCastingHandler(actionsQueue, raiderHandler, new GlobalCooldownHandler());
+    spellCastingHandler =
+        new SpellCastingHandler(actionsQueue, raiderHandler, new GlobalCooldownHandler());
     game =
         new Game(
-            actionsQueue, raiderHandler, bossHandler, stateService, gameLoopHelper, buffHandler, spellCastingHandler);
+            actionsQueue,
+            raiderHandler,
+            bossHandler,
+            stateService,
+            gameLoopHelper,
+            buffHandler,
+            spellCastingHandler);
     game.toggleIsRunning(false);
   }
 }
