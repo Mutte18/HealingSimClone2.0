@@ -15,6 +15,7 @@ public class GameTest {
   Game game;
   BuffHandler buffHandler;
   SpellCastingHandler spellCastingHandler;
+  GlobalCooldownHandler globalCooldownHandler;
 
   @BeforeEach
   void setup() {
@@ -22,12 +23,13 @@ public class GameTest {
     bossHandler = new BossHandler(raiderHandler);
     actionsQueue = new ActionsQueue();
     stateService = new StateService(bossHandler, raiderHandler);
+    globalCooldownHandler = new GlobalCooldownHandler();
     gameLoopHelper =
         new GameLoopHelper(
-            actionsQueue, bossHandler, raiderHandler, new SpellBook(), new GlobalCooldownHandler());
+            actionsQueue, bossHandler, raiderHandler, new SpellBook());
     buffHandler = new BuffHandler(raiderHandler, actionsQueue);
     spellCastingHandler =
-        new SpellCastingHandler(actionsQueue, raiderHandler, new GlobalCooldownHandler());
+        new SpellCastingHandler(actionsQueue, raiderHandler, globalCooldownHandler);
     game =
         new Game(
             actionsQueue,
@@ -36,7 +38,8 @@ public class GameTest {
             stateService,
             gameLoopHelper,
             buffHandler,
-            spellCastingHandler);
+            spellCastingHandler,
+                globalCooldownHandler);
     game.toggleIsRunning(false);
   }
 }

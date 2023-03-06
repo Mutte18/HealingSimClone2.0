@@ -149,7 +149,7 @@ public class SpellCastServiceTest {
     var spell = getSpellByName("Renew");
     var target = "PLAYER0";
     spellCastService.castSpell(spell.getSpellId(), target);
-    globalCooldownHandler.toggleGlobalCooldown(false);
+    globalCooldownHandler.endGlobalCooldown();
 
     spellCastService.castSpell(spell.getSpellId(), target);
 
@@ -165,7 +165,7 @@ public class SpellCastServiceTest {
     var spell = getSpellByName("Riptide");
     var target = "PLAYER0";
     spellCastService.castSpell(spell.getSpellId(), target);
-    globalCooldownHandler.toggleGlobalCooldown(false);
+    globalCooldownHandler.endGlobalCooldown();
 
     Assertions.assertThrows(
         SpellOnCooldownException.class,

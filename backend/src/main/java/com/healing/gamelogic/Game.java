@@ -3,6 +3,7 @@ package com.healing.gamelogic;
 import com.healing.buff.RenewBuff;
 import com.healing.entity.Boss;
 import com.healing.gui.MainWindow;
+import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.state.StateService;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class Game implements Runnable {
   private final GameLoopHelper gameLoopHelper;
   private final BuffHandler buffHandler;
   private final SpellCastingHandler spellCastingHandler;
+  private final GlobalCooldownHandler globalCooldownHandler;
 
   /** Time keeping variables */
   private long lasttime = System.nanoTime();
@@ -30,13 +32,14 @@ public class Game implements Runnable {
 
   @Autowired
   public Game(
-      ActionsQueue actionsQueue,
-      RaiderHandler raiderHandler,
-      BossHandler bossHandler,
-      StateService stateService,
-      GameLoopHelper gameLoopHelper,
-      BuffHandler buffHandler,
-      SpellCastingHandler spellCastingHandler) {
+          ActionsQueue actionsQueue,
+          RaiderHandler raiderHandler,
+          BossHandler bossHandler,
+          StateService stateService,
+          GameLoopHelper gameLoopHelper,
+          BuffHandler buffHandler,
+          SpellCastingHandler spellCastingHandler,
+          GlobalCooldownHandler globalCooldownHandler) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;
@@ -44,6 +47,7 @@ public class Game implements Runnable {
     this.gameLoopHelper = gameLoopHelper;
     this.buffHandler = buffHandler;
     this.spellCastingHandler = spellCastingHandler;
+    this.globalCooldownHandler = globalCooldownHandler;
 
     if (!GraphicsEnvironment.isHeadless()) {
       new MainWindow(stateService);
@@ -92,6 +96,7 @@ public class Game implements Runnable {
 
         buffHandler.processBuffs(1);
         spellCastingHandler.tick(1.0);
+        globalCooldownHandler.tick(1.0);
         buffHandler.cleanUpExpiredBuffs();
 
       } else if (tenthOfSecond == 10) {

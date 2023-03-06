@@ -17,7 +17,6 @@ public class GameLoopHelperTest {
   private BossHandler bossHandler;
   private ActionsQueue actionsQueue;
   private SpellBook spellBook;
-  private GlobalCooldownHandler globalCooldownHandler;
 
   @BeforeEach
   void setup() {
@@ -27,10 +26,9 @@ public class GameLoopHelperTest {
     bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     actionsQueue = new ActionsQueue();
     spellBook = new SpellBook();
-    globalCooldownHandler = new GlobalCooldownHandler();
     gameLoopHelper =
         new GameLoopHelper(
-            actionsQueue, bossHandler, raiderHandler, spellBook, globalCooldownHandler);
+            actionsQueue, bossHandler, raiderHandler, spellBook);
   }
 
   @Test
@@ -90,13 +88,13 @@ public class GameLoopHelperTest {
     Assertions.assertEquals(1, bossActions.size());
   }
 
-  @Test
+  /*@Test
   void shouldSetGlobalCooldownToFalseEachTick() {
-    globalCooldownHandler.toggleGlobalCooldown(true);
+    globalCooldownHandler.endGlobalCooldown(true);
     gameLoopHelper.tick(1);
 
     Assertions.assertFalse(globalCooldownHandler.isOnCooldown());
-  }
+  }*/
 
   private List<Action> getActionsOfType(Class actionTypeToFind) {
     return actionsQueue.stream()

@@ -13,7 +13,6 @@ public class GameLoopHelper {
   private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
   private final SpellBook spellBook;
-  private final GlobalCooldownHandler globalCooldownHandler;
 
   private int secondsElapsed = 0;
 
@@ -21,13 +20,11 @@ public class GameLoopHelper {
       ActionsQueue actionsQueue,
       BossHandler bossHandler,
       RaiderHandler raiderHandler,
-      SpellBook spellBook,
-      GlobalCooldownHandler globalCooldownHandler) {
+      SpellBook spellBook) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;
     this.spellBook = spellBook;
-    this.globalCooldownHandler = globalCooldownHandler;
   }
 
   public void tick(Integer seconds) {
@@ -42,7 +39,6 @@ public class GameLoopHelper {
 
     raiderHandler.getRaidGroup().forEach(raider -> raider.tick(secondsElapsed));
     spellBook.forEach(spell -> spell.tick(1));
-    globalCooldownHandler.toggleGlobalCooldown(false);
   }
 
   private void bossAutoAttack(Integer secondsElapsed) {

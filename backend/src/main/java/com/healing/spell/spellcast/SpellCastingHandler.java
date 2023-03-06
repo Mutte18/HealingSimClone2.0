@@ -40,7 +40,7 @@ public class SpellCastingHandler {
     this.isCasting = true;
     this.player = player;
     this.target = target;
-    globalCooldownHandler.toggleGlobalCooldown(true);
+    globalCooldownHandler.startGlobalCooldown();
     spell.startCooldown();
     System.out.println(
         "Started casting " + spell.getName() + " time remaining: " + castTimeRemaining);

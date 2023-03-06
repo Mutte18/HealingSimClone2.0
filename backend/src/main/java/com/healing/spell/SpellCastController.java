@@ -1,7 +1,9 @@
 package com.healing.spell;
 
+import com.healing.spell.exceptions.GlobalCooldownException;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
+import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastService;
 import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.spell.spellcast.request.SpellCastRequest;
@@ -20,12 +22,14 @@ public class SpellCastController {
 
   private final SpellCastService spellCastService;
   private final SpellCastingHandler spellCastingHandler;
+  private final GlobalCooldownHandler globalCooldownHandler;
 
   @Autowired
   public SpellCastController(
-      SpellCastService spellCastService, SpellCastingHandler spellCastingHandler) {
+      SpellCastService spellCastService, SpellCastingHandler spellCastingHandler, GlobalCooldownHandler globalCooldownHandler) {
     this.spellCastService = spellCastService;
     this.spellCastingHandler = spellCastingHandler;
+    this.globalCooldownHandler = globalCooldownHandler;
   }
 
   @PostMapping(produces = "application/json")
@@ -35,6 +39,7 @@ public class SpellCastController {
       return ResponseEntity.status(400).body("Missing spellId or targetId");
     }
     try {
+
       spellCastService.castSpell(data.getSpellId(), data.getTargetId());
     } catch (NoTargetException | InvalidSpellNameException e) {
       System.err.println(e);
