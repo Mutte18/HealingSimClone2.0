@@ -3,6 +3,7 @@ package com.healing.spell;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellcast.SpellCastService;
+import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.spell.spellcast.request.SpellCastRequest;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ public class SpellCastController {
   private Logger logger;
 
   private final SpellCastService spellCastService;
+  private final SpellCastingHandler spellCastingHandler;
 
   @Autowired
-  public SpellCastController(SpellCastService spellCastService) {
+  public SpellCastController(SpellCastService spellCastService, SpellCastingHandler spellCastingHandler) {
     this.spellCastService = spellCastService;
+    this.spellCastingHandler = spellCastingHandler;
   }
 
   @PostMapping(produces = "application/json")
@@ -36,6 +39,12 @@ public class SpellCastController {
       System.err.println(e);
       return ResponseEntity.notFound().build();
     }
+    return ResponseEntity.ok().body("");
+  }
+
+  @PostMapping("/spellcasting/cancel")
+  public ResponseEntity<String> cancelSpellCast() {
+    spellCastingHandler.cancelSpellCast();
     return ResponseEntity.ok().body("");
   }
 }

@@ -3,6 +3,7 @@ package com.healing.gamelogic;
 import com.healing.buff.RenewBuff;
 import com.healing.entity.Boss;
 import com.healing.gui.MainWindow;
+import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.state.StateService;
 import java.awt.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class Game implements Runnable {
   private final StateService stateService;
   private final GameLoopHelper gameLoopHelper;
   private final BuffHandler buffHandler;
+  private final SpellCastingHandler spellCastingHandler;
+
 
   /** Time keeping variables */
   private long lasttime = System.nanoTime();
@@ -33,13 +36,15 @@ public class Game implements Runnable {
       BossHandler bossHandler,
       StateService stateService,
       GameLoopHelper gameLoopHelper,
-      BuffHandler buffHandler) {
+      BuffHandler buffHandler,
+      SpellCastingHandler spellCastingHandler) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;
     this.stateService = stateService;
     this.gameLoopHelper = gameLoopHelper;
     this.buffHandler = buffHandler;
+    this.spellCastingHandler = spellCastingHandler;
 
     if (!GraphicsEnvironment.isHeadless()) {
       new MainWindow(stateService);
@@ -87,6 +92,7 @@ public class Game implements Runnable {
         tenthOfSecond++;
 
         buffHandler.processBuffs(1);
+        spellCastingHandler.tick(1.0);
         buffHandler.cleanUpExpiredBuffs();
 
       } else if (tenthOfSecond == 10) {

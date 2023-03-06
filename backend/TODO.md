@@ -6,6 +6,9 @@
 # DoTs & Debuffs on raiders?
 
 # Cooldown on spells
+* ~~Cooldown added on spells~~
+* ~~Global cooldown added on spells~~
+* ~~Cooldown ticks down every second on all spells~~
 
 # GUI to see raider healths in Java
 

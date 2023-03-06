@@ -1,5 +1,6 @@
 package com.healing.spell.spellbook;
 
+import com.healing.config.TimeKeeping;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class ChainHeal extends Spell {
   public ChainHeal() {
-    super("Chain Heal", "2", 250, 2, 150, 0, 1);
+    super("Chain Heal", "2", 250, 2, 150, 0, 1, 2.0 * TimeKeeping.TENTH_OF_SECOND);
   }
 
   @Override

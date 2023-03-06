@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Renew extends Spell {
   public Renew() {
-    super("Renew", "1", 100, 0, 0, 0, 0);
+    super("Renew", "1", 100, 0, 0, 0, 0, 0.0);
   }
 
   @Override

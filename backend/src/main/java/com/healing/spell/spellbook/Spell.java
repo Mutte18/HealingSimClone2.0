@@ -15,6 +15,7 @@ public abstract class Spell {
   private final Integer damageAmount;
   private final Integer additionalTargets;
   private final Integer coolDownTime;
+  private final Double castTime;
   private Integer remainingCooldown = 0;
   private Boolean onCooldown = false;
 
@@ -25,7 +26,8 @@ public abstract class Spell {
       Integer additionalTargets,
       Integer healAmount,
       Integer damageAmount,
-      Integer coolDownTime) {
+      Integer coolDownTime,
+      Double castTime) {
     this.name = name;
     this.spellId = spellId;
     this.manaCost = manaCost;
@@ -33,6 +35,7 @@ public abstract class Spell {
     this.healAmount = healAmount;
     this.damageAmount = damageAmount;
     this.coolDownTime = coolDownTime;
+    this.castTime = castTime;
   }
 
   public abstract void createAction(

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Riptide extends Spell {
   public Riptide() {
-    super("Riptide", "3", 150, 0, 75, 0, 4);
+    super("Riptide", "3", 150, 0, 75, 0, 4, 0.0);
   }
 
   @Override
