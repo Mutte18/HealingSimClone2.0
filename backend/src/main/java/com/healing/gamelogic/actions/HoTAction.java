@@ -20,6 +20,6 @@ public class HoTAction extends Action {
   public void performAction() {
     entity.increaseHealth(healAmount);
     /*System.out.println(
-        buff.getClass().getName() + " ticked for " + buff.getHealAmount() + " on " + entity);*/
+    buff.getClass().getName() + " ticked for " + buff.getHealAmount() + " on " + entity);*/
   }
 }

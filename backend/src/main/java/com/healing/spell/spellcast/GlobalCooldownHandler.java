@@ -20,7 +20,6 @@ public class GlobalCooldownHandler {
   public void endGlobalCooldown() {
     this.onCooldown = false;
     System.err.println("Global cooldown finished");
-
   }
 
   public void tick(double tenthOfSeconds) {

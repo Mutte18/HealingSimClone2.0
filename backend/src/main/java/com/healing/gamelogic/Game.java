@@ -32,14 +32,14 @@ public class Game implements Runnable {
 
   @Autowired
   public Game(
-          ActionsQueue actionsQueue,
-          RaiderHandler raiderHandler,
-          BossHandler bossHandler,
-          StateService stateService,
-          GameLoopHelper gameLoopHelper,
-          BuffHandler buffHandler,
-          SpellCastingHandler spellCastingHandler,
-          GlobalCooldownHandler globalCooldownHandler) {
+      ActionsQueue actionsQueue,
+      RaiderHandler raiderHandler,
+      BossHandler bossHandler,
+      StateService stateService,
+      GameLoopHelper gameLoopHelper,
+      BuffHandler buffHandler,
+      SpellCastingHandler spellCastingHandler,
+      GlobalCooldownHandler globalCooldownHandler) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;

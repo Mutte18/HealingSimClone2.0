@@ -4,7 +4,6 @@ import com.healing.entity.Dps;
 import com.healing.entity.EntityRole;
 import com.healing.entity.Healer;
 import com.healing.spell.spellbook.SpellBook;
-import com.healing.spell.spellcast.GlobalCooldownHandler;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,12 +29,10 @@ public class GameLoopHelper {
   public void tick(Integer seconds) {
     this.secondsElapsed += seconds;
 
-    /*dpsAutoAttack(secondsElapsed);
+    dpsAutoAttack(secondsElapsed);
     npcHealerAoEHeal(secondsElapsed);
     bossAutoAttack(secondsElapsed);
     bossSpecialAttack(secondsElapsed);
-
-     */
 
     raiderHandler.getRaidGroup().forEach(raider -> raider.tick(secondsElapsed));
     spellBook.forEach(spell -> spell.tick(1));

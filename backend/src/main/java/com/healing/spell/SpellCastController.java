@@ -1,6 +1,5 @@
 package com.healing.spell;
 
-import com.healing.spell.exceptions.GlobalCooldownException;
 import com.healing.spell.exceptions.InvalidSpellNameException;
 import com.healing.spell.exceptions.NoTargetException;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
@@ -26,7 +25,9 @@ public class SpellCastController {
 
   @Autowired
   public SpellCastController(
-      SpellCastService spellCastService, SpellCastingHandler spellCastingHandler, GlobalCooldownHandler globalCooldownHandler) {
+      SpellCastService spellCastService,
+      SpellCastingHandler spellCastingHandler,
+      GlobalCooldownHandler globalCooldownHandler) {
     this.spellCastService = spellCastService;
     this.spellCastingHandler = spellCastingHandler;
     this.globalCooldownHandler = globalCooldownHandler;

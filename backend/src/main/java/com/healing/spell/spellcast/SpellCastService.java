@@ -43,8 +43,8 @@ public class SpellCastService {
     var spell = optionalSpell.get();
 
     if (player != null) {
-        validationChecks(spell, player);
-        spellCastingHandler.startCastingSpell(spell, player, target);
+      validationChecks(spell, player);
+      spellCastingHandler.startCastingSpell(spell, player, target);
     }
   }
 
