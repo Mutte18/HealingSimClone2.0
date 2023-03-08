@@ -53,7 +53,7 @@ public class SpellCastingHandler {
   public void tick(Double tenthOfSeconds) {
     if (isCasting) {
       this.castTimeRemaining -= tenthOfSeconds;
-      System.out.println(castTimeRemaining);
+      System.out.printf("%.1f%n", castTimeRemaining);
       if (castTimeRemaining <= 0) {
         finishSpellCast();
       }

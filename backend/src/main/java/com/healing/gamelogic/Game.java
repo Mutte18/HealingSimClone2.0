@@ -95,8 +95,8 @@ public class Game implements Runnable {
         tenthOfSecond++;
 
         buffHandler.processBuffs(1);
-        spellCastingHandler.tick(1.0);
-        globalCooldownHandler.tick(1.0);
+        spellCastingHandler.tick(0.1);
+        globalCooldownHandler.tick(0.1);
         buffHandler.cleanUpExpiredBuffs();
 
       } else if (tenthOfSecond == 10) {

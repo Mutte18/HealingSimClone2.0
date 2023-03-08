@@ -2,6 +2,7 @@ package com.healing.spellcast;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.healing.config.TimeKeeping;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.spellbook.ChainHeal;
@@ -29,14 +30,6 @@ public class SpellCastingHandlerTest {
         new SpellCastingHandler(actionsQueue, raiderHandler, globalCooldownHandler);
   }
 
-  /*
-  1. Start globalCooldown
-  2. Starts casting
-  3. No cast time for instant spells
-  4. Tick counts down cast time
-  5. Cancels casting spell casts
-  6. Adds buffs, performs actions, reduces mana on finished spell cast
-   */
   @Test
   void finishingCastingSpellShouldReducePlayersMana() {
     var player = raiderHandler.getPlayer();
@@ -144,6 +137,28 @@ public class SpellCastingHandlerTest {
   void cancelSpellCastingWhenNotCastingShouldDoNothing() {
     spellCastingHandler.cancelSpellCast();
 
+    assertFalse(spellCastingHandler.isCasting());
+  }
+
+  @Test
+  void castingSpellWithCastTimeShouldStillBeCastingWhenCastTimeNotFinished() {
+    var spell = new FlashHeal();
+    var target = raiderHandler.getRaiderById("PLAYER0").get();
+    spellCastingHandler.startCastingSpell(spell, raiderHandler.getPlayer(), target);
+
+    spellCastingHandler.tick(1.0);
+    assertEquals(spell, spellCastingHandler.getCastingSpell());
+    assertTrue(spellCastingHandler.isCasting());
+    assertEquals(1.4 * TimeKeeping.TENTH_OF_SECOND, spellCastingHandler.getCastTimeRemaining());
+  }
+
+  @Test
+  void castingInstantSpellsShouldNotTriggerACastTime() {
+    var spell = new Renew();
+    var target = raiderHandler.getRaiderById("PLAYER0").get();
+    spellCastingHandler.startCastingSpell(spell, raiderHandler.getPlayer(), target);
+
+    assertNull(spellCastingHandler.getCastingSpell());
     assertFalse(spellCastingHandler.isCasting());
   }
 }

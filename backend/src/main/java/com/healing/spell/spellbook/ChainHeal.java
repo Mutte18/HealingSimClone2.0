@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ChainHeal extends Spell {
   public ChainHeal() {
-    super("Chain Heal", "2", 250, 2, 150, 0, 1, 2.0 * TimeKeeping.TENTH_OF_SECOND);
+    super("Chain Heal", "2", 250, 2, 150, 0, 1, 2.0);
   }
 
   @Override

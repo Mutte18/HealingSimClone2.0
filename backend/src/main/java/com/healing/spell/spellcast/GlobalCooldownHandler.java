@@ -1,6 +1,5 @@
 package com.healing.spell.spellcast;
 
-import com.healing.config.TimeKeeping;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public class GlobalCooldownHandler {
   private boolean onCooldown = false;
-  private final Double globalCooldownTimer = 1.0 * TimeKeeping.TENTH_OF_SECOND;
+  private final Double globalCooldownTimer = 1.0;
   private Double remainingTime;
 
   public void startGlobalCooldown() {
@@ -25,9 +24,9 @@ public class GlobalCooldownHandler {
   public void tick(double tenthOfSeconds) {
     if (onCooldown) {
       remainingTime -= tenthOfSeconds;
-      System.err.println("Global cooldown with " + remainingTime + " tenths to go");
+      System.err.println("Global cooldown with " + String.format("%.1f", remainingTime) +  " seconds to go");
 
-      if (remainingTime <= 0.0) {
+      if (remainingTime <= 0) {
         endGlobalCooldown();
       }
     }
