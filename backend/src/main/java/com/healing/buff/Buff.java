@@ -11,12 +11,14 @@ public abstract class Buff {
   private final double maxDuration;
   private final double tickInterval;
   private boolean isExpired = false;
+  private BuffType buffType;
 
-  public Buff(double maxDuration, double tickInterval, String name) {
+  public Buff(double maxDuration, double tickInterval, String name, BuffType buffType) {
     this.maxDuration = maxDuration;
     this.remainingDuration = maxDuration;
     this.tickInterval = tickInterval;
     this.name = name;
+    this.buffType = buffType;
   }
 
   public void tick(double tenthOfSecond) {

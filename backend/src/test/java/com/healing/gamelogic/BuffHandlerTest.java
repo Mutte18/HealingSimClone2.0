@@ -1,6 +1,6 @@
 package com.healing.gamelogic;
 
-import com.healing.buff.RenewBuff;
+import com.healing.buff.buffs.RenewBuff;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 public class BuffHandlerTest {
   private BuffHandler buffHandler;
   private RaiderHandler raiderHandler;
+  private BossHandler bossHandler;
   private ActionsQueue actionsQueue;
 
   @BeforeEach
@@ -16,7 +17,8 @@ public class BuffHandlerTest {
     raiderHandler = new RaiderHandler();
     raiderHandler.resetRaidGroup();
     actionsQueue = new ActionsQueue();
-    buffHandler = new BuffHandler(raiderHandler, actionsQueue);
+    bossHandler = new BossHandler(raiderHandler);
+    buffHandler = new BuffHandler(raiderHandler, bossHandler, actionsQueue);
   }
 
   @Test

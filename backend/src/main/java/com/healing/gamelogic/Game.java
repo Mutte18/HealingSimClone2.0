@@ -1,6 +1,6 @@
 package com.healing.gamelogic;
 
-import com.healing.buff.RenewBuff;
+import com.healing.buff.buffs.RenewBuff;
 import com.healing.entity.Boss;
 import com.healing.gui.MainWindow;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
@@ -85,6 +85,10 @@ public class Game implements Runnable {
     raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
     raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
     raiderHandler.getPlayer().setMaxHealth(1000);
+    raiderHandler.getRaidGroup().forEach(raider ->  {
+      raider.setHealth(1000);
+      raider.setMaxHealth(1000);
+    });
 
     while (this.gameRunning) {
       processTime();
@@ -112,6 +116,7 @@ public class Game implements Runnable {
         buffHandler.processBuffs(0.1);
         spellCastingHandler.tick(0.1);
         globalCooldownHandler.tick(0.1);
+        validateBossAndRaidersAliveStatus();
         buffHandler.cleanUpExpiredBuffs();
       }
       if (tenthOfSecond % 10 == 0 && tenthOfSecond > 0) {
@@ -125,5 +130,24 @@ public class Game implements Runnable {
 
   void toggleIsRunning(boolean isRunning) {
     this.gameRunning = isRunning;
+  }
+
+  public boolean isRunning() {
+    return this.gameRunning;
+  }
+
+  void validateBossAndRaidersAliveStatus() {
+    var bossIsAlive = bossHandler.getCurrentBoss().isAlive();
+    var raidersAlive = raiderHandler.getAliveRaiders().size();
+
+    if (!bossIsAlive) {
+      toggleIsRunning(false);
+      System.err.println(
+          bossHandler.getCurrentBoss().getName() + " has been slain! Well done. You Win!");
+    } else if (raidersAlive <= 0) {
+      toggleIsRunning(false);
+      System.err.println(
+          "You and your fellow raiders have died. You failed to keep them alive. Good job.");
+    }
   }
 }

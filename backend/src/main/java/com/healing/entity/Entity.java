@@ -61,4 +61,8 @@ public abstract class Entity {
   public void killEntity() {
     reduceHealth(maxHealth);
   }
+
+  public void addBuff(Buff buff) {
+    this.buffs.add(buff);
+  }
 }

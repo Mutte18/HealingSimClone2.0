@@ -77,7 +77,7 @@ public class RaiderHandler {
   }
 
   void killAllRaiders() {
-    raidGroup.forEach(raider -> raider.reduceHealth(999999));
+    raidGroup.forEach(Entity::killEntity);
   }
 
   public List<Entity> getLeastHealthyRaiders(Entity initialTarget, Integer desiredTargets) {

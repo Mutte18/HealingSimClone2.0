@@ -1,6 +1,6 @@
 package com.healing.spell.spellbook;
 
-import com.healing.buff.RiptideBuff;
+import com.healing.buff.buffs.RiptideBuff;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
@@ -20,6 +20,6 @@ public class Riptide extends Spell {
 
   @Override
   public void addBuff(Entity target) {
-    target.getBuffs().add(new RiptideBuff());
+    target.addBuff(new RiptideBuff());
   }
 }

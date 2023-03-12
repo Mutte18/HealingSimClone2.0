@@ -1,10 +1,13 @@
 package com.healing.gamelogic;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.state.StateService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class GameTest {
   RaiderHandler raiderHandler;
@@ -25,7 +28,7 @@ public class GameTest {
     stateService = new StateService(bossHandler, raiderHandler);
     globalCooldownHandler = new GlobalCooldownHandler();
     gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler, new SpellBook());
-    buffHandler = new BuffHandler(raiderHandler, actionsQueue);
+    buffHandler = new BuffHandler(raiderHandler, bossHandler, actionsQueue);
     spellCastingHandler =
         new SpellCastingHandler(actionsQueue, raiderHandler, globalCooldownHandler);
     game =
@@ -39,5 +42,20 @@ public class GameTest {
             spellCastingHandler,
             globalCooldownHandler);
     game.toggleIsRunning(false);
+  }
+
+  @Test
+  void gameShouldEndWhenAllRaidersAreDead() {
+    raiderHandler.killAllRaiders();
+    game.validateBossAndRaidersAliveStatus();
+    assertFalse(game.isRunning());
+  }
+
+  @Test
+  void gameShouldEndWhenBossIsDead() {
+    bossHandler.getCurrentBoss().killEntity();
+    game.validateBossAndRaidersAliveStatus();
+
+    assertFalse(game.isRunning());
   }
 }

@@ -1,5 +1,7 @@
 package com.healing.buff;
 
+import com.healing.buff.buffs.RenewBuff;
+import com.healing.buff.buffs.RiptideBuff;
 import com.healing.entity.Dps;
 import com.healing.gamelogic.ActionsQueue;
 import java.util.stream.Stream;

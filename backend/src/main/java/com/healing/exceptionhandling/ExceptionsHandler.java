@@ -53,4 +53,11 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     return handleExceptionInternal(
         ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
   }
+
+  @ExceptionHandler(value = {PlayerIsDeadException.class})
+  protected ResponseEntity<Object> handlePlayerIsDead(RuntimeException ex, WebRequest request) {
+    String bodyOfResponse = "You are dead, you can not heal anymore!";
+    return handleExceptionInternal(
+        ex, bodyOfResponse, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED, request);
+  }
 }

@@ -1,6 +1,6 @@
 package com.healing.spell.spellbook;
 
-import com.healing.buff.RenewBuff;
+import com.healing.buff.buffs.RenewBuff;
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
@@ -17,6 +17,6 @@ public class Renew extends Spell {
 
   @Override
   public void addBuff(Entity target) {
-    target.getBuffs().add(new RenewBuff());
+    target.addBuff(new RenewBuff());
   }
 }
