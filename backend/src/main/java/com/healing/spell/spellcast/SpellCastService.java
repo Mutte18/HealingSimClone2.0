@@ -1,8 +1,8 @@
 package com.healing.spell.spellcast;
 
 import com.healing.entity.Player;
+import com.healing.exceptionhandling.exceptions.*;
 import com.healing.gamelogic.RaiderHandler;
-import com.healing.spell.exceptions.*;
 import com.healing.spell.spellbook.Spell;
 import com.healing.spell.spellbook.SpellBook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +28,16 @@ public class SpellCastService {
     this.spellCastingHandler = spellCastingHandler;
   }
 
-  public void castSpell(String spellId, String targetId) throws NoTargetException {
+  public void castSpell(String spellId, String targetId) throws TargetNotFoundException {
     var player = raiderHandler.getPlayer();
     var optionalSpell = spellBook.getSpell(spellId);
     var optionalTarget = raiderHandler.getRaiderById(targetId);
 
     if (optionalTarget.isEmpty()) {
-      throw new NoTargetException();
+      throw new TargetNotFoundException();
     }
     if (optionalSpell.isEmpty()) {
-      throw new InvalidSpellNameException();
+      throw new SpellNotFoundException();
     }
     var target = optionalTarget.get();
     var spell = optionalSpell.get();

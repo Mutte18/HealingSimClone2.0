@@ -1,3 +1,3 @@
-package com.healing.spell.exceptions;
+package com.healing.exceptionhandling.exceptions;
 
 public class AlreadyCastingException extends RuntimeException {}

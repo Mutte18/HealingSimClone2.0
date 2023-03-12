@@ -1,8 +1,8 @@
 package com.healing.spellcast;
 
+import com.healing.exceptionhandling.exceptions.*;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
-import com.healing.spell.exceptions.*;
 import com.healing.spell.spellbook.*;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastService;
@@ -36,7 +36,7 @@ public class SpellCastServiceTest {
     var target = "PLAYER0";
 
     Assertions.assertThrows(
-        InvalidSpellNameException.class, () -> spellCastService.castSpell("99", target));
+        SpellNotFoundException.class, () -> spellCastService.castSpell("99", target));
   }
 
   @Test
@@ -44,7 +44,7 @@ public class SpellCastServiceTest {
     var target = "GG123";
 
     Assertions.assertThrows(
-        NoTargetException.class,
+        TargetNotFoundException.class,
         () -> spellCastService.castSpell(new FlashHeal().getSpellId(), target));
   }
 
@@ -59,7 +59,7 @@ public class SpellCastServiceTest {
   }
 
   @Test
-  void castingSpellWhenSpellIsOnCooldownShouldThrowException() throws NoTargetException {
+  void castingSpellWhenSpellIsOnCooldownShouldThrowException() throws TargetNotFoundException {
     var spell = new Riptide();
     var target = "PLAYER0";
     spellCastService.castSpell(spell.getSpellId(), target);
@@ -71,7 +71,7 @@ public class SpellCastServiceTest {
   }
 
   @Test
-  void castingSpellWhenAlreadyCastingShouldThrowException() throws NoTargetException {
+  void castingSpellWhenAlreadyCastingShouldThrowException() throws TargetNotFoundException {
     var spell = new ChainHeal();
     var target = "PLAYER0";
     spellCastService.castSpell(spell.getSpellId(), target);
@@ -83,7 +83,7 @@ public class SpellCastServiceTest {
   }
 
   @Test
-  void castingSpellDuringGlobalCooldownShouldThrowException() throws NoTargetException {
+  void castingSpellDuringGlobalCooldownShouldThrowException() throws TargetNotFoundException {
     var firstSpell = new Riptide();
     var secondSpell = new Renew();
     var target = "PLAYER0";
