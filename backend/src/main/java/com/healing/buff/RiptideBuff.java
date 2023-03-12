@@ -5,7 +5,7 @@ import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.actions.HoTAction;
 
 public class RiptideBuff extends Buff {
-  private static final double duration = 10.0;
+  private static final double duration = 9.0;
   private static final double interval = 1.5;
   private static final int healAmount = 45;
 
@@ -20,9 +20,5 @@ public class RiptideBuff extends Buff {
         actionsQueue.addActionToQueue(new HoTAction(entity, healAmount, this));
       }
     }
-  }
-
-  public int getHealAmount() {
-    return healAmount;
   }
 }

@@ -1,6 +1,5 @@
 package com.healing.spell;
 
-import com.healing.exceptionhandling.exceptions.SpellNotFoundException;
 import com.healing.exceptionhandling.exceptions.TargetNotFoundException;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastService;
@@ -34,7 +33,8 @@ public class SpellCastController {
   }
 
   @PostMapping(produces = "application/json")
-  public ResponseEntity<String> castSpell(@RequestBody SpellCastRequest data) throws TargetNotFoundException {
+  public ResponseEntity<String> castSpell(@RequestBody SpellCastRequest data)
+      throws TargetNotFoundException {
     System.out.println("GGs " + data);
     if (data.getSpellId() == null || data.getTargetId() == null) {
       return ResponseEntity.status(400).body("Missing spellId or targetId");

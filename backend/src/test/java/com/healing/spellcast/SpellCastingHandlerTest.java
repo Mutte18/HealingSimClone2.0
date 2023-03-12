@@ -2,6 +2,7 @@ package com.healing.spellcast;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.healing.exceptionhandling.exceptions.InsufficientManaException;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.spellbook.ChainHeal;
@@ -10,6 +11,7 @@ import com.healing.spell.spellbook.Renew;
 import com.healing.spell.spellbook.Riptide;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastingHandler;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -159,5 +161,16 @@ public class SpellCastingHandlerTest {
 
     assertNull(spellCastingHandler.getCastingSpell());
     assertFalse(spellCastingHandler.isCasting());
+  }
+
+  @Test
+  void finishingCastingSpellWithInsufficientManaShouldThrowException() {
+    var spell = new FlashHeal();
+    var target = raiderHandler.getRaiderById("PLAYER0").get();
+    spellCastingHandler.startCastingSpell(spell, raiderHandler.getPlayer(), target);
+    raiderHandler.getPlayer().setMana(0);
+
+    Assertions.assertThrows(
+        InsufficientManaException.class, () -> spellCastingHandler.tick(spell.getCastTime()));
   }
 }

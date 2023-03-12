@@ -29,6 +29,4 @@ public abstract class Buff {
   }
 
   public abstract void addAction(Entity entity, ActionsQueue actionsQueue);
-
-  public abstract int getHealAmount();
 }

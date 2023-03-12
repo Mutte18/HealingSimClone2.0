@@ -27,4 +27,8 @@ public class ActionsQueue extends ArrayList<Action> {
       optionalAction.ifPresent(Action::performAction);
     }
   }
+
+  public void resetActionsQueue() {
+    this.clear();
+  }
 }

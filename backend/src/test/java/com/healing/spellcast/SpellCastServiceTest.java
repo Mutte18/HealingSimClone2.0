@@ -93,4 +93,14 @@ public class SpellCastServiceTest {
         GlobalCooldownException.class,
         () -> spellCastService.castSpell(secondSpell.getSpellId(), target));
   }
+
+  @Test
+  void castingSpellWhenPlayerIsDeadShouldThrowException() {
+    var spell = new ChainHeal();
+    var target = "PLAYER0";
+    raiderHandler.getPlayer().killEntity();
+
+    Assertions.assertThrows(
+        PlayerIsDeadException.class, () -> spellCastService.castSpell(spell.getSpellId(), target));
+  }
 }

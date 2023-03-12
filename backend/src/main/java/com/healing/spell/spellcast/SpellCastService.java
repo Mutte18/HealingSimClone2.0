@@ -30,22 +30,25 @@ public class SpellCastService {
 
   public void castSpell(String spellId, String targetId) throws TargetNotFoundException {
     var player = raiderHandler.getPlayer();
-    var optionalSpell = spellBook.getSpell(spellId);
-    var optionalTarget = raiderHandler.getRaiderById(targetId);
+    if (!player.isAlive()) {
+      throw new PlayerIsDeadException();
+    }
 
+    var optionalTarget = raiderHandler.getRaiderById(targetId);
     if (optionalTarget.isEmpty()) {
       throw new TargetNotFoundException();
     }
+
+    var optionalSpell = spellBook.getSpell(spellId);
     if (optionalSpell.isEmpty()) {
       throw new SpellNotFoundException();
     }
+
     var target = optionalTarget.get();
     var spell = optionalSpell.get();
 
-    if (player != null) {
-      validationChecks(spell, player);
-      spellCastingHandler.startCastingSpell(spell, player, target);
-    }
+    validationChecks(spell, player);
+    spellCastingHandler.startCastingSpell(spell, player, target);
   }
 
   private void validationChecks(Spell spell, Player player) {

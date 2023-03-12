@@ -3,7 +3,9 @@ package com.healing.gamelogic.actions;
 import com.healing.entity.Entity;
 import com.healing.entity.Healer;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class NPCHealerAction extends Action {
   private final Healer healer;
   private final Integer healAmount = 10;

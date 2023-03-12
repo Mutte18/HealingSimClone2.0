@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Game implements Runnable {
-  private boolean gameRunning = true;
+  private boolean gameRunning = false;
   private final RaiderHandler raiderHandler;
   private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
@@ -52,8 +52,7 @@ public class Game implements Runnable {
     if (!GraphicsEnvironment.isHeadless()) {
       new MainWindow(stateService);
     }
-    restartGame();
-    new Thread(this).start();
+    resetGame();
   }
 
   @Override
@@ -61,9 +60,25 @@ public class Game implements Runnable {
     gameLoop();
   }
 
-  private void restartGame() {
+  public void resetGame() {
+    toggleIsRunning(false);
     raiderHandler.resetRaidGroup();
+    actionsQueue.resetActionsQueue();
+    spellCastingHandler.resetSpellCastState();
+    gameLoopHelper.resetSecondsElapsed();
     this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
+    resetTimeKeepingValues();
+    toggleIsRunning(true);
+    new Thread(this).start();
+  }
+
+  private void resetTimeKeepingValues() {
+    lasttime = System.nanoTime();
+
+    delta = 0;
+    frames = 0;
+    time = System.currentTimeMillis();
+    tenthOfSecond = 0;
   }
 
   private void gameLoop() {
@@ -98,8 +113,9 @@ public class Game implements Runnable {
         spellCastingHandler.tick(0.1);
         globalCooldownHandler.tick(0.1);
         buffHandler.cleanUpExpiredBuffs();
-
-      } else if (tenthOfSecond == 10) {
+      }
+      if (tenthOfSecond % 10 == 0 && tenthOfSecond > 0) {
+        System.out.println("Tenth of Second " + tenthOfSecond);
         frames = 0;
         tenthOfSecond = 0;
         gameLoopHelper.tick(1);

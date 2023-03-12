@@ -2,6 +2,7 @@ package com.healing.spell.spellcast;
 
 import com.healing.entity.Entity;
 import com.healing.entity.Player;
+import com.healing.exceptionhandling.exceptions.InsufficientManaException;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.spellbook.Spell;
@@ -73,6 +74,10 @@ public class SpellCastingHandler {
   }
 
   private void finishSpellCast() {
+    if (player.getMana() < castingSpell.getManaCost()) {
+      throw new InsufficientManaException();
+    }
+
     castingSpell.createAction(
         actionsQueue,
         target,
@@ -92,7 +97,7 @@ public class SpellCastingHandler {
     return targets;
   }
 
-  private void resetSpellCastState() {
+  public void resetSpellCastState() {
     this.isCasting = false;
     this.castingSpell = null;
   }

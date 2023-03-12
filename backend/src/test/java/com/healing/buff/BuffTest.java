@@ -2,72 +2,77 @@ package com.healing.buff;
 
 import com.healing.entity.Dps;
 import com.healing.gamelogic.ActionsQueue;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class BuffTest {
 
-  private RenewBuff renewBuff;
+  @ParameterizedTest
+  @MethodSource("buffs")
+  void shouldOnlyReduceRemainingDurationWhenBuffNotExpired(Buff buff) {
+    buff.tick(1.0);
 
-  @BeforeEach
-  void setup() {
-    renewBuff = new RenewBuff();
+    Assertions.assertEquals(buff.getMaxDuration() - 1, buff.getRemainingDuration());
   }
 
-  @Test
-  void shouldOnlyReduceRemainingDurationWhenBuffNotExpired() {
-    renewBuff.tick(1.0);
+  @ParameterizedTest
+  @MethodSource("buffs")
+  void shouldSetExpiredWhenRemainingDurationIs0(Buff buff) {
+    buff.tick(999);
 
-    Assertions.assertEquals(renewBuff.getMaxDuration() - 1, renewBuff.getRemainingDuration());
+    Assertions.assertTrue(buff.isExpired());
   }
 
-  @Test
-  void shouldSetExpiredWhenRemainingDurationIs0() {
-    renewBuff.tick(999);
+  @ParameterizedTest
+  @MethodSource("buffs")
+  void shouldNotReduceRemainingDurationWhenAlreadyExpired(Buff buff) {
+    buff.tick(buff.getMaxDuration());
+    buff.tick(1);
 
-    Assertions.assertTrue(renewBuff.isExpired());
+    Assertions.assertEquals(0, buff.getRemainingDuration());
   }
 
-  @Test
-  void shouldNotReduceRemainingDurationWhenAlreadyExpired() {
-    renewBuff.tick(renewBuff.getMaxDuration());
-    renewBuff.tick(1);
-
-    Assertions.assertEquals(0, renewBuff.getRemainingDuration());
-  }
-
-  @Test
-  void shouldNotTriggerActionWhenRemainingDurationIsNotOnTickInterval() {
+  @ParameterizedTest
+  @MethodSource("buffs")
+  void shouldNotTriggerActionWhenRemainingDurationIsNotOnTickInterval(Buff buff) {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    renewBuff.tick(2);
+    buff.tick(2);
 
-    renewBuff.addAction(dps, actionsQueue);
+    buff.addAction(dps, actionsQueue);
 
     Assertions.assertEquals(0, actionsQueue.size());
   }
 
-  @Test
-  void shouldNotTriggerActionWhenBuffIsExpired() {
+  @ParameterizedTest
+  @MethodSource("buffs")
+  void shouldNotTriggerActionWhenBuffIsExpired(Buff buff) {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    renewBuff.tick(9999);
+    buff.tick(9999);
 
-    renewBuff.addAction(dps, actionsQueue);
+    buff.addAction(dps, actionsQueue);
 
     Assertions.assertEquals(0, actionsQueue.size());
   }
 
-  @Test
-  void shouldTriggerActionWhenRemainingDurationIsOnIntervalTickAndNotExpired() {
+  @ParameterizedTest
+  @MethodSource("buffs")
+  void shouldTriggerActionWhenRemainingDurationIsOnIntervalTickAndNotExpired(Buff buff) {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
 
-    renewBuff.tick(1.5);
+    buff.tick(buff.getTickInterval());
 
-    renewBuff.addAction(dps, actionsQueue);
+    buff.addAction(dps, actionsQueue);
 
     Assertions.assertEquals(1, actionsQueue.size());
+  }
+
+  private static Stream<Arguments> buffs() {
+    return Stream.of(Arguments.of(new RiptideBuff()), Arguments.of(new RenewBuff()));
   }
 }

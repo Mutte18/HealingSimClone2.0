@@ -57,4 +57,8 @@ public abstract class Entity {
     double maxHp = maxHealth;
     return (int) ((hp / maxHp) * 100);
   }
+
+  public void killEntity() {
+    reduceHealth(maxHealth);
+  }
 }

@@ -9,6 +9,6 @@ public class MainWindow extends JFrame {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setSize(300, 300);
     this.setVisible(true);
-    this.addKeyListener(new InputManager(stateService));
+    new Thread(() -> this.addKeyListener(new InputManager(stateService))).start();
   }
 }

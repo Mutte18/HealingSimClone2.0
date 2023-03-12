@@ -21,8 +21,4 @@ public class RenewBuff extends Buff {
       }
     }
   }
-
-  public int getHealAmount() {
-    return healAmount;
-  }
 }
