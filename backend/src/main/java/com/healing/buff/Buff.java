@@ -7,21 +7,22 @@ import lombok.Getter;
 @Getter
 public abstract class Buff {
   private final String name;
-  protected int timeElapsed;
-  private final int duration;
+  protected double remainingDuration;
+  private final double maxDuration;
   private final double tickInterval;
   private boolean isExpired = false;
 
-  public Buff(int duration, double tickInterval, String name) {
-    this.duration = duration;
+  public Buff(double maxDuration, double tickInterval, String name) {
+    this.maxDuration = maxDuration;
+    this.remainingDuration = maxDuration;
     this.tickInterval = tickInterval;
     this.name = name;
   }
 
-  public void tick(int timeIncrease) {
+  public void tick(double tenthOfSecond) {
     if (!isExpired) {
-      timeElapsed += timeIncrease;
-      if (timeElapsed >= duration) {
+      remainingDuration -= tenthOfSecond;
+      if (remainingDuration <= 0.0) {
         isExpired = true;
       }
     }

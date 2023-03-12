@@ -2,7 +2,6 @@ package com.healing.spellcast;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.healing.config.TimeKeeping;
 import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.spell.spellbook.ChainHeal;
@@ -149,7 +148,7 @@ public class SpellCastingHandlerTest {
     spellCastingHandler.tick(1.0);
     assertEquals(spell, spellCastingHandler.getCastingSpell());
     assertTrue(spellCastingHandler.isCasting());
-    assertEquals(1.4 * TimeKeeping.TENTH_OF_SECOND, spellCastingHandler.getCastTimeRemaining());
+    assertEquals(0.5, spellCastingHandler.getCastTimeRemaining());
   }
 
   @Test

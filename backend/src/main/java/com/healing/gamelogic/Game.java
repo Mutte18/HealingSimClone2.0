@@ -94,7 +94,7 @@ public class Game implements Runnable {
         time += 100;
         tenthOfSecond++;
 
-        buffHandler.processBuffs(1);
+        buffHandler.processBuffs(0.1);
         spellCastingHandler.tick(0.1);
         globalCooldownHandler.tick(0.1);
         buffHandler.cleanUpExpiredBuffs();

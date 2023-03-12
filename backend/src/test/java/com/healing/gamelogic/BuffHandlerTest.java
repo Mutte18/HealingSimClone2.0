@@ -28,12 +28,13 @@ public class BuffHandlerTest {
   }
 
   @Test
-  void shouldIncrementBuffTimeElapsedWhenProcessed() {
+  void shouldReduceBuffRemainingDurationWhenProcessed() {
     addBuffToRaider();
     buffHandler.processBuffs(1);
-    var buffElapsedAfter = raiderHandler.getRaidGroup().get(0).getBuffs().get(0).getTimeElapsed();
+    var durationRemainingAfter =
+        raiderHandler.getRaidGroup().get(0).getBuffs().get(0).getRemainingDuration();
 
-    Assertions.assertEquals(1, buffElapsedAfter);
+    Assertions.assertEquals(8, durationRemainingAfter);
   }
 
   @Test

@@ -3,7 +3,9 @@ package com.healing.gamelogic;
 import com.healing.gamelogic.actions.Action;
 import java.util.ArrayList;
 import java.util.Optional;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ActionsQueue extends ArrayList<Action> {
 
   public ActionsQueue() {}

@@ -13,7 +13,7 @@ public class BuffHandler {
     this.actionsQueue = actionsQueue;
   }
 
-  public void processBuffs(int timeIncrease) {
+  public void processBuffs(double tenthOfSeconds) {
     var raiders = raiderHandler.getAliveRaiders();
     raiders.forEach(
         raider ->
@@ -22,7 +22,7 @@ public class BuffHandler {
                 .forEach(
                     buff -> {
                       buff.addAction(raider, actionsQueue);
-                      buff.tick(timeIncrease);
+                      buff.tick(tenthOfSeconds);
                     }));
   }
 

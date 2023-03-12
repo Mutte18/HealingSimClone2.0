@@ -24,7 +24,8 @@ public class GlobalCooldownHandler {
   public void tick(double tenthOfSeconds) {
     if (onCooldown) {
       remainingTime -= tenthOfSeconds;
-      System.err.println("Global cooldown with " + String.format("%.1f", remainingTime) +  " seconds to go");
+      System.err.println(
+          "Global cooldown with " + String.format("%.1f", remainingTime) + " seconds to go");
 
       if (remainingTime <= 0) {
         endGlobalCooldown();
