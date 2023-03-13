@@ -2,7 +2,6 @@ package com.healing.gamelogic.actions;
 
 import com.healing.buff.Buff;
 import com.healing.entity.Entity;
-
 import java.util.List;
 
 public class DoTAction extends Action {
@@ -20,7 +19,10 @@ public class DoTAction extends Action {
   @Override
   public void performAction() {
     entity.reduceHealth(damageAmount);
-    /*System.out.println(
-    buff.getClass().getName() + " ticked for " + buff.getHealAmount() + " on " + entity);*/
+
+    if (shouldLog) {
+      System.out.println(
+          buff.getClass().getName() + " ticked for " + damageAmount + " on " + entity);
+    }
   }
 }

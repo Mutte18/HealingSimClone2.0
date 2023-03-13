@@ -10,6 +10,7 @@ public abstract class Action {
   protected Entity initiator;
   protected List<Entity> targets;
   protected String id;
+  protected boolean shouldLog = false;
 
   public Action(Entity initiator, List<Entity> targets, String id) {
     this.initiator = initiator;

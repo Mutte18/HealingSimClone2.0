@@ -1,10 +1,12 @@
 package com.healing.gamelogic.actions;
 
 import static com.healing.gamelogic.actions.ActionType.NORMAL;
+import static com.healing.gamelogic.actions.ActionType.SPECIAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.healing.entity.*;
 import com.healing.entity.attacks.MeleeSwing;
+import com.healing.entity.attacks.specials.MassPyroblast;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -65,6 +67,20 @@ public class BossActionTest {
 
     assertEntityIsDead(player);
     assertEntityIsAlive(healer);
+  }
+
+  @Test
+  void shouldAddDebuffAndDealDamageToTarget() {
+    var player = new Player(0, 100, true, 100);
+    var boss = new Boss(1, 1000, true, "Defias Pillager");
+
+    var healthBeforeAttack = player.getHealth();
+    var action =
+        new BossAction(boss, new ArrayList<>(List.of(player)), new MassPyroblast(), "1", SPECIAL);
+    action.performAction();
+
+    assertEquals(1, player.getBuffs().size());
+    assertEquals(healthBeforeAttack - action.getNpcAttack().getDamageAmount(), player.getHealth());
   }
 
   private void assertEntityIsDead(Entity entity) {

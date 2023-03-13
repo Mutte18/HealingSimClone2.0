@@ -2,6 +2,7 @@ package com.healing.buff;
 
 import com.healing.buff.buffs.RenewBuff;
 import com.healing.buff.buffs.RiptideBuff;
+import com.healing.buff.debuffs.BurningDebuff;
 import com.healing.entity.Dps;
 import com.healing.gamelogic.ActionsQueue;
 import java.util.stream.Stream;
@@ -42,7 +43,7 @@ public class BuffTest {
   void shouldNotTriggerActionWhenRemainingDurationIsNotOnTickInterval(Buff buff) {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();
-    buff.tick(2);
+    buff.tick(buff.getTickInterval() + 0.1);
 
     buff.addAction(dps, actionsQueue);
 
@@ -75,6 +76,9 @@ public class BuffTest {
   }
 
   private static Stream<Arguments> buffs() {
-    return Stream.of(Arguments.of(new RiptideBuff()), Arguments.of(new RenewBuff()));
+    return Stream.of(
+        Arguments.of(new RiptideBuff()),
+        Arguments.of(new RenewBuff()),
+        Arguments.of(new BurningDebuff()));
   }
 }

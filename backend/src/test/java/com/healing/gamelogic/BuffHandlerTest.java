@@ -18,6 +18,7 @@ public class BuffHandlerTest {
     raiderHandler.resetRaidGroup();
     actionsQueue = new ActionsQueue();
     bossHandler = new BossHandler(raiderHandler);
+    bossHandler.resetBosses();
     buffHandler = new BuffHandler(raiderHandler, bossHandler, actionsQueue);
   }
 

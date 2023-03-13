@@ -29,14 +29,16 @@ public class BossAction extends Action {
       }
     }
 
-    System.out.println(
-        "Performed Boss Action, "
-            + boss.getName()
-            + " casted "
-            + npcAttack.getName()
-            + " for "
-            + npcAttack.getDamageAmount()
-            + " damage on "
-            + getTargetsInfo());
+    if (shouldLog) {
+      System.out.println(
+          "Performed Boss Action, "
+              + boss.getName()
+              + " casted "
+              + npcAttack.getName()
+              + " for "
+              + npcAttack.getDamageAmount()
+              + " damage on "
+              + getTargetsInfo());
+    }
   }
 }

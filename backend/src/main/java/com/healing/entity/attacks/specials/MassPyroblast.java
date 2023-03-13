@@ -8,10 +8,3 @@ public class MassPyroblast extends NPCAttack {
     super("Mass Pyroblast", 50, 18, new BurningDebuff());
   }
 }
-
-/*
- public MeleeSwing(Integer damageAmount) {
-   super("Melee Swing", damageAmount, 1);
- }
-
-*/

@@ -19,7 +19,9 @@ public class HoTAction extends Action {
   @Override
   public void performAction() {
     entity.increaseHealth(healAmount);
-    /*System.out.println(
-    buff.getClass().getName() + " ticked for " + buff.getHealAmount() + " on " + entity);*/
+    if (shouldLog) {
+
+      System.out.println(buff.getClass().getName() + " ticked for " + healAmount + " on " + entity);
+    }
   }
 }

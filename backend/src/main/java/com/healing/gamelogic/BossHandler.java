@@ -26,6 +26,10 @@ public class BossHandler {
     return currentBoss;
   }
 
+  public void resetBosses() {
+    createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
+  }
+
   public void createNewBoss(Boss boss) {
     bosses.add(boss);
     currentBoss = boss;

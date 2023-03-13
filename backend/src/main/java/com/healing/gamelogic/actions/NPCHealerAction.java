@@ -20,12 +20,14 @@ public class NPCHealerAction extends Action {
     for (var target : targets) {
       target.increaseHealth(healAmount);
     }
-    System.out.println(
-        "Performed NPC Heal Action, "
-            + healer.getId()
-            + " casted Heal Aura for "
-            + healAmount
-            + " healing on "
-            + getTargetsInfo());
+    if (shouldLog) {
+      System.out.println(
+          "Performed NPC Heal Action, "
+              + healer.getId()
+              + " casted Heal Aura for "
+              + healAmount
+              + " healing on "
+              + getTargetsInfo());
+    }
   }
 }

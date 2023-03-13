@@ -1,0 +1,12 @@
+
+GameLoopHelper every 10 sec, creates a boss special attack (which is mass pyroblast). Here the BossAction is created
+containing the boss that issued the attack, what targets, which attack.
+
+When the action is processed it does the following for each target:
+* Reduces HP, based of the attack dmg
+* If the attack has a debuff, add the debuff to the target
+
+This adds the BurningDebuff to the target, which is being processed by BuffHandler. And each tick of the buff, a DotAction is
+added to the actionQueue, which contains the target, dmg amount and what buff it is.
+
+When the DotAction is processed by the actionQueue, then it deals the ticking damage

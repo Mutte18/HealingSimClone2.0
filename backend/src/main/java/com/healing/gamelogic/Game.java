@@ -1,7 +1,6 @@
 package com.healing.gamelogic;
 
 import com.healing.buff.buffs.RenewBuff;
-import com.healing.entity.Boss;
 import com.healing.gui.MainWindow;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastingHandler;
@@ -66,7 +65,7 @@ public class Game implements Runnable {
     actionsQueue.resetActionsQueue();
     spellCastingHandler.resetSpellCastState();
     gameLoopHelper.resetSecondsElapsed();
-    this.bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
+    this.bossHandler.resetBosses();
     resetTimeKeepingValues();
     toggleIsRunning(true);
     new Thread(this).start();
@@ -85,10 +84,13 @@ public class Game implements Runnable {
     raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
     raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
     raiderHandler.getPlayer().setMaxHealth(1000);
-    raiderHandler.getRaidGroup().forEach(raider ->  {
-      raider.setHealth(1000);
-      raider.setMaxHealth(1000);
-    });
+    raiderHandler
+        .getRaidGroup()
+        .forEach(
+            raider -> {
+              raider.setHealth(1000);
+              raider.setMaxHealth(1000);
+            });
 
     while (this.gameRunning) {
       processTime();

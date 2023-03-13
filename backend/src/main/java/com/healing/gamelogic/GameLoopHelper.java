@@ -30,9 +30,9 @@ public class GameLoopHelper {
     this.secondsElapsed += seconds;
     System.out.println("SEOCNDS ELAPSED: " + secondsElapsed);
 
-    /*dpsAutoAttack(secondsElapsed);
+    dpsAutoAttack(secondsElapsed);
     npcHealerAoEHeal(secondsElapsed);
-    bossAutoAttack(secondsElapsed);*/
+    bossAutoAttack(secondsElapsed);
     bossSpecialAttack(secondsElapsed);
 
     raiderHandler.getRaidGroup().forEach(raider -> raider.tick(secondsElapsed));
@@ -47,7 +47,7 @@ public class GameLoopHelper {
   }
 
   private void bossSpecialAttack(Integer secondsElapsed) {
-    if (secondsElapsed % 3 == 0) {
+    if (secondsElapsed % 10 == 0) {
       actionsQueue.addActionToQueue(bossHandler.createBossSpecialAttackAction());
     }
   }
