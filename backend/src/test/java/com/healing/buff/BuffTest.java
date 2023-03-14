@@ -52,6 +52,22 @@ public class BuffTest {
 
   @ParameterizedTest
   @MethodSource("buffs")
+  void shouldAddCorrectAmountOfTicksBasedOnInterval(Buff buff) {
+    var actionsQueue = new ActionsQueue();
+    var dps = Dps.builder().build();
+    var interval = buff.getTickInterval();
+    var duration = buff.getMaxDuration();
+    var expectedActions = duration / interval;
+
+    for (double i = duration; i > 0; i -= 0.1) {
+      buff.addAction(dps, actionsQueue);
+      buff.tick(0.1);
+    }
+    Assertions.assertEquals(expectedActions, actionsQueue.size());
+  }
+
+  @ParameterizedTest
+  @MethodSource("buffs")
   void shouldNotTriggerActionWhenBuffIsExpired(Buff buff) {
     var actionsQueue = new ActionsQueue();
     var dps = Dps.builder().build();

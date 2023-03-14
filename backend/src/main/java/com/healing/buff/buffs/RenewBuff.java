@@ -1,5 +1,7 @@
 package com.healing.buff.buffs;
 
+import static com.healing.RoundingHelper.roundToOneDecimal;
+
 import com.healing.buff.Buff;
 import com.healing.buff.BuffType;
 import com.healing.entity.Entity;
@@ -18,9 +20,19 @@ public class RenewBuff extends Buff {
   @Override
   public void addAction(Entity entity, ActionsQueue actionsQueue) {
     if (!isExpired()) {
-      if (remainingDuration % interval == 0.0) {
+      if (roundToOneDecimal(remainingDuration) % interval == 0) {
         actionsQueue.addActionToQueue(new HoTAction(entity, healAmount, this));
       }
     }
+  }
+
+  @Override
+  public int getDamageAmount() {
+    return 0;
+  }
+
+  @Override
+  public int getHealingAmount() {
+    return healAmount;
   }
 }

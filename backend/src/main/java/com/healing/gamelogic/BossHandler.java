@@ -53,7 +53,7 @@ public class BossHandler {
     var specialAttack = new MassPyroblast();
     return new BossAction(
         currentBoss,
-        raiderHandler.getTargets(specialAttack.getMaxTargets()),
+        raiderHandler.getSpecialAttackTargets(specialAttack.getMaxTargets()),
         specialAttack,
         "0",
         ActionType.SPECIAL);

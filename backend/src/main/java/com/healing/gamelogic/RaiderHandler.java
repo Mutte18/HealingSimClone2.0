@@ -68,6 +68,13 @@ public class RaiderHandler {
         .collect(Collectors.toList());
   }
 
+  public List<Entity> getSpecialAttackTargets(Integer nrOfTargets) {
+    return raidGroup.stream()
+        .filter(Entity::isAlive)
+        .limit(nrOfTargets)
+        .collect(Collectors.toList());
+  }
+
   public NPCAction createDPSAutoAttackAction(Dps dps, Boss currentBoss) {
     return new NPCAction(dps, new ArrayList<>(List.of(currentBoss)), new MeleeSwing(5), "0");
   }

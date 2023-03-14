@@ -83,6 +83,23 @@ public class BossActionTest {
     assertEquals(healthBeforeAttack - action.getNpcAttack().getDamageAmount(), player.getHealth());
   }
 
+  @Test
+  void theDebuffAddedToTargetsShouldBeUnique() {
+    var dps1 = new Dps(0, 100, true);
+    var dps2 = new Dps(0, 100, true);
+    var boss = new Boss(1, 1000, true, "Defias Pillager");
+
+    var action =
+        new BossAction(
+            boss, new ArrayList<>(List.of(dps1, dps2)), new MassPyroblast(), "1", SPECIAL);
+    action.performAction();
+
+    var buff1 = dps1.getBuffs().get(0);
+    var buff2 = dps2.getBuffs().get(0);
+
+    assertNotEquals(buff1, buff2);
+  }
+
   private void assertEntityIsDead(Entity entity) {
     assertEquals(0, entity.getHealth());
     assertFalse(entity.isAlive());

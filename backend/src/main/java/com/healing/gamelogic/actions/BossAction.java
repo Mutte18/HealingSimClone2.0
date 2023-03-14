@@ -25,7 +25,7 @@ public class BossAction extends Action {
     for (var target : targets) {
       target.reduceHealth(npcAttack.getDamageAmount());
       if (npcAttack.getDebuff() != null) {
-        target.addBuff(npcAttack.getDebuff());
+        target.addBuff(npcAttack.getDebuff().clone());
       }
     }
 

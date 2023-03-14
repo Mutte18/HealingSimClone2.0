@@ -5,24 +5,21 @@ import com.healing.entity.Entity;
 import java.util.List;
 
 public class DoTAction extends Action {
-  private final Entity entity;
+  private final Entity target;
   private final Integer damageAmount;
   private final Buff buff;
 
-  public DoTAction(Entity entity, Integer damageAmount, Buff buff) {
-    super(entity, List.of(entity), "0");
-    this.entity = entity;
+  public DoTAction(Entity target, Integer damageAmount, Buff buff) {
+    super(target, List.of(target), "0");
+    this.target = target;
     this.damageAmount = damageAmount;
     this.buff = buff;
   }
 
   @Override
   public void performAction() {
-    entity.reduceHealth(damageAmount);
-
-    if (shouldLog) {
-      System.out.println(
-          buff.getClass().getName() + " ticked for " + damageAmount + " on " + entity);
-    }
+    target.reduceHealth(damageAmount);
+    System.out.println(buff.getClass().getName() + " ticked for " + damageAmount + " on " + target);
+    if (shouldLog) {}
   }
 }

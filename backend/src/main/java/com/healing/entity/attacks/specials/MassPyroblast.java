@@ -5,6 +5,6 @@ import com.healing.entity.attacks.NPCAttack;
 
 public class MassPyroblast extends NPCAttack {
   public MassPyroblast() {
-    super("Mass Pyroblast", 50, 18, new BurningDebuff());
+    super("Mass Pyroblast", 50, 10, new BurningDebuff());
   }
 }
