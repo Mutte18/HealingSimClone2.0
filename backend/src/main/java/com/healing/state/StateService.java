@@ -67,7 +67,7 @@ public class StateService {
         System.out.println();
       }
       try {
-        var json = mapper.writeValueAsString(raider);
+        var json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(raider);
         System.out.println(json);
       } catch (JsonProcessingException e) {
         e.printStackTrace();

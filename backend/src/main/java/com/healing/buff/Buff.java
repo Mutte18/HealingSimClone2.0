@@ -1,11 +1,10 @@
 package com.healing.buff;
 
-import com.healing.RoundingHelper;
+import static com.healing.RoundingHelper.roundToOneDecimal;
+
 import com.healing.entity.Entity;
 import com.healing.gamelogic.ActionsQueue;
 import lombok.Getter;
-
-import static com.healing.RoundingHelper.roundToOneDecimal;
 
 @Getter
 public abstract class Buff implements Cloneable {

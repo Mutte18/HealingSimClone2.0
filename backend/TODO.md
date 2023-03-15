@@ -11,6 +11,7 @@
 * ~~Cooldown ticks down every second on all spells~~
 
 # GUI to see raider healths in Java
+* Write each raiders info in each box
 
 
 
