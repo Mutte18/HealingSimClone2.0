@@ -28,7 +28,6 @@ public class GameLoopHelper {
 
   public void tick(Integer seconds) {
     this.secondsElapsed += seconds;
-    System.out.println("SEOCNDS ELAPSED: " + secondsElapsed);
 
     dpsAutoAttack(secondsElapsed);
     npcHealerAoEHeal(secondsElapsed);

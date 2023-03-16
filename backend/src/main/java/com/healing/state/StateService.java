@@ -9,10 +9,12 @@ import com.healing.gamelogic.BossHandler;
 import com.healing.gamelogic.RaidGroup;
 import com.healing.gamelogic.RaiderHandler;
 import com.healing.state.model.StateModel;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Getter
 public class StateService {
   private final BossHandler bossHandler;
   private final RaiderHandler raiderHandler;

@@ -20,6 +20,7 @@ public class Game implements Runnable {
   private final BuffHandler buffHandler;
   private final SpellCastingHandler spellCastingHandler;
   private final GlobalCooldownHandler globalCooldownHandler;
+  private MainWindow mainWindow;
 
   /** Time keeping variables */
   private long lasttime = System.nanoTime();
@@ -49,7 +50,7 @@ public class Game implements Runnable {
     this.globalCooldownHandler = globalCooldownHandler;
 
     if (!GraphicsEnvironment.isHeadless()) {
-      new MainWindow(stateService);
+      mainWindow = new MainWindow(stateService);
     }
     resetGame();
   }
@@ -120,9 +121,9 @@ public class Game implements Runnable {
         globalCooldownHandler.tick(0.1);
         validateBossAndRaidersAliveStatus();
         buffHandler.cleanUpExpiredBuffs();
+        mainWindow.showUI();
       }
       if (tenthOfSecond % 10 == 0 && tenthOfSecond > 0) {
-        System.out.println("Tenth of Second " + tenthOfSecond);
         frames = 0;
         tenthOfSecond = 0;
         gameLoopHelper.tick(1);

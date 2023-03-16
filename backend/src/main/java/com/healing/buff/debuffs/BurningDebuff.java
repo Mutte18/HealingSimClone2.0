@@ -9,9 +9,9 @@ import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.actions.DoTAction;
 
 public class BurningDebuff extends Buff {
-  private static final double duration = 20.0;
+  private static final double duration = 12.0;
   private static final double interval = 2.0;
-  private static final int damageAmount = 100;
+  private static final int damageAmount = 50;
 
   public BurningDebuff() {
     super(duration, interval, "Burning", BuffType.DEBUFF);

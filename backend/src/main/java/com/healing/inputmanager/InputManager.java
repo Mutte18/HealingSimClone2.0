@@ -2,6 +2,7 @@ package com.healing.inputmanager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.healing.gui.MainWindow;
 import com.healing.spell.spellcast.request.SpellCastRequest;
 import com.healing.state.StateService;
 import java.awt.event.KeyEvent;
@@ -15,9 +16,11 @@ import lombok.SneakyThrows;
 
 public class InputManager implements java.awt.event.KeyListener {
   private final StateService stateService;
+  private final MainWindow mainWindow;
 
-  public InputManager(StateService stateService) {
+  public InputManager(StateService stateService, MainWindow mainWindow) {
     this.stateService = stateService;
+    this.mainWindow = mainWindow;
   }
 
   @Override
@@ -46,6 +49,7 @@ public class InputManager implements java.awt.event.KeyListener {
               t.getName(), t.getState(), t.getPriority(), t.isDaemon());
         }
       }
+      case KeyEvent.VK_F -> mainWindow.showUI();
     }
   }
 

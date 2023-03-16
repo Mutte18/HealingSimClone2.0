@@ -10,7 +10,7 @@ public class Player extends Entity {
   private int mana;
   private int maxMana;
   private double manaRegenTickInterval = 2;
-  private int manaRegenAmount = 100;
+  private int manaRegenAmount = 10;
 
   @Builder
   public Player(int id, int health, boolean alive, int mana) {
