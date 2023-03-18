@@ -6,5 +6,5 @@ public class Healer extends Entity {
   }
 
   @Override
-  public void tick(Integer secondsElapsed) {}
+  public void tick(Double tenthOfSeconds) {}
 }

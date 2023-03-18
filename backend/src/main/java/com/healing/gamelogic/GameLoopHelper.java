@@ -34,7 +34,6 @@ public class GameLoopHelper {
     bossAutoAttack(secondsElapsed);
     bossSpecialAttack(secondsElapsed);
 
-    raiderHandler.getRaidGroup().forEach(raider -> raider.tick(secondsElapsed));
     spellBook.forEach(spell -> spell.tick(1));
   }
 

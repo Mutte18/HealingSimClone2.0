@@ -8,6 +8,9 @@ import com.healing.entity.Player;
 import com.healing.gamelogic.BossHandler;
 import com.healing.gamelogic.RaidGroup;
 import com.healing.gamelogic.RaiderHandler;
+import com.healing.spell.spellbook.SpellBook;
+import com.healing.spell.spellcast.GlobalCooldownHandler;
+import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.state.model.StateModel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,23 @@ import org.springframework.stereotype.Service;
 public class StateService {
   private final BossHandler bossHandler;
   private final RaiderHandler raiderHandler;
+  private final SpellCastingHandler spellCastingHandler;
+  private final GlobalCooldownHandler globalCooldownHandler;
+  private final SpellBook spellBook;
   private final ObjectMapper mapper;
 
   @Autowired
-  public StateService(BossHandler bossHandler, RaiderHandler raiderHandler) {
+  public StateService(
+      BossHandler bossHandler,
+      RaiderHandler raiderHandler,
+      SpellCastingHandler spellCastingHandler,
+      SpellBook spellBook,
+      GlobalCooldownHandler globalCooldownHandler) {
     this.bossHandler = bossHandler;
     this.raiderHandler = raiderHandler;
+    this.spellCastingHandler = spellCastingHandler;
+    this.spellBook = spellBook;
+    this.globalCooldownHandler = globalCooldownHandler;
     this.mapper = new ObjectMapper();
   }
 

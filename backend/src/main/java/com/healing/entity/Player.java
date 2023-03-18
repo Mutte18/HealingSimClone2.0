@@ -1,5 +1,7 @@
 package com.healing.entity;
 
+import static com.healing.RoundingHelper.roundToOneDecimal;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +11,9 @@ import lombok.Setter;
 public class Player extends Entity {
   private int mana;
   private int maxMana;
-  private double manaRegenTickInterval = 2;
-  private int manaRegenAmount = 10;
+  private double manaRegenTickInterval = 1.0;
+  private int manaRegenAmount = 20;
+  private double manaRegTimeElapsed = 0.0;
 
   @Builder
   public Player(int id, int health, boolean alive, int mana) {
@@ -34,10 +37,12 @@ public class Player extends Entity {
   }
 
   @Override
-  public void tick(Integer secondsElapsed) {
+  public void tick(Double tenthOfSeconds) {
     if (isAlive()) {
-      if (secondsElapsed % manaRegenTickInterval == 0) {
+      manaRegTimeElapsed += tenthOfSeconds;
+      if (roundToOneDecimal(manaRegTimeElapsed) % manaRegenTickInterval == 0) {
         increaseMana(manaRegenAmount);
+        manaRegTimeElapsed = 0.0;
       }
     }
   }

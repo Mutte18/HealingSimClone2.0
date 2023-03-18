@@ -119,6 +119,8 @@ public class Game implements Runnable {
         buffHandler.processBuffs(0.1);
         spellCastingHandler.tick(0.1);
         globalCooldownHandler.tick(0.1);
+        raiderHandler.getPlayer().tick(0.1);
+        // raiderHandler.getRaidGroup().forEach(raider -> raider.tick(0.1));
         validateBossAndRaidersAliveStatus();
         buffHandler.cleanUpExpiredBuffs();
         mainWindow.showUI();

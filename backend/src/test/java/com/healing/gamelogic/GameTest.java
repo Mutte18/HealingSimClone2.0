@@ -25,7 +25,13 @@ public class GameTest {
     raiderHandler = new RaiderHandler();
     bossHandler = new BossHandler(raiderHandler);
     actionsQueue = new ActionsQueue();
-    stateService = new StateService(bossHandler, raiderHandler);
+    stateService =
+        new StateService(
+            bossHandler,
+            raiderHandler,
+            new SpellCastingHandler(actionsQueue, raiderHandler, globalCooldownHandler),
+            new SpellBook(),
+            globalCooldownHandler);
     globalCooldownHandler = new GlobalCooldownHandler();
     gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler, new SpellBook());
     buffHandler = new BuffHandler(raiderHandler, bossHandler, actionsQueue);

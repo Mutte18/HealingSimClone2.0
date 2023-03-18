@@ -56,4 +56,8 @@ public abstract class Spell {
       this.remainingCooldown = this.coolDownTime;
     }
   }
+
+  public String getSpellId() {
+    return this.spellId;
+  }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ChainHeal extends Spell {
   public ChainHeal() {
-    super("Chain Heal", "2", 250, 2, 150, 0, 1, 2.0);
+    super("Chain Heal", "2", 250, 2, 150, 0, 4, 2.0);
   }
 
   @Override

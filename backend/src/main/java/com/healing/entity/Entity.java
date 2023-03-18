@@ -50,7 +50,7 @@ public abstract class Entity {
     }
   }
 
-  public abstract void tick(Integer secondsElapsed);
+  public abstract void tick(Double tenthOfSeconds);
 
   public int getHpInPercent() {
     double hp = health;

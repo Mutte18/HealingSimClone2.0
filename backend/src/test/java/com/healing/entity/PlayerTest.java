@@ -14,9 +14,9 @@ public class PlayerTest {
   }
 
   @Test
-  void shouldIncreaseManaEveryTwoSecondsByManaRegAmount() {
+  void shouldIncreaseManaOnManaTickIntervalByManaRegAmount() {
     player.setMana(0);
-    player.tick(2);
+    player.tick(player.getManaRegenTickInterval());
 
     Assertions.assertEquals(player.getManaRegenAmount(), player.getMana());
   }
@@ -24,7 +24,7 @@ public class PlayerTest {
   @Test
   void shouldNotIncreaseManaOnUnevenSecondTicks() {
     player.setMana(0);
-    player.tick(1);
+    player.tick(player.getManaRegenTickInterval() + 0.1);
 
     Assertions.assertEquals(0, player.getMana());
   }
