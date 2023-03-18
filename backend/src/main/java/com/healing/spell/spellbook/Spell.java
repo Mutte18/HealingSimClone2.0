@@ -14,9 +14,9 @@ public abstract class Spell {
   private final Integer healAmount;
   private final Integer damageAmount;
   private final Integer additionalTargets;
-  private final Integer coolDownTime;
+  private final Double coolDownTime;
   private final Double castTime;
-  private Integer remainingCooldown = 0;
+  private Double remainingCooldown = 0.0;
   private Boolean onCooldown = false;
 
   public Spell(
@@ -26,7 +26,7 @@ public abstract class Spell {
       Integer additionalTargets,
       Integer healAmount,
       Integer damageAmount,
-      Integer coolDownTime,
+      Double coolDownTime,
       Double castTime) {
     this.name = name;
     this.spellId = spellId;
@@ -43,8 +43,8 @@ public abstract class Spell {
 
   public abstract void addBuff(Entity target);
 
-  public void tick(Integer seconds) {
-    this.remainingCooldown -= seconds;
+  public void tick(Double tenthOfSeconds) {
+    this.remainingCooldown -= tenthOfSeconds;
     if (this.remainingCooldown <= 0) {
       this.onCooldown = false;
     }

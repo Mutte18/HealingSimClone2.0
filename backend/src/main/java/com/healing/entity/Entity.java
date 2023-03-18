@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.healing.buff.Buff;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,6 +48,7 @@ public abstract class Entity {
     if (this.health <= 0) {
       this.setAlive(false);
       this.health = 0;
+      getBuffs().clear();
     }
   }
 
@@ -63,6 +65,19 @@ public abstract class Entity {
   }
 
   public void addBuff(Buff buff) {
+    var existingBuff = isAlreadyAffectedByBuff(buff);
+    existingBuff.ifPresent(this::removeBuff);
     this.buffs.add(buff);
+  }
+
+  public void removeBuff(Buff buff) {
+    this.buffs.remove(buff);
+  }
+
+  private Optional<Buff> isAlreadyAffectedByBuff(Buff newBuff) {
+    var existingBuffs = getBuffs();
+    return existingBuffs.stream()
+        .filter(oldBuff -> oldBuff.getName().equals(newBuff.getName()))
+        .findAny();
   }
 }

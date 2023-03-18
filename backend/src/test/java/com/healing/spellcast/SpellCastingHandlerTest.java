@@ -110,21 +110,6 @@ public class SpellCastingHandlerTest {
   }
 
   @Test
-  void castingTheSameBuffSpellShouldGenerateAUniqueBuffPerCast() {
-    var spell = new Renew();
-    var target = raiderHandler.getRaiderById("PLAYER0").get();
-    spellCastingHandler.startCastingSpell(spell, raiderHandler.getPlayer(), target);
-    globalCooldownHandler.endGlobalCooldown();
-    spellCastingHandler.startCastingSpell(spell, raiderHandler.getPlayer(), target);
-
-    var buffs = target.getBuffs();
-    var buff1 = buffs.get(0);
-    var buff2 = buffs.get(1);
-
-    assertNotEquals(buff1, buff2);
-  }
-
-  @Test
   void cancelSpellCastWhenCastingASpellShouldStopCasting() {
     var spell = new FlashHeal();
     var target = raiderHandler.getRaiderById("PLAYER0").get();

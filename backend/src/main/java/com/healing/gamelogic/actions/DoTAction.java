@@ -19,7 +19,9 @@ public class DoTAction extends Action {
   @Override
   public void performAction() {
     target.reduceHealth(damageAmount);
-    System.out.println(buff.getClass().getName() + " ticked for " + damageAmount + " on " + target);
-    if (shouldLog) {}
+    if (shouldLog) {
+      System.out.println(
+          buff.getClass().getName() + " ticked for " + damageAmount + " on " + target);
+    }
   }
 }

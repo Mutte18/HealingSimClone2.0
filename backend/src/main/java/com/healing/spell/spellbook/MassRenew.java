@@ -6,9 +6,9 @@ import com.healing.entity.Player;
 import com.healing.gamelogic.ActionsQueue;
 import java.util.List;
 
-public class Renew extends Spell {
-  public Renew() {
-    super("Renew", "1", 100, 0, 0, 0, 0.0, 0.0);
+public class MassRenew extends Spell {
+  public MassRenew() {
+    super("Mass Renew", "6", 400, 4, 0, 0, 15.0, 2.0);
   }
 
   @Override

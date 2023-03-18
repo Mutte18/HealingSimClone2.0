@@ -94,11 +94,9 @@ public class RaiderHandler {
                 raider ->
                     raider.isAlive()
                         && !raider.getId().equals(initialTarget.getId())
-                        && !raider.getRole().equals(EntityRole.TANK)
                         && raider.getHealth() != raider.getMaxHealth())
             .sorted(Comparator.comparingInt(Entity::getHpInPercent))
             .toList();
-
     return damagedRaiders.stream().limit(desiredTargets).collect(Collectors.toList());
   }
 }

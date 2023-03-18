@@ -84,6 +84,10 @@ public class SpellCastingHandler {
         getAdditionalTargets(target, castingSpell.getAdditionalTargets()),
         player);
     castingSpell.addBuff(target);
+    if (castingSpell.getAdditionalTargets() > 0) {
+      var targets = getAdditionalTargets(target, castingSpell.getAdditionalTargets());
+      targets.forEach(target -> castingSpell.addBuff(target));
+    }
     player.reduceMana(castingSpell.getManaCost());
     System.err.println("Casted " + castingSpell.getName() + " on " + target.getId());
 

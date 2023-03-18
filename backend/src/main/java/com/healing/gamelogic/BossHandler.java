@@ -27,7 +27,7 @@ public class BossHandler {
   }
 
   public void resetBosses() {
-    createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
+    createNewBoss(new Boss(0, 10000, true, "Defias Pillager"));
   }
 
   public void createNewBoss(Boss boss) {

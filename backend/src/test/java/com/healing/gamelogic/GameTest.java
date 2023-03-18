@@ -33,7 +33,7 @@ public class GameTest {
             new SpellBook(),
             globalCooldownHandler);
     globalCooldownHandler = new GlobalCooldownHandler();
-    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler, new SpellBook());
+    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler);
     buffHandler = new BuffHandler(raiderHandler, bossHandler, actionsQueue);
     spellCastingHandler =
         new SpellCastingHandler(actionsQueue, raiderHandler, globalCooldownHandler);
@@ -46,7 +46,8 @@ public class GameTest {
             gameLoopHelper,
             buffHandler,
             spellCastingHandler,
-            globalCooldownHandler);
+            globalCooldownHandler,
+            new SpellBook());
     game.toggleIsRunning(false);
   }
 

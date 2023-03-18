@@ -84,6 +84,7 @@ public class MainWindow extends JFrame {
 
   private JPanel createRaidFrame() {
     var raid = stateService.getState().getRaidGroup();
+    var currentTarget = stateService.getState().getBoss().getCurrentTarget();
     var raidPanel = new JPanel();
     raidPanel.setLayout(new GridLayout(5, 4));
     for (Entity raider : raid) {
@@ -119,7 +120,11 @@ public class MainWindow extends JFrame {
       }
 
       raidFrame.setBackground(Color.white);
-      raidFrame.setBorder(BorderFactory.createLineBorder(Color.black));
+      if (currentTarget != null && currentTarget.equals(raider)) {
+        raidFrame.setBorder(BorderFactory.createLineBorder(Color.red));
+      } else {
+        raidFrame.setBorder(BorderFactory.createLineBorder(Color.black));
+      }
 
       raidPanel.add(raidFrame);
     }
@@ -197,7 +202,10 @@ public class MainWindow extends JFrame {
           spellPanel.add(new JLabel("Mana cost: " + spell.getManaCost()));
           if (spell.getOnCooldown()) {
             spellPanel.add(
-                new JLabel("Remaining Cooldown: " + spell.getRemainingCooldown() + " sec"));
+                new JLabel(
+                    "Remaining Cooldown: "
+                        + RoundingHelper.roundToOneDecimal(spell.getRemainingCooldown())
+                        + " sec"));
           } else {
             spellPanel.add(new JLabel("Cooldown: " + coolDownText));
           }

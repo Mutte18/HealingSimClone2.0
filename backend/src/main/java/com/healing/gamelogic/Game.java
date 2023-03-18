@@ -1,7 +1,7 @@
 package com.healing.gamelogic;
 
-import com.healing.buff.buffs.RenewBuff;
 import com.healing.gui.MainWindow;
+import com.healing.spell.spellbook.SpellBook;
 import com.healing.spell.spellcast.GlobalCooldownHandler;
 import com.healing.spell.spellcast.SpellCastingHandler;
 import com.healing.state.StateService;
@@ -20,6 +20,7 @@ public class Game implements Runnable {
   private final BuffHandler buffHandler;
   private final SpellCastingHandler spellCastingHandler;
   private final GlobalCooldownHandler globalCooldownHandler;
+  private final SpellBook spellBook;
   private MainWindow mainWindow;
 
   /** Time keeping variables */
@@ -39,7 +40,8 @@ public class Game implements Runnable {
       GameLoopHelper gameLoopHelper,
       BuffHandler buffHandler,
       SpellCastingHandler spellCastingHandler,
-      GlobalCooldownHandler globalCooldownHandler) {
+      GlobalCooldownHandler globalCooldownHandler,
+      SpellBook spellBook) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;
@@ -48,6 +50,7 @@ public class Game implements Runnable {
     this.buffHandler = buffHandler;
     this.spellCastingHandler = spellCastingHandler;
     this.globalCooldownHandler = globalCooldownHandler;
+    this.spellBook = spellBook;
 
     if (!GraphicsEnvironment.isHeadless()) {
       mainWindow = new MainWindow(stateService);
@@ -82,9 +85,6 @@ public class Game implements Runnable {
   }
 
   private void gameLoop() {
-    raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
-    raiderHandler.getPlayer().getBuffs().add(new RenewBuff());
-    raiderHandler.getPlayer().setMaxHealth(1000);
     raiderHandler
         .getRaidGroup()
         .forEach(
@@ -120,6 +120,7 @@ public class Game implements Runnable {
         spellCastingHandler.tick(0.1);
         globalCooldownHandler.tick(0.1);
         raiderHandler.getPlayer().tick(0.1);
+        spellBook.forEach(spell -> spell.tick(0.1));
         // raiderHandler.getRaidGroup().forEach(raider -> raider.tick(0.1));
         validateBossAndRaidersAliveStatus();
         buffHandler.cleanUpExpiredBuffs();

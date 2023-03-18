@@ -19,6 +19,9 @@ public class SpellBook extends ArrayList<Spell> {
     this.add(new Renew());
     this.add(new ChainHeal());
     this.add(new Riptide());
+    this.add(new HolyShock());
+    this.add(new HolyNova());
+    this.add(new MassRenew());
   }
 
   /*public Optional<Spell> getSpell(String spellId) {

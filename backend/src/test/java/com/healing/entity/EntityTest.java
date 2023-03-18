@@ -2,6 +2,8 @@ package com.healing.entity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.healing.buff.buffs.RenewBuff;
+import com.healing.buff.buffs.RiptideBuff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,5 +66,23 @@ class EntityTest {
     dps.reduceHealth(50);
 
     assertEquals(50, dps.getHpInPercent());
+  }
+
+  @Test
+  void shouldReplaceBuffWhenAddingSame() {
+    dps = new Dps(0, 100, true);
+    dps.addBuff(new RenewBuff());
+    dps.addBuff(new RenewBuff());
+
+    assertEquals(1, dps.getBuffs().size());
+  }
+
+  @Test
+  void shouldAddBuffWhenBuffsAreUnique() {
+    dps = new Dps(0, 100, true);
+    dps.addBuff(new RenewBuff());
+    dps.addBuff(new RiptideBuff());
+
+    assertEquals(2, dps.getBuffs().size());
   }
 }

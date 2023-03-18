@@ -6,9 +6,9 @@ import com.healing.gamelogic.ActionsQueue;
 import com.healing.gamelogic.actions.PlayerAction;
 import java.util.List;
 
-public class ChainHeal extends Spell {
-  public ChainHeal() {
-    super("Chain Heal", "2", 250, 2, 150, 0, 4.0, 2.0);
+public class HolyShock extends Spell {
+  public HolyShock() {
+    super("Holy Shock", "4", 100, 0, 150, 0, 6.0, 0.0);
   }
 
   @Override

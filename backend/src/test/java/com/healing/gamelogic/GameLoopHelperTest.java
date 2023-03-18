@@ -3,7 +3,6 @@ package com.healing.gamelogic;
 import com.healing.entity.Boss;
 import com.healing.entity.EntityRole;
 import com.healing.gamelogic.actions.*;
-import com.healing.spell.spellbook.SpellBook;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +14,6 @@ public class GameLoopHelperTest {
   private RaiderHandler raiderHandler;
   private BossHandler bossHandler;
   private ActionsQueue actionsQueue;
-  private SpellBook spellBook;
 
   @BeforeEach
   void setup() {
@@ -24,8 +22,7 @@ public class GameLoopHelperTest {
     bossHandler = new BossHandler(raiderHandler);
     bossHandler.createNewBoss(new Boss(0, 1000, true, "Defias Pillager"));
     actionsQueue = new ActionsQueue();
-    spellBook = new SpellBook();
-    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler, spellBook);
+    gameLoopHelper = new GameLoopHelper(actionsQueue, bossHandler, raiderHandler);
   }
 
   @Test

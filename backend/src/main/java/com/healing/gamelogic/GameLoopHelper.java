@@ -3,7 +3,6 @@ package com.healing.gamelogic;
 import com.healing.entity.Dps;
 import com.healing.entity.EntityRole;
 import com.healing.entity.Healer;
-import com.healing.spell.spellbook.SpellBook;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,19 +10,14 @@ public class GameLoopHelper {
   private final RaiderHandler raiderHandler;
   private final BossHandler bossHandler;
   private final ActionsQueue actionsQueue;
-  private final SpellBook spellBook;
 
   private int secondsElapsed = 0;
 
   public GameLoopHelper(
-      ActionsQueue actionsQueue,
-      BossHandler bossHandler,
-      RaiderHandler raiderHandler,
-      SpellBook spellBook) {
+      ActionsQueue actionsQueue, BossHandler bossHandler, RaiderHandler raiderHandler) {
     this.raiderHandler = raiderHandler;
     this.actionsQueue = actionsQueue;
     this.bossHandler = bossHandler;
-    this.spellBook = spellBook;
   }
 
   public void tick(Integer seconds) {
@@ -33,8 +27,6 @@ public class GameLoopHelper {
     npcHealerAoEHeal(secondsElapsed);
     bossAutoAttack(secondsElapsed);
     bossSpecialAttack(secondsElapsed);
-
-    spellBook.forEach(spell -> spell.tick(1));
   }
 
   private void bossAutoAttack(Integer secondsElapsed) {

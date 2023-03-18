@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FlashHeal extends Spell {
   public FlashHeal() {
-    super("Flash Heal", "0", 100, 0, 100, 0, 0, 1.5);
+    super("Flash Heal", "0", 100, 0, 100, 0, 0.0, 1.5);
   }
 
   @Override
