@@ -14,7 +14,7 @@ public class RiptideBuff extends Buff {
   private static final int healAmount = 45;
 
   public RiptideBuff() {
-    super(duration, interval, "Riptide", BuffType.BUFF);
+    super(duration, interval, "Riptide", BuffType.BUFF, false);
   }
 
   @Override

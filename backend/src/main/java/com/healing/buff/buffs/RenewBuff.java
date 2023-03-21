@@ -14,7 +14,7 @@ public class RenewBuff extends Buff {
   private static final int healAmount = 45;
 
   public RenewBuff() {
-    super(duration, interval, "Renew", BuffType.BUFF);
+    super(duration, interval, "Renew", BuffType.BUFF, true);
   }
 
   @Override

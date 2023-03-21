@@ -65,8 +65,10 @@ public abstract class Entity {
   }
 
   public void addBuff(Buff buff) {
-    var existingBuff = isAlreadyAffectedByBuff(buff);
-    existingBuff.ifPresent(this::removeBuff);
+    if (!buff.isAllowMultiple()) {
+      var existingBuff = isAlreadyAffectedByBuff(buff);
+      existingBuff.ifPresent(this::removeBuff);
+    }
     this.buffs.add(buff);
   }
 

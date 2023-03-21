@@ -37,12 +37,15 @@ public class BossHandler {
 
   public Optional<BossAction> createBossAutoAttackAction() {
     setBossFocusTarget();
+    var damageRoll = (Math.random() * 50) + 25;
+    var critRoll = (Math.random() * 10) + 1;
+    if (critRoll == 10) damageRoll *= 2;
     if (currentBoss.getCurrentTarget() != null) {
       return Optional.of(
           new BossAction(
               currentBoss,
               new ArrayList<>(List.of(currentBoss.getCurrentTarget())),
-              new MeleeSwing(25),
+              new MeleeSwing((int) damageRoll),
               "0",
               ActionType.NORMAL));
     }

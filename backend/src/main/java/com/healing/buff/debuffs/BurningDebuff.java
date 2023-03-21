@@ -14,7 +14,7 @@ public class BurningDebuff extends Buff {
   private static final int damageAmount = 50;
 
   public BurningDebuff() {
-    super(duration, interval, "Burning", BuffType.DEBUFF);
+    super(duration, interval, "Burning", BuffType.DEBUFF, true);
   }
 
   @Override

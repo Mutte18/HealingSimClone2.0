@@ -12,15 +12,17 @@ public abstract class Buff implements Cloneable {
   protected double remainingDuration;
   private final double maxDuration;
   private final double tickInterval;
+  private final boolean allowMultiple;
   private boolean isExpired = false;
   private BuffType buffType;
 
-  public Buff(double maxDuration, double tickInterval, String name, BuffType buffType) {
+  public Buff(double maxDuration, double tickInterval, String name, BuffType buffType, Boolean allowMultiple) {
     this.maxDuration = maxDuration;
     this.remainingDuration = maxDuration;
     this.tickInterval = tickInterval;
     this.name = name;
     this.buffType = buffType;
+    this.allowMultiple = allowMultiple;
   }
 
   public void tick(double tenthOfSecond) {

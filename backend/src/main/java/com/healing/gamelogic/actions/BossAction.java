@@ -28,17 +28,17 @@ public class BossAction extends Action {
         target.addBuff(npcAttack.getDebuff().clone());
       }
     }
-
+    System.out.println(
+            "Performed Boss Action, "
+                    + boss.getName()
+                    + " casted "
+                    + npcAttack.getName()
+                    + " for "
+                    + npcAttack.getDamageAmount()
+                    + " damage on "
+                    + getTargetsInfo());
     if (shouldLog) {
-      System.out.println(
-          "Performed Boss Action, "
-              + boss.getName()
-              + " casted "
-              + npcAttack.getName()
-              + " for "
-              + npcAttack.getDamageAmount()
-              + " damage on "
-              + getTargetsInfo());
+
     }
   }
 }
