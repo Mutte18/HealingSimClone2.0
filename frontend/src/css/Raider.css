@@ -1,0 +1,79 @@
+.raider-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.raider-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.raider-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.raider-type {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.raider-role {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.raider-status {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.raider-buffs {
+    display: flex;
+    flex-direction: row;
+}
+
+.raider-buff {
+    background-color: #fff;
+    color: #333;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.raider-health-bar {
+    background-color: #777;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.raider-health-bar-fill {
+    background-color: #f00;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.raider-health-bar-text {
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+}
+
+.raider-hp-in-percent {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}

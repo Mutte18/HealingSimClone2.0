@@ -1,0 +1,24 @@
+.raid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.raid-container h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.raid-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.raid-col {
+    display: flex;
+    justify-content: center;
+}
+

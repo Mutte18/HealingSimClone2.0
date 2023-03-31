@@ -1,0 +1,227 @@
+[{
+  "type" : "player",
+  "id" : "PLAYER0",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "PLAYER",
+  "buffs" : [ ],
+  "mana" : 1000,
+  "maxMana" : 1000,
+  "manaRegenTickInterval" : 1.0,
+  "manaRegenAmount" : 20,
+  "manaRegTimeElapsed" : 0.1,
+  "hpInPercent" : 100
+},
+{
+  "type" : "healer",
+  "id" : "HEALER0",
+  "health" : 0,
+  "maxHealth" : 1000,
+  "alive" : false,
+  "role" : "HEALER",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "healer",
+  "id" : "HEALER1",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "HEALER",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "healer",
+  "id" : "HEALER2",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "HEALER",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "healer",
+  "id" : "HEALER3",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "HEALER",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "tank",
+  "id" : "TANK0",
+  "health" : 898,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "TANK",
+  "buffs" : [ ],
+  "hpInPercent" : 89
+},
+{
+  "type" : "tank",
+  "id" : "TANK1",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "TANK",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS0",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS1",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS2",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS3",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS4",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS5",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS6",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS7",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS8",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS9",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS10",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS11",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+  "type" : "dps",
+  "id" : "DPS12",
+  "health" : 1000,
+  "maxHealth" : 1000,
+  "alive" : true,
+  "role" : "DPS",
+  "buffs" : [ ],
+  "hpInPercent" : 100
+},
+{
+"type" : "boss",
+"id" : "BOSS0",
+"health" : 10000,
+"maxHealth" : 10000,
+"alive" : true,
+"role" : "BOSS",
+"buffs" : [ ],
+"name" : "Defias Pillager",
+"currentTarget" : {
+"type" : "tank",
+"id" : "TANK0",
+"health" : 898,
+"maxHealth" : 1000,
+"alive" : true,
+"role" : "TANK",
+"buffs" : [ ],
+"hpInPercent" : 89
+},
+"hpInPercent" : 100
+}
+  ]
