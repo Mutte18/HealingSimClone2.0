@@ -1,1 +1,4 @@
-<p>health-bar works!</p>
+<p *ngIf="isAlive; else notAlive">HP: {{ currentHealthPoints }} / {{ maxHealthPoints }}</p>
+<ng-template #notAlive>
+  <p>DEAD</p>
+</ng-template>

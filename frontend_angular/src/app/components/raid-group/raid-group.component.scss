@@ -1,0 +1,14 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+app-raider {
+  width: calc(20% - 50px);
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  margin: 5px;
+  text-align: center;
+}
