@@ -1,4 +1,11 @@
-<p *ngIf="isAlive; else notAlive">HP: {{ currentHealthPoints }} / {{ maxHealthPoints }}</p>
+<div class="outer-health-bar">
+  <div class="inner-health-bar" [ngStyle]="{ 'background-color': healthColor, 'width.%': healthPercentage }">
+  </div>
+  <div class="raider-info">
+    <p *ngIf="isAlive; else notAlive">HP: {{ currentHealthPoints }} / {{ maxHealthPoints }}</p>
+    <p>Raider</p>
+  </div>
+</div>
 <ng-template #notAlive>
   <p>DEAD</p>
 </ng-template>

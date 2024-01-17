@@ -3,12 +3,25 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  border: 1px solid black;
 }
 
 app-raider {
   width: calc(20% - 50px);
+  height: 75px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  margin: 5px;
+  margin: 10px;
   text-align: center;
+  cursor: cell;
+}
+
+.raid-frame {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+  justify-content: left;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }

@@ -1,11 +1,3 @@
-<!--<div class="health-bar-container">-->
-<!--  <p class="raider-text">Raider</p>-->
-<!--  -->
-<!--</div>-->
-
-<div [ngStyle]="{ 'background-color': healthColor, 'width.%': healthPercentage }" class="health-bar" >
-  <div class="raider-info">
-    <p class="raider-name">Raider</p>
-    <app-health-bar class="health-points" [currentHealthPoints]="currentHealthPoints" [maxHealthPoints]="maxHealthPoints" [isAlive]="isAlive" />
-  </div>
+<div class="disable-select">
+  <app-health-bar [currentHealthPoints]="currentHealthPoints" [maxHealthPoints]="maxHealthPoints" [isAlive]="isAlive" />
 </div>

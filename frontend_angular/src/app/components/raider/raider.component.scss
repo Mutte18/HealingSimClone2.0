@@ -1,18 +1,8 @@
-.health-bar {
-  padding: 10px; /* Add padding to create space between text and the edges */
-  text-align: center; /* Center the content horizontally */
-  position: relative;
-  color: white; /* Text color */
-
+.disable-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
-
-.raider-info {
-  text-align: center;
-  font-weight: bold; /* Adjust the font weight as needed */
-  position: relative;
-}
-
-.raider-name {
-  margin: 0; /* Remove margin for the raider name */
-}
-
