@@ -1,3 +1,8 @@
-<div class="flex">
-  <app-raider *ngFor="let i of [].constructor(20)"/>
+<div class="raid-group">
+  <app-raider #raider
+    (click)="doSomething(raider)"
+    (mouseover)="mouseoverTarget=raider"
+    (mouseleave)="mouseoverTarget=undefined"
+    *ngFor="let i of [].constructor(20); index as idx"
+    [name]="'Raider ' + idx"/>
 </div>

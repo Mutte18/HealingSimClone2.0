@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {HealthBarComponent} from '../health-bar/health-bar.component';
 import {NgStyle} from '@angular/common';
-import {TimeInterval} from 'rxjs/internal/operators/timeInterval';
 
 @Component({
   selector: 'app-raider',
@@ -17,8 +16,16 @@ export class RaiderComponent {
   @Input() currentHealthPoints: number = 1000;
   @Input() maxHealthPoints: number = 1000;
   @Input() isAlive: boolean = true;
+  @Input() name: string = "";
 
   constructor() {
-    // setInterval(() => this.currentHealthPoints = this.currentHealthPoints -15, 500);
+    setInterval(() =>  {
+      if (this.currentHealthPoints > 0) {
+        this.currentHealthPoints = this.currentHealthPoints -10
+      }
+      else {
+        this.isAlive = false;
+      }
+    }, 100);
   }
 }

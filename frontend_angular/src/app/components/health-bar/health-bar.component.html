@@ -3,7 +3,8 @@
   </div>
   <div class="raider-info">
     <p *ngIf="isAlive; else notAlive">HP: {{ currentHealthPoints }} / {{ maxHealthPoints }}</p>
-    <p>Raider</p>
+    <p *ngIf="isAlive">{{healthPercentage}}%</p>
+    <p>{{ name }}</p>
   </div>
 </div>
 <ng-template #notAlive>

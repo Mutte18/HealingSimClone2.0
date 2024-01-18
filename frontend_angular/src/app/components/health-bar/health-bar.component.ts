@@ -15,23 +15,23 @@ export class HealthBarComponent {
   @Input() currentHealthPoints: number = 0;
   @Input() maxHealthPoints: number = 0;
   @Input() isAlive: boolean = true;
+  @Input() name: string = ""
 
   get healthPercentage(): number {
-    return this.isAlive ? (this.currentHealthPoints / this.maxHealthPoints) * 100 : 0;
+    return Math.floor((this.currentHealthPoints / this.maxHealthPoints) * 100);
   }
 
   get healthColor(): string {
     const percentage = this.healthPercentage;
-    console.log(percentage);
 
     if (percentage <= 25) {
       return 'red';
     } else if (percentage <= 50) {
       return 'orange';
-    } else if (percentage <= 74) {
+    } else if (percentage <= 75) {
       return 'yellow';
     } else if (percentage <= 99) {
-      return 'lime'
+      return 'lightgreen'
     } else {
       return 'green';
     }
