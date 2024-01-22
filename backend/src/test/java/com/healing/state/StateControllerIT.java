@@ -8,7 +8,9 @@ import com.healing.gamelogic.RaiderHandler;
 import com.healing.integration.IntegrationTest;
 import com.healing.state.model.StateModel;
 import com.healing.state.response.StateResponse;
-import org.junit.Before;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,22 +27,18 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.concurrent.ExecutionException;
-
 public class StateControllerIT extends IntegrationTest {
   @Autowired Game game;
   @Autowired RaiderHandler raiderHandler;
   private WebSocketStompClient stompClient;
-  @Autowired
-  private SimpMessagingTemplate messagingTemplate;
-
+  @Autowired private SimpMessagingTemplate messagingTemplate;
 
   @BeforeEach
   public void setUp() {
-    stompClient = new WebSocketStompClient(new SockJsClient(
-            Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
+    stompClient =
+        new WebSocketStompClient(
+            new SockJsClient(
+                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
   }
 
   @Test
@@ -70,20 +68,23 @@ public class StateControllerIT extends IntegrationTest {
 
   @Test
   void testWebSocketEndpoint() throws ExecutionException, InterruptedException {
-    StompSession session = stompClient.connect("ws://localhost:8080/healing-simulator", new StompSessionHandlerAdapter() {
-    }).get();
-    session.subscribe("/game/state", new StompFrameHandler() {
-      @Override
-      public Type getPayloadType(StompHeaders stompHeaders) {
-        return null;
-      }
+    StompSession session =
+        stompClient
+            .connect("ws://localhost:8080/healing-simulator", new StompSessionHandlerAdapter() {})
+            .get();
+    session.subscribe(
+        "/game/state",
+        new StompFrameHandler() {
+          @Override
+          public Type getPayloadType(StompHeaders stompHeaders) {
+            return null;
+          }
 
-      @Override
-      public void handleFrame(StompHeaders stompHeaders, Object o) {
-        var stateResponse = (StateResponse) o;
-      }
-    });
+          @Override
+          public void handleFrame(StompHeaders stompHeaders, Object o) {
+            var stateResponse = (StateResponse) o;
+          }
+        });
     messagingTemplate.convertAndSend("/game/state", new StateModel());
-
   }
 }

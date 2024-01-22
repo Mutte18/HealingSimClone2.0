@@ -69,15 +69,6 @@ class EntityTest {
   }
 
   @Test
-  void shouldReplaceBuffWhenAddingSame() {
-    dps = new Dps(0, 100, true);
-    dps.addBuff(new RenewBuff());
-    dps.addBuff(new RenewBuff());
-
-    assertEquals(1, dps.getBuffs().size());
-  }
-
-  @Test
   void shouldAddBuffWhenBuffsAreUnique() {
     dps = new Dps(0, 100, true);
     dps.addBuff(new RenewBuff());

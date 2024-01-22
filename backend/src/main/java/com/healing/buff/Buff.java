@@ -16,7 +16,12 @@ public abstract class Buff implements Cloneable {
   private boolean isExpired = false;
   private BuffType buffType;
 
-  public Buff(double maxDuration, double tickInterval, String name, BuffType buffType, Boolean allowMultiple) {
+  public Buff(
+      double maxDuration,
+      double tickInterval,
+      String name,
+      BuffType buffType,
+      Boolean allowMultiple) {
     this.maxDuration = maxDuration;
     this.remainingDuration = maxDuration;
     this.tickInterval = tickInterval;
