@@ -16,7 +16,9 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-@Controller
+// Disabled with WebSocketConfig; this client also attempted to connect back to
+// the server during application startup.
+// @Controller
 public class WebSocketsController {
 
   public WebSocketsController() throws ExecutionException, InterruptedException {

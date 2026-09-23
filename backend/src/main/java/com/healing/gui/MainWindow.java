@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
     // this.setLayout(new BorderLayout());
     this.setVisible(true);
 
-    new Thread(() -> this.addKeyListener(new InputManager(stateService, this))).start();
+    new InputManager(stateService, this).registerKeyBindings(getRootPane());
   }
 
   public void showUI() {
